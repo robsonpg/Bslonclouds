@@ -12,7 +12,6 @@ if(isset($user) && $user->isLoggedIn()){
 ?>
 		<div class="jumbotron">
 			<h1 align="center"><?=lang("JOIN_SUC");?> <?php echo $settings->site_name;?></h1>
-			<p align="center" class="text-muted"><?=lang("MAINT_OPEN")?></p>
 			<p align="center">
 				<?php
 				if($user->isLoggedIn()){?>
