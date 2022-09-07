@@ -22,8 +22,6 @@ if(isset($user) && $user->isLoggedIn()){
 				<?php }?>
 			</p>
 			<br>
-			<p align="center"><?=lang("MAINT_PLEASE");?></p>
-			<h4 align="center"><a href="https://userspice.com/getting-started/">https://userspice.com/getting-started/</a></h4>
 		</div>
 <?php  languageSwitcher();?>
 
