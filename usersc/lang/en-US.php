@@ -6,9 +6,14 @@
 
 //You can test this out by uncommenting the section below and you will note that the menu on the home page changes from the default Home to Homepage
 
-// $lang = array_merge($lang,array(
-// "MENU_HOME"			=> "Homepage",
-// ));
+ $lang = array_merge($lang,array(
+ "MENU_HOME"			=> "Homepage",
+  "PERSONAL_DATA"       => "User Information Data",
+     "DATA_INFORMATION" => "Please, let us know you",
+     "GEN_INSTITUTION" => "Institution and department",
+  "GEN_COUNTRY" => "Country",
+     "GEN_SKILLS" => "Skills",
+ ));
 
 
 ?>
