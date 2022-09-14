@@ -76,6 +76,14 @@ Special thanks to John Bovey for the password strenth feature.
         required autocomplete="email">
       </div>
 
+        <div class="form-group">
+            <label for="country" id="country-label"><?=lang("GEN_COUNTRY");?>*</label>
+
+            <input  class="form-control" type="text" name="country" id="country"
+                    placeholder="<?=lang("GEN_COUNTRY");?>" value="<?php if (!$form_valid && !empty($_POST)){ echo $country;} ?>"
+                    required autocomplete="country">
+        </div>
+
     <div class="form-group">
         <label for="institution" id="institution-label"><?=lang("GEN_INSTITUTION");?></label>
 
@@ -83,14 +91,6 @@ Special thanks to John Bovey for the password strenth feature.
                 placeholder="<?=lang("GEN_INSTITUTION");?>" value="<?php if (!$form_valid && !empty($_POST)){ echo $institution;} ?>"
                 autocomplete="institution">
     </div>
-
-        <div class="form-group">
-            <label for="country" id="country-label"><?=lang("GEN_COUNTRY");?></label>
-
-            <input  class="form-control" type="text" name="country" id="country"
-                    placeholder="<?=lang("GEN_COUNTRY");?>" value="<?php if (!$form_valid && !empty($_POST)){ echo $country;} ?>"
-                    autocomplete="country">
-        </div>
 
         <div class="form-group">
             <label for="skills" id="skills-label"><?=lang("GEN_SKILLS");?></label>

@@ -107,6 +107,12 @@ if (Input::exists()) {
                 'min' => 5,
                 'max' => 100,
           ],
+            'country' => [
+                'display' => lang('GEN_COUNTRY'),
+                'required' => true,
+                'min' => 5,
+                'max' => 100,
+            ],
 
           'password' => [
                 'display' => lang('GEN_PASS'),
