@@ -71,6 +71,22 @@ if (Input::exists()) {
     $institution = Input::get('institution');
     $country = Input::get('country');
     $skills = Input::get('skills');
+    $newsletter = Input::get('newsletter');
+    $agreement = Input::get('agreement');
+
+    if ($newsletter == 'on') {
+        $newsletter = 1;
+    } else {
+        $newsletter = 0;
+    }
+
+    if ($agreement == 'on') {
+        $agreement = 1;
+    } else {
+        $agreement = 0;
+    }
+
+
 
     $validation = new Validate();
         if (pluginActive('userInfo', true)) {
@@ -107,6 +123,11 @@ if (Input::exists()) {
                 'min' => 5,
                 'max' => 100,
           ],
+            'agreement' => [
+                'display' => lang('GEN_MUST_AGREE'),
+                'required' => true,
+
+            ],
             'country' => [
                 'display' => lang('GEN_COUNTRY'),
                 'required' => true,
@@ -173,6 +194,8 @@ if (Input::exists()) {
                                         'locale'=>$country,
                                         'institution'=>$institution,
                                         'skills' =>$skills,
+                                        'newsletter' =>$newsletter,
+                                        'agreement' =>$agreement,
                                 ];
                 //######################################################################
                 // Verifica a existência do campo "institution" na table
@@ -183,6 +206,12 @@ if (Input::exists()) {
                 }
                 if (!property_exists($fieldInstitution, 'skills')) {
                     $db->query("ALTER TABLE `users` ADD COLUMN `skills` VARCHAR (128)");
+                }
+                if (!property_exists($fieldInstitution, 'newsletter')) {
+                    $db->query("ALTER TABLE `users` ADD COLUMN `newsletter` BOOLEAN");
+                }
+                if (!property_exists($fieldInstitution, 'agreement')) {
+                    $db->query("ALTER TABLE `users` ADD COLUMN `agreement` BOOLEAN");
                 }
 
                 $activeCheck = $db->query('SELECT active FROM users');

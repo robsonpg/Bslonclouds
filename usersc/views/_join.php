@@ -100,6 +100,16 @@ Special thanks to John Bovey for the password strenth feature.
                     autocomplete="skills">
         </div>
 
+        <div class="form-group">
+            <label for="newsletter" id="newsletter-label"><?=lang("GEN_NEWSLETTER");?></label>
+            <input type="checkbox" name="newsletter" id="newsletter">
+        </div>
+
+        <div class="form-group">
+            <label for="agreement" id="agreement-label"><b><?=lang("GEN_AGREEMENT");?>*</b></label>
+            <input type="checkbox" name="agreement" id="agreement">
+        </div>
+
       <div class="form-group">
         <?php
         $character_range = lang("GEN_MIN")." ".$settings->min_pw . " ". lang("GEN_AND") ." ". $settings->max_pw . " " .lang("GEN_MAX")." ".lang("GEN_CHAR");
