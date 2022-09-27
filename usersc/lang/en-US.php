@@ -8,6 +8,7 @@
 
  $lang = array_merge($lang,array(
     "MENU_HOME"			=> "Homepage",
+    "MENU_IMAGE_MANAGER" => "Image Manager",
     "PERSONAL_DATA"       => "User Information Data",
     "DATA_INFORMATION" => "Please, let us know you",
     "GEN_INSTITUTION" => "Institution and department",
@@ -22,6 +23,11 @@
     "SELECT_IMAGES_BTN" => "Select images...",
     "NEXT_STEP" => "Next step >>",
     "ZIP_IMAGES" => "Compact image files",
+    "IMAGE_PROPERTIES" => "Images Properties",
+  "MODAL_PROPERTIES_TITLE" => "Properties for all images loaded",
+  "BTN_ACCEPT" => "Apply",
+  "BTN_CANCEL" => "Cancel",
+
  ));
 
 
