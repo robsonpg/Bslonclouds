@@ -16,6 +16,9 @@ if (!$user->isLoggedIn()) {
 }
 
 $image_name_msg = lang("IMAGE_NAME_MSG");
+$no_image_information = lang("NO_IMAGE_INFORMATION");
+$image_date = lang("IMAGE_DATE");
+$image_size = lang("IMAGE_SIZE");
 
 require_once "properties_modal.php";
 ?>
@@ -23,6 +26,9 @@ require_once "properties_modal.php";
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
 <script type="text/javascript">
     let filename_msg = "<?=$image_name_msg; ?>";
+    let no_image_info = "<?=$no_image_information; ?>";
+    let image_date = "<?=$image_date; ?>";
+    let image_size = "<?=$image_size; ?>";
 </script>
 
 <br><br>
@@ -44,7 +50,6 @@ require_once "properties_modal.php";
                 <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
                        data-target='#properties-modal' data-backdrop="static" class="btn btn-default"/>
                 <hr>
-                <a href=''
             </div>
             <div class="container bg-light" id="tumbnails">
                 <!-- Exibir a imagem que irá para o upload -->

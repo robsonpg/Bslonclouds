@@ -25,8 +25,21 @@
     "ZIP_IMAGES" => "Compact image files",
     "IMAGE_PROPERTIES" => "Images Properties",
   "MODAL_PROPERTIES_TITLE" => "Properties for all images loaded",
+  "ILLUMINATED_SAMPLE" => "Illuminated sample",
+  "TIME_RATE" => "Time rate (frames-per-second)",
+  "SAMPLE_CONFIG" => "Configuration",
+  "BACKSCATTERING" => "Backscattering",
+  "FWD_SCATTERING" => "Forward Scattering",
+  "LASER_TYPE" => "Type of Laser",
+  "HENE" => "HeNe",
+  "DIODE" => "Diode",
+  "OTHER" => "Other",
+  "LASER_WAVELENGTH" => "Laser wavelength",
   "BTN_ACCEPT" => "Apply",
   "BTN_CANCEL" => "Cancel",
+     "NO_IMAGE_INFORMATION" => "No image information.",
+  "IMAGE_DATE" => "Image Date: ",
+  "IMAGE_SIZE" => " Image Size: ",
 
  ));
 
