@@ -3,7 +3,7 @@ const HENE_LASER_TYPE = "1";
 const DIODE_LASER_TYPE = "2";
 const OTHER_LASER_TYPE = "3";
 
-let image_file_list = [];
+let images_properties = [];
 let image_info_list = [];
 
 
@@ -12,6 +12,9 @@ let image_info_list = [];
 // Mas o projeto prevê muitas imagens
 // Vamos ler apenas o path e o nome do arquivo e armazenar
 function readURL(input, id) {
+    let main_width = 0;
+    let main_height = 0;
+
     let tumb_div = document.querySelector("#tumbnails");
     let tumb_image = null;
     for (let i=0; i<input.files.length; i++) {
@@ -28,12 +31,22 @@ function readURL(input, id) {
             let image_main = new Image();
             image_main.src = e.target.result;
             image_main.onload = function() {
+                // Determna o tamanho padrão
+                if (i === 0) {
+                    main_width = this.width;
+                    main_height = this.height;
+                }
                 // access image size here
                 image_info_list[i][2] = this.width;
                 image_info_list[i][3] = this.height;
                 let tumb_msg = document.querySelector("#image_info" + i);
-                tumb_msg.innerHTML = tumb_msg.innerHTML + image_size + "<b>" + this.width + "x" +
-                    this.height + "</b>";
+                if ((this.width !== main_width) || (this.height !== main_height)) {
+                    tumb_msg.innerHTML = tumb_msg.innerHTML + "<a style='color: orange'>" + image_size + "<b>" + this.width + "x" +
+                        this.height + "</b></a>";
+                } else {
+                    tumb_msg.innerHTML = tumb_msg.innerHTML + image_size + "<b>" + this.width + "x" +
+                        this.height + "</b>";
+                }
             };
         }
         reader.readAsDataURL(input.files[i]);
@@ -54,10 +67,22 @@ function readURL(input, id) {
 
         let col_tumb_image = document.createElement("div");
         col_tumb_image.className = "col-2";
+        col_tumb_image.append(tumb_image);
+
+        let col_tumb_remove = document.createElement("div");
+        col_tumb_remove.className = "col-2";
+        let btn_remove = document.createElement("a");
+        btn_remove.className = "btn btn-info";
+        btn_remove.setAttribute("id", "image_remove_" + i);
+        //btn_remove.onclick = removeImage();
+        btn_remove.innerHTML = "<a style='color: white'>" + btn_remove_text + "</a>";
+        //<a id="sample_data_confirm" className="btn btn-primary delete" href="#"><?=lang("BTN_ACCEPT")?></a>
+        col_tumb_remove.append(btn_remove);
 
         row_tumb.append(col_tumb_msg);
         row_tumb.append(col_tumb_filename);
-        row_tumb.append(tumb_image);
+        row_tumb.append(col_tumb_image);
+        row_tumb.append(col_tumb_remove);
         tumb_div.append(row_tumb);
 
         //#####################################################
@@ -80,7 +105,7 @@ $(document).ready(function() {
         let sample_name = document.getElementById("sample_name");
         let sample_frames = document.getElementById("sample_frames");
         let sample_config = document.querySelector('input[name="sample_config"]:checked');
-        let sample_laser_type = document.getElementById("sample_laser_type");
+        let sample_laser_type = document.querySelector('input[name="sample_laser_type"]:checked');
         let sample_wavelength = document.getElementById("sample_wavelength");
 
 
@@ -97,12 +122,77 @@ $(document).ready(function() {
             });
             return false;
         }
-        if (!shakeDOM(sample_laser_type)) return false;
+        if (sample_laser_type === null) {
+            let sample_laser_type_label = document.getElementById("sample_laser_type_label");
+            sample_laser_type_label.style.borderColor = "red";
+            sample_laser_type_label.className = "col shake";
+            sample_laser_type_label.addEventListener("webkitAnimationEnd", function endEdit() {
+                sample_laser_type_label.style.borderColor = "#A9A9A9";
+                sample_laser_type_label.className = "col";
+            });
+            return false;
+        }
         if (!shakeDOM(sample_wavelength)) return false;
 
         //###################################################################
         // Salva os dados para inserir no banco de dados
-        alert("confirm");
+        images_properties.push(sample_name.value);
+        images_properties.push(sample_frames.value);
+        images_properties.push(sample_config.value);
+        images_properties.push(sample_laser_type.value);
+        let other_laser_type = document.getElementById("other_laser_type");
+        images_properties.push(other_laser_type.value);
+        images_properties.push(sample_wavelength.value);
+        //####################################################################
+        // Preenche a interface
+        let image_properties = document.querySelector("#images_properties");
+        let row_prop = document.createElement("div");
+        row_prop.className = "row justify-content-between align-items-center";
+        let col_prop = document.createElement("div");
+        col_prop.className = "col-10";
+
+        let config_id = sample_config.getAttribute("id").toString();
+        let config_text = $("label[for='" + config_id + "']").text();
+        let laser_type_id = sample_laser_type.getAttribute("id").toString();
+        let laser_type_text = $("label[for='" + laser_type_id + "']").text();
+        col_prop.innerHTML = "Sample Name: " + "<b>" + sample_name.value + "</b>" + " Frames per second: " +
+          "<b>" + sample_frames.value + "</b>" + " Configuration: " + "<b>" + config_text + "</b>" +
+          " Laser Type : " + "<b>" + laser_type_text + "</b>" + " Wavelength: " + "<b>" +
+            sample_wavelength.value + "</b>";
+
+        //#############################################################
+        // Botão de editar as propriedades
+        let col_prop_edit = document.createElement("div");
+        col_prop_edit.className = "col-2";
+        let btn_edit = document.createElement("a");
+        btn_edit.className = "btn btn-info";
+        btn_edit.setAttribute("id", "properties_edit");
+        //btn_remove.onclick = removeImage();
+        btn_edit.innerHTML = "<a style='color: white'>" + btn_edit_text + "</a>";
+        //<a id="sample_data_confirm" className="btn btn-primary delete" href="#"><?=lang("BTN_ACCEPT")?></a>
+        col_prop_edit.append(btn_edit);
+
+        row_prop.append(col_prop);
+        row_prop.append(col_prop_edit);
+        image_properties.append(row_prop);
+        //alert("confirm");
+    });
+
+    $('#btn_prop_modal').click( function () {
+       let i;
+        // Limpa o modal
+        let sample_name = document.getElementById("sample_name");
+        sample_name.value = "";
+        let sample_frames = document.getElementById("sample_frames");
+        sample_frames.value = "";
+        let radio_config = document.getElementsByName("sample_config");
+        for(i = 0; i<radio_config.length; i++)
+            radio_config[i].checked = false;
+        let laser_type = document.getElementsByName("sample_laser_type");
+        for(i = 0; i<laser_type.length; i++)
+            laser_type[i].checked = false;
+        let sample_wavelength = document.getElementById("sample_wavelength");
+        sample_wavelength.value = "";
     });
 })
 
@@ -114,6 +204,10 @@ function enableOtherType() {
         document.getElementById("other_laser_type").disabled = true;
         document.getElementById("other_laser_type").value = "";
     }
+}
+
+function showPropertiesModal() {
+
 }
 
 

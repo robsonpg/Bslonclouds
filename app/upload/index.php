@@ -19,6 +19,8 @@ $image_name_msg = lang("IMAGE_NAME_MSG");
 $no_image_information = lang("NO_IMAGE_INFORMATION");
 $image_date = lang("IMAGE_DATE");
 $image_size = lang("IMAGE_SIZE");
+$btn_remove_text = lang("BTN_REMOVE_IMAGE");
+$btn_edit_text = lang("BTN_EDIT_PROP");
 
 require_once "properties_modal.php";
 ?>
@@ -29,6 +31,8 @@ require_once "properties_modal.php";
     let no_image_info = "<?=$no_image_information; ?>";
     let image_date = "<?=$image_date; ?>";
     let image_size = "<?=$image_size; ?>";
+    let btn_remove_text = "<?=$btn_remove_text; ?>";
+    let btn_edit_text = "<?=$btn_edit_text; ?>";
 </script>
 
 <br><br>
@@ -41,16 +45,24 @@ require_once "properties_modal.php";
         </div-->
 
         <div class="row">
-
             <div class="col">
                 <input type="file" id="getfiles" style="display: none;" capture="camera"
                        onchange="readURL(this,'mini_foto_new');" multiple/>
                 <input type="button" value="<?=lang("SELECT_IMAGES_BTN");?>"
                        onclick="document.getElementById('getfiles').click();" class="btn btn-default"/>
                 <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
-                       data-target='#properties-modal' data-backdrop="static" class="btn btn-default"/>
+                       id="btn_prop_modal" data-target='#properties-modal' data-backdrop="static"
+                       class="btn btn-default"/>
                 <hr>
             </div>
+        </div>
+        <div class="row">
+            <div class="mt-1 alert alert-primary bg-primary text-white alert-dismissible fade show" id="images_properties">
+            <!-- Aqui vão as propriedades das imagens -->
+            </div>
+        </div>
+        <hr>
+        <div class="row">
             <div class="container bg-light" id="tumbnails">
                 <!-- Exibir a imagem que irá para o upload -->
                 <!--img id="mini_foto_new" width=90% class="mini_foto" src="img/default.png" /-->

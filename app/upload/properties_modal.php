@@ -29,40 +29,43 @@
                     <div class="col">
                         <div class="row">
                             <div class="form-check ">
-                                <input class="form-check-input" type="radio" name="sample_config" value="1" />
-                                <label class="form-check-label" for="sample_config"><?=lang("BACKSCATTERING"); ?></label>
+                                <input class="form-check-input" id="sample_config1" type="radio" name="sample_config"
+                                       value="1"/>
+                                <label class="form-check-label" for="sample_config1">
+                                    <?=lang("BACKSCATTERING"); ?>
+                                </label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-check ">
-                                <input class="form-check-input" type="radio" name="sample_config" value="2" />
-                                <label class="form-check-label" for="sample_config"><?=lang("FWD_SCATTERING"); ?></label>
+                                <input class="form-check-input" id="sample_config2" type="radio" name="sample_config" value="2" />
+                                <label class="form-check-label" for="sample_config2"><?=lang("FWD_SCATTERING"); ?></label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-between align-items-center border">
-                    <div class="col"><?=lang("LASER_TYPE"); ?></div>
+                    <div class="col" id="sample_laser_type_label"><?=lang("LASER_TYPE"); ?></div>
                     <div class="col">
                         <div class="row">
                             <div class="col">
-                                <input class="form-check-input" type="radio" name="sample_laser_type" value="1"
-                                       onclick="enableOtherType()"/>
-                                <label class="form-check-label" for="sample_laser_type"><?=lang("HENE"); ?></label>
+                                <input class="form-check-input" id="sample_laser_type1" type="radio"
+                                       name="sample_laser_type" value="1" onclick="enableOtherType()"/>
+                                <label class="form-check-label" for="sample_laser_type1"><?=lang("HENE"); ?></label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input class="form-check-input" type="radio" name="sample_laser_type" value="2"
-                                       onclick="enableOtherType()"/>
-                                <label class="form-check-label" for="sample_laser_type"><?=lang("DIODE"); ?></label>
+                                <input class="form-check-input" id="sample_laser_type2" type="radio"
+                                       name="sample_laser_type" value="2" onclick="enableOtherType()"/>
+                                <label class="form-check-label" for="sample_laser_type2"><?=lang("DIODE"); ?></label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input class="form-check-input" type="radio" name="sample_laser_type" value="3"
-                                  onclick="enableOtherType()"/>
-                                <label class="form-check-label" for="sample_laser_type"><?=lang("OTHER"); ?></label>
+                                <input class="form-check-input" id="sample_laser_type3" type="radio"
+                                       name="sample_laser_type" value="3" onclick="enableOtherType()"/>
+                                <label class="form-check-label" for="sample_laser_type3"><?=lang("OTHER"); ?></label>
                             </div>
                             <div class="col">
                                 <input type="text" id="other_laser_type" disabled>
@@ -76,7 +79,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="sample_data_confirm" class="btn btn-primary delete" href="#"><?=lang("BTN_ACCEPT")?></a>
+                <a id="sample_data_confirm" class="btn btn-primary" style="color: whitesmoke" data-dismiss="modal"><?=lang("BTN_ACCEPT")?></a>
                 <a id="cancel" class="btn btn-default" data-dismiss="modal"><?=lang("BTN_CANCEL")?></a>
             </div>
         </div>

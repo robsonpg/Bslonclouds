@@ -40,6 +40,8 @@
      "NO_IMAGE_INFORMATION" => "No image information.",
   "IMAGE_DATE" => "Image Date: ",
   "IMAGE_SIZE" => " Image Size: ",
+     "BTN_REMOVE_IMAGE" => "Remove from list",
+  "BTN_EDIT_PROP" => "Edit Properties"
 
  ));
 
