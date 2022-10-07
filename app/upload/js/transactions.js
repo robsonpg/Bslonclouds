@@ -2,6 +2,8 @@
 const HENE_LASER_TYPE = "1";
 const DIODE_LASER_TYPE = "2";
 const OTHER_LASER_TYPE = "3";
+const CONFIG_BACKSCATTERING = 1;
+const CONFIG_FOWARDSCATTERING = 2;
 
 let images_properties = [];
 let image_info_list = [];
@@ -16,6 +18,7 @@ function readURL(input, id) {
     let main_height = 0;
 
     let tumb_div = document.querySelector("#tumbnails");
+    tumb_div.innerHTML = "";
     let tumb_image = null;
     for (let i=0; i<input.files.length; i++) {
         tumb_image = document.createElement("img");
@@ -71,13 +74,13 @@ function readURL(input, id) {
 
         let col_tumb_remove = document.createElement("div");
         col_tumb_remove.className = "col-2";
-        let btn_remove = document.createElement("a");
-        btn_remove.className = "btn btn-info";
-        btn_remove.setAttribute("id", "image_remove_" + i);
-        //btn_remove.onclick = removeImage();
-        btn_remove.innerHTML = "<a style='color: white'>" + btn_remove_text + "</a>";
-        //<a id="sample_data_confirm" className="btn btn-primary delete" href="#"><?=lang("BTN_ACCEPT")?></a>
-        col_tumb_remove.append(btn_remove);
+        // let btn_remove = document.createElement("a");
+        // btn_remove.className = "btn btn-info";
+        // btn_remove.setAttribute("id", "image_remove_" + i);
+        // btn_remove.onclick = removeImage(btn_remove);
+        // btn_remove.innerHTML = "<a style='color: white'>" + btn_remove_text + "</a>";
+        // //<a id="sample_data_confirm" className="btn btn-primary delete" href="#"><?=lang("BTN_ACCEPT")?></a>
+        // col_tumb_remove.append(btn_remove);
 
         row_tumb.append(col_tumb_msg);
         row_tumb.append(col_tumb_filename);
@@ -145,7 +148,7 @@ $(document).ready(function() {
         images_properties.push(sample_wavelength.value);
         //####################################################################
         // Preenche a interface
-        let image_properties = document.querySelector("#images_properties");
+        let image_properties = document.getElementById("images_properties");
         let row_prop = document.createElement("div");
         row_prop.className = "row justify-content-between align-items-center";
         let col_prop = document.createElement("div");
@@ -167,7 +170,7 @@ $(document).ready(function() {
         let btn_edit = document.createElement("a");
         btn_edit.className = "btn btn-info";
         btn_edit.setAttribute("id", "properties_edit");
-        //btn_remove.onclick = removeImage();
+        btn_edit.onclick = showPropertiesModal;
         btn_edit.innerHTML = "<a style='color: white'>" + btn_edit_text + "</a>";
         //<a id="sample_data_confirm" className="btn btn-primary delete" href="#"><?=lang("BTN_ACCEPT")?></a>
         col_prop_edit.append(btn_edit);
@@ -175,6 +178,7 @@ $(document).ready(function() {
         row_prop.append(col_prop);
         row_prop.append(col_prop_edit);
         image_properties.append(row_prop);
+        image_properties.style.display = "block";
         //alert("confirm");
     });
 
@@ -193,6 +197,10 @@ $(document).ready(function() {
             laser_type[i].checked = false;
         let sample_wavelength = document.getElementById("sample_wavelength");
         sample_wavelength.value = "";
+        let sample_other = document.getElementById("other_laser_type");
+        sample_other.value = "";
+        sample_other.disabled = true;
+
     });
 })
 
@@ -206,8 +214,55 @@ function enableOtherType() {
     }
 }
 
+//############################################################################
+// Abre modal das propiedades com os valores preenchidos
 function showPropertiesModal() {
 
+    // // Preenche o modal
+    // images_properties.push(sample_name.value);
+    // images_properties.push(sample_frames.value);
+    // images_properties.push(sample_config.value);
+    // images_properties.push(sample_laser_type.value);
+    // let other_laser_type = document.getElementById("other_laser_type");
+    // images_properties.push(other_laser_type.value);
+    // images_properties.push(sample_wavelength.value);
+
+
+    let sample_name = document.getElementById("sample_name");
+    sample_name.value = images_properties[0];
+    let sample_frames = document.getElementById("sample_frames");
+    sample_frames.value = images_properties[1];
+
+    let checked = images_properties[2];
+    if (checked === CONFIG_BACKSCATTERING) {
+        document.getElementById("sample_config1").checked = true;
+    } else {
+        document.getElementById("sample_config2").checked = true;
+    }
+
+    checked = images_properties[3];
+    if (checked === HENE_LASER_TYPE) {
+        document.getElementById("sample_laser_type1").checked = true;
+    } else {
+        if (checked === DIODE_LASER_TYPE) {
+            document.getElementById("sample_laser_type2").checked = true;
+        } else {
+            document.getElementById("sample_laser_type3").checked = true;
+            document.getElementById("other_laser_type").value = images_properties[4];
+        }
+    }
+    // let radio_config = document.getElementsByName("sample_config");
+    // for(i = 0; i<radio_config.length; i++)
+    //     radio_config[i].checked = false;
+    // let laser_type = document.getElementsByName("sample_laser_type");
+    // for(i = 0; i<laser_type.length; i++)
+    //     laser_type[i].checked = false;
+
+    let sample_wavelength = document.getElementById("sample_wavelength");
+    sample_wavelength.value = images_properties[5];
+
+    // Exibe o modal
+    $('#properties-modal').modal('show');
 }
 
 

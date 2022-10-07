@@ -57,7 +57,8 @@ require_once "properties_modal.php";
             </div>
         </div>
         <div class="row">
-            <div class="mt-1 alert alert-primary bg-primary text-white alert-dismissible fade show" id="images_properties">
+            <div class="mt-1 alert alert-primary bg-primary text-white alert-dismissible fade show"
+                 id="images_properties" style="display: none">
             <!-- Aqui vão as propriedades das imagens -->
             </div>
         </div>
