@@ -41,7 +41,12 @@
   "IMAGE_DATE" => "Image Date: ",
   "IMAGE_SIZE" => " Image Size: ",
      "BTN_REMOVE_IMAGE" => "Remove from list",
-  "BTN_EDIT_PROP" => "Edit Properties"
+  "BTN_EDIT_PROP" => "Edit Properties",
+      "IMAGES_PERMISSION" => "Images Permission",
+  "PERMISSION_PUBLIC" => "Public",
+     "PUBLIC_MESSAGE" => "Anyone registered in platform can access",
+  "PERMISSION_PRIVATE" => "Private",
+  "PRIVATE_MESSAGE" => "Only owner can access"
 
  ));
 

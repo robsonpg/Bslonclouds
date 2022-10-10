@@ -77,6 +77,32 @@
                     <div class="col"><?=lang("LASER_WAVELENGTH"); ?></div>
                     <div class="col"><input type="number" id="sample_wavelength"></div>
                 </div>
+                <div class="row justify-content-between align-items-center border">
+                    <div class="col" id="sample_permission_label"><?=lang("IMAGES_PERMISSION"); ?></div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-check ">
+                                <input class="form-check-input" id="sample_permission1" type="radio" name="sample_permission"
+                                       value="1"/>
+                                <label class="form-check-label" for="sample_permission1">
+                                    <?=lang("PERMISSION_PUBLIC"); ?>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a><?=lang("PUBLIC_MESSAGE"); ?></a>
+                        </div>
+                        <div class="row">
+                            <div class="form-check ">
+                                <input class="form-check-input" id="sample_permission2" type="radio" name="sample_permission" value="2" />
+                                <label class="form-check-label" for="sample_permission2"><?=lang("PERMISSION_PRIVATE"); ?></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a><?=lang("PRIVATE_MESSAGE"); ?></a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <a id="sample_data_confirm" class="btn btn-primary" style="color: whitesmoke" data-dismiss="modal"><?=lang("BTN_ACCEPT")?></a>

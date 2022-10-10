@@ -2,8 +2,11 @@
 const HENE_LASER_TYPE = "1";
 const DIODE_LASER_TYPE = "2";
 const OTHER_LASER_TYPE = "3";
-const CONFIG_BACKSCATTERING = 1;
-const CONFIG_FOWARDSCATTERING = 2;
+const CONFIG_BACKSCATTERING = "1";
+const CONFIG_FOWARDSCATTERING = "2";
+
+const PERMISSION_PUBLIC = "1";
+const PERMISSION_PRIVATE = "2";
 
 let images_properties = [];
 let image_info_list = [];
@@ -110,6 +113,7 @@ $(document).ready(function() {
         let sample_config = document.querySelector('input[name="sample_config"]:checked');
         let sample_laser_type = document.querySelector('input[name="sample_laser_type"]:checked');
         let sample_wavelength = document.getElementById("sample_wavelength");
+        let sample_permission = document.querySelector('input[name="sample_permission"]:checked');
 
 
         // verify field empty
@@ -136,9 +140,20 @@ $(document).ready(function() {
             return false;
         }
         if (!shakeDOM(sample_wavelength)) return false;
+        if (sample_permission === null) {
+            let sample_permission_label = document.getElementById("sample_permission_label");
+            sample_permission_label.style.borderColor = "red";
+            sample_permission_label.className = "col shake";
+            sample_permission_label.addEventListener("webkitAnimationEnd", function endEdit() {
+                sample_permission_label.style.borderColor = "#A9A9A9";
+                sample_permission_label.className = "col";
+            });
+            return false;
+        }
 
         //###################################################################
         // Salva os dados para inserir no banco de dados
+        images_properties = [];
         images_properties.push(sample_name.value);
         images_properties.push(sample_frames.value);
         images_properties.push(sample_config.value);
@@ -146,9 +161,11 @@ $(document).ready(function() {
         let other_laser_type = document.getElementById("other_laser_type");
         images_properties.push(other_laser_type.value);
         images_properties.push(sample_wavelength.value);
+        images_properties.push(sample_permission.value);
         //####################################################################
         // Preenche a interface
         let image_properties = document.getElementById("images_properties");
+        image_properties.innerHTML = "";
         let row_prop = document.createElement("div");
         row_prop.className = "row justify-content-between align-items-center";
         let col_prop = document.createElement("div");
@@ -158,10 +175,13 @@ $(document).ready(function() {
         let config_text = $("label[for='" + config_id + "']").text();
         let laser_type_id = sample_laser_type.getAttribute("id").toString();
         let laser_type_text = $("label[for='" + laser_type_id + "']").text();
+        let permission_id = sample_permission.getAttribute("id").toString();
+        let permission_text = $("label[for='" + permission_id + "']").text();
+
         col_prop.innerHTML = "Sample Name: " + "<b>" + sample_name.value + "</b>" + " Frames per second: " +
           "<b>" + sample_frames.value + "</b>" + " Configuration: " + "<b>" + config_text + "</b>" +
           " Laser Type : " + "<b>" + laser_type_text + "</b>" + " Wavelength: " + "<b>" +
-            sample_wavelength.value + "</b>";
+            sample_wavelength.value + "</b> Access Permission: " + "<b>" + permission_text + "</b>" ;
 
         //#############################################################
         // Botão de editar as propriedades
@@ -201,6 +221,10 @@ $(document).ready(function() {
         sample_other.value = "";
         sample_other.disabled = true;
 
+        let permission = document.getElementsByName("sample_permission");
+        for(i = 0; i<permission.length; i++)
+            permission[i].checked = false;
+
     });
 })
 
@@ -217,17 +241,6 @@ function enableOtherType() {
 //############################################################################
 // Abre modal das propiedades com os valores preenchidos
 function showPropertiesModal() {
-
-    // // Preenche o modal
-    // images_properties.push(sample_name.value);
-    // images_properties.push(sample_frames.value);
-    // images_properties.push(sample_config.value);
-    // images_properties.push(sample_laser_type.value);
-    // let other_laser_type = document.getElementById("other_laser_type");
-    // images_properties.push(other_laser_type.value);
-    // images_properties.push(sample_wavelength.value);
-
-
     let sample_name = document.getElementById("sample_name");
     sample_name.value = images_properties[0];
     let sample_frames = document.getElementById("sample_frames");
@@ -261,6 +274,14 @@ function showPropertiesModal() {
     let sample_wavelength = document.getElementById("sample_wavelength");
     sample_wavelength.value = images_properties[5];
 
+    checked = images_properties[6];
+    if (checked === PERMISSION_PUBLIC) {
+        document.getElementById("sample_permission1").checked = true;
+    } else {
+        if (checked === PERMISSION_PRIVATE) {
+            document.getElementById("sample_permission2").checked = true;
+        }
+    }
     // Exibe o modal
     $('#properties-modal').modal('show');
 }
