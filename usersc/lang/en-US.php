@@ -46,7 +46,12 @@
   "PERMISSION_PUBLIC" => "Public",
      "PUBLIC_MESSAGE" => "Anyone registered in platform can access",
   "PERMISSION_PRIVATE" => "Private",
-  "PRIVATE_MESSAGE" => "Only owner can access"
+  "PRIVATE_MESSAGE" => "Only owner can access",
+  "SEND_IMAGES" => "Send images to server",
+  "MODAL_SEND_IMAGES_TITLE" => "Send Images to Server",
+  "IMAGE_FORMAT_ERROR" => "File format not suported.",
+  "FILE_ERROR" => "Read image file error."
+
 
  ));
 

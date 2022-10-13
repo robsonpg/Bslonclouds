@@ -11,6 +11,11 @@ const PERMISSION_PRIVATE = "2";
 let images_properties = [];
 let image_info_list = [];
 
+let OBJECT_IMAGE_INDEX = 0;
+let IMAGE_TIMESTAMP = 1;
+let IMAGE_WIDTH = 2;
+let IMAGE_HEIGTH = 3;
+
 
 //#######################################################################
 // Função de leitura da imagem
@@ -43,8 +48,8 @@ function readURL(input, id) {
                     main_height = this.height;
                 }
                 // access image size here
-                image_info_list[i][2] = this.width;
-                image_info_list[i][3] = this.height;
+                image_info_list[i][IMAGE_WIDTH] = this.width;
+                image_info_list[i][IMAGE_HEIGTH] = this.height;
                 let tumb_msg = document.querySelector("#image_info" + i);
                 if ((this.width !== main_width) || (this.height !== main_height)) {
                     tumb_msg.innerHTML = tumb_msg.innerHTML + "<a style='color: orange'>" + image_size + "<b>" + this.width + "x" +
@@ -56,7 +61,6 @@ function readURL(input, id) {
             };
         }
         reader.readAsDataURL(input.files[i]);
-
         // Criar o disposição para exibição das imagens
         let row_tumb = document.createElement("div");
         row_tumb.className = "row justify-content-between align-items-center border";
@@ -93,7 +97,13 @@ function readURL(input, id) {
 
         //#####################################################
         // Guarda as informações colhidas sobre o arquivo
-        image_info_list.push([input.files[i].name, input.files[i].lastModified, 0, 0]);
+        image_info_list.push([input.files[i], input.files[i].lastModified, 0, 0]);
+
+        if ((image_info_list.length > 0) && (images_properties.length > 0)) {
+            let btn_send = document.getElementById("btn_send_modal");
+            btn_send.disabled = false;
+        }
+
     }
 
 }
@@ -199,6 +209,11 @@ $(document).ready(function() {
         row_prop.append(col_prop_edit);
         image_properties.append(row_prop);
         image_properties.style.display = "block";
+        // Preencheu as propriedades, ativa o botão de envio
+        if ((image_info_list.length > 0) && (images_properties.length > 0)) {
+            let btn_send = document.getElementById("btn_send_modal");
+            btn_send.disabled = false;
+        }
         //alert("confirm");
     });
 
@@ -284,6 +299,77 @@ function showPropertiesModal() {
     }
     // Exibe o modal
     $('#properties-modal').modal('show');
+}
+
+//#########################################################################
+// Envia imagens para o servidor na nuvem
+function sendImagesToServer() {
+    //alert("click");
+    let message_place = document.getElementById("message_place");
+    message_place.innerText = "Start process images...";
+    let progress_bar = document.getElementById("progress_bar");
+    let messages_place = document.getElementById("messages_place");
+    let sample_name = images_properties[0];
+    let sample_frame_rate = images_properties[1];
+    let sample_config = images_properties[2];
+    let sample_laser_type = images_properties[3];
+    let other_laser_type = images_properties[4];
+    let sample_wavelength = images_properties[5];
+    let sample_permission = images_properties[6];
+    progress_bar.style.width = "0%";
+
+    let progress_steps = 100 / image_info_list.length;
+    let progress_value = 0;
+
+    // Monta o cabeçalho para todas imagens do stream
+    let header = sample_name + "&" + sample_frame_rate + "&" + sample_config + "&" +
+        sample_laser_type + "&" + other_laser_type + "&" + sample_wavelength + "&" + sample_permission;
+
+    //###################################################
+    // Loop de envio das imagens
+    for (let idx = 0; idx < image_info_list.length; idx++)
+    {
+        // Monta a linha de inserção
+        const reader = new FileReader();
+        //let idx = 0;
+        reader.readAsDataURL(image_info_list[idx][OBJECT_IMAGE_INDEX]);
+        reader.onload = function (e) {
+            // $('#tumb' + i)
+            //     .attr('src', e.target.result);
+            // Cada imagem vai com sua lasgura e altura
+            let image_size_date = "&" + image_info_list[idx][IMAGE_TIMESTAMP] + "&" + image_info_list[idx][IMAGE_WIDTH] +
+                "&" + image_info_list[idx][IMAGE_HEIGTH];
+            let data = header + image_size_date + "&" + e.target.result;
+
+            let ajaxRequest = $.ajax({
+                type: 'POST',
+                url: 'upload_images.php',
+                dataType: "text",
+                //async: true,
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    //location.reload();
+                    if (response.includes('')) {
+                        //alert("Image Sent..");
+                        // Assim que o registro for salvo, vai para o registro de
+                        // Dados dos seus contato
+                        //window.location.href = 'reg_user_type.php';
+                        progress_value = progress_value + progress_steps;
+                        progress_bar.style.width = progress_value + "%";
+                        progress_bar.innerText = "Sending image " + (idx+1) + " of " + image_info_list.length + "...";
+                    } else {
+                        messages_place.innerText = response.toString();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error: " + textStatus + " - " + errorThrown);
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+    }
 }
 
 

@@ -23,6 +23,7 @@ $btn_remove_text = lang("BTN_REMOVE_IMAGE");
 $btn_edit_text = lang("BTN_EDIT_PROP");
 
 require_once "properties_modal.php";
+require_once "send_images_modal.php";
 ?>
 
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
@@ -53,6 +54,9 @@ require_once "properties_modal.php";
                 <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
                        id="btn_prop_modal" data-target='#properties-modal' data-backdrop="static"
                        class="btn btn-default"/>
+                <input type="button" value="<?=lang("SEND_IMAGES");?>" data-toggle='modal'
+                       id="btn_send_modal" data-target='#send-images-modal' data-backdrop="static"
+                       class="btn btn-default" onclick="sendImagesToServer()" disabled/>
                 <hr>
             </div>
         </div>
