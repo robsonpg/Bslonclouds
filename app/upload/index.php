@@ -21,9 +21,15 @@ $image_date = lang("IMAGE_DATE");
 $image_size = lang("IMAGE_SIZE");
 $btn_remove_text = lang("BTN_REMOVE_IMAGE");
 $btn_edit_text = lang("BTN_EDIT_PROP");
+$user_id = $user->data()->id;
 
 require_once "properties_modal.php";
 require_once "send_images_modal.php";
+require_once "../database_layer.php";
+
+//#############################################################
+// Carrega todas as pesquisas
+$all_researches = getAllResearches($user_id);
 ?>
 
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
@@ -34,6 +40,14 @@ require_once "send_images_modal.php";
     let image_size = "<?=$image_size; ?>";
     let btn_remove_text = "<?=$btn_remove_text; ?>";
     let btn_edit_text = "<?=$btn_edit_text; ?>";
+
+    let researchers = <?php
+    if (sizeof($all_researches) == 0) {
+        echo json_encode("none");
+    } else {
+        echo json_encode($all_researches[0]);
+    } ?>;
+        let user_id = <?php echo $user_id; ?>;
 </script>
 
 <br><br>
@@ -48,7 +62,7 @@ require_once "send_images_modal.php";
         <div class="row">
             <div class="col">
                 <input type="file" id="getfiles" style="display: none;" capture="camera"
-                       onchange="readURL(this,'mini_foto_new');" multiple/>
+                       onchange="readURL(this,'mini_foto_new');" multiple accept=".bmp"/>
                 <input type="button" value="<?=lang("SELECT_IMAGES_BTN");?>"
                        onclick="document.getElementById('getfiles').click();" class="btn btn-default"/>
                 <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
@@ -57,7 +71,11 @@ require_once "send_images_modal.php";
                 <input type="button" value="<?=lang("SEND_IMAGES");?>" data-toggle='modal'
                        id="btn_send_modal" data-target='#send-images-modal' data-backdrop="static"
                        class="btn btn-default" onclick="sendImagesToServer()" disabled/>
-                <hr>
+                <!--input type="file" id="getfilesrename" style="display: none;"
+                       onchange="renameFiles(this,'mini_foto_new');" multiple accept=".bmp"/>
+                <input type="button" value="Rename" id="btn_rename" class="btn btn-default"
+                       onclick="document.getElementById('getfilesrename').click();"/>
+                <hr-->
             </div>
         </div>
         <div class="row">

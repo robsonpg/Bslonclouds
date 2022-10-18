@@ -8,7 +8,7 @@
 
  $lang = array_merge($lang,array(
     "MENU_HOME"			=> "Homepage",
-    "MENU_IMAGE_MANAGER" => "Image Manager",
+    "MENU_IMAGE_MANAGER" => "Research Manager",
     "PERSONAL_DATA"       => "User Information Data",
     "DATA_INFORMATION" => "Please, let us know you",
     "GEN_INSTITUTION" => "Institution and department",
@@ -34,7 +34,7 @@
   "HENE" => "HeNe",
   "DIODE" => "Diode",
   "OTHER" => "Other",
-  "LASER_WAVELENGTH" => "Laser wavelength",
+  "LASER_WAVELENGTH" => "Laser wavelength (nm)",
   "BTN_ACCEPT" => "Apply",
   "BTN_CANCEL" => "Cancel",
      "NO_IMAGE_INFORMATION" => "No image information.",
@@ -50,9 +50,9 @@
   "SEND_IMAGES" => "Send images to server",
   "MODAL_SEND_IMAGES_TITLE" => "Send Images to Server",
   "IMAGE_FORMAT_ERROR" => "File format not suported.",
-  "FILE_ERROR" => "Read image file error."
-
-
+  "FILE_ERROR" => "Read image file error.",
+  "SAMPLE_IDENTIFICATION" => "Sample Identification:",
+     "SAMPLE_ID_ESPECS" => "This field will be the identification in sample catalog, is the unique ID for your research. Use wisely!"
  ));
 
 

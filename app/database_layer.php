@@ -17,15 +17,8 @@ function getMedicalSpecialties() {
 
 //##############################################################################
 // Função para inserir as propriedades da amostra e sua imagem
-function insertSampleDataImage($sample_name, $sample_frame_rate, $sample_config, $sample_laser_type, $sample_other_lt,
-                               $sample_wavelength, $sample_permission, $sample_image, $sample_image_width,
-                               $sample_image_height, $sample_image_timestamp) {
-
-    $image_size = $sample_image_width . 'x' . $sample_image_height;
-
-    //################################################
-    // Converte timestamp para mysql
-    $sample_image_date = date("Y-m-d H:i:s",$sample_image_timestamp/1000);
+function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type, $sample_other_lt,
+                               $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner) {
 
     $db = DB::getInstance();
 
@@ -36,11 +29,11 @@ function insertSampleDataImage($sample_name, $sample_frame_rate, $sample_config,
                     bsl_sample_data_laser_type,
                     bsl_sample_data_other_laser_type,
                     bsl_sample_data_laser_wavelength,
-                    bsl_sample_data_image,
-                    bsl_sample_data_image_size,
-                    bsl_sample_data_image_date,
-                    bsl_sample_data_image_insert_date,
-                    bsl_sample_data_permission)
+                    bsl_sample_data_permission,
+                    bsl_sample_data_insert_timestamp,
+                    bsl_sample_data_amount_of_images,
+                    bsl_sample_data_unique_id,
+                    bsl_sample_data_owner_id)
             VALUES (
                     '$sample_name',
                     $sample_frame_rate,
@@ -48,11 +41,11 @@ function insertSampleDataImage($sample_name, $sample_frame_rate, $sample_config,
                     $sample_laser_type,
                     '$sample_other_lt',
                     $sample_wavelength,
-                    '$sample_image',
-                    '$image_size',
-                    '$sample_image_date',
+                    $sample_permission,
                     now(),
-                    $sample_permission);";
+                    $sample_amount_of_images,
+                    '$sample_unique_id',
+                    $sample_owner);";
 
 //    $sql = "INSERT INTO bsl_sample_data (
 //                    bsl_sample_data_name,
@@ -73,11 +66,51 @@ function insertSampleDataImage($sample_name, $sample_frame_rate, $sample_config,
 //                    $sample_laser_type,
 //                    '$sample_other_lt',
 //                    $sample_wavelength,
-//                    LOAD_FILE('/app/upload/img/temp.image.bmp'),
+//                    '$sample_image',
 //                    '$image_size',
 //                    '$sample_image_date',
 //                    now(),
 //                    $sample_permission);";
+//
+
+
+    $res = $db->query($sql);
+
+    // Pega id da amostra inserida
+    $sql = "SELECT bsl_sample_data_id FROM bsl_sample_data where bsl_sample_data_unique_id = '$sample_unique_id'";
+    $res = $db->query($sql);
+    return $res->results()[0]->bsl_sample_data_id;
+}
+
+//##############################################################################
+// Função para inserir as propriedades da amostra e sua imagem
+function insertSampleImage($sample_file_name, $sample_data_id, $sample_image_blob, $sample_image_width,
+                               $sample_image_height, $sample_image_timestamp) {
+
+    $image_size = $sample_image_width . 'x' . $sample_image_height;
+
+    //################################################
+    // Converte timestamp para mysql
+    $sample_image_date = date("Y-m-d H:i:s",$sample_image_timestamp/1000);
+
+    $db = DB::getInstance();
+
+    $sql = "INSERT INTO bsl_sample_images (
+                    bsl_sample_images_name,
+                    bsl_sample_images_data_id,
+                    bsl_sample_images_size,
+                    bsl_sample_images_blob,
+                    bsl_sample_images_timestamp,
+                    bsl_sample_images_insert_timestamp)
+            VALUES (
+                    '$sample_file_name',
+                    $sample_data_id,
+                    '$image_size',
+                    '$sample_image_blob',
+                    '$sample_image_date',
+                    now());";
+
+
 
     $res = $db->query($sql);
 
@@ -86,6 +119,15 @@ function insertSampleDataImage($sample_name, $sample_frame_rate, $sample_config,
     //return $sql;
     return $res->errorString();
 
+}
+
+function getAllResearches($user_id): array
+{
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM bsl_sample_data where bsl_sample_data_owner_id = $user_id or bsl_sample_data_permission =" .
+        PERMISSION_PUBLIC . " order by bsl_sample_data_unique_id";
+    $res = $db->query($sql);
+    return $res->results();
 }
 
 //##############################################################################
@@ -120,6 +162,31 @@ function insertSampleDataImage($sample_name, $sample_frame_rate, $sample_config,
 // A imagem ficará menor e de fácil manipulação
 //ALTER TABLE `bslonc02_bslonc`.`bsl_sample_data`
 //CHANGE COLUMN `bsl_sample_data_image` `bsl_sample_data_image` TEXT NOT NULL ;
+
+//##############################################################################
+// Tabela de imagens
+//    CREATE TABLE `bslonc02_bslonc`.`bsl_sample_images` (
+//    `bsl_sample_images_id` INT NOT NULL AUTO_INCREMENT,
+//      `bsl_sample_images_data_id` INT NOT NULL,
+//      `bsl_sample_images_name` VARCHAR(128) NOT NULL,
+//      `bsl_sample_images_size` VARCHAR(45) NOT NULL,
+//      `bsl_sample_images_blob` BLOB NOT NULL,
+//      `bsl_sample_images_insert_timestamp` DATETIME NOT NULL,
+//      PRIMARY KEY (`bsl_sample_images_id`),
+//      UNIQUE INDEX `bsl_sample_images_id_UNIQUE` (`bsl_sample_images_id` ASC) VISIBLE);
+//    ALTER TABLE `bslonc02_bslonc`.`bsl_sample_images`
+//    ADD COLUMN `bsl_sample_images_timestamp` DATETIME NULL AFTER `bsl_sample_images_blob`;
+//    ALTER TABLE `bslonc02_bslonc`.`bsl_sample_data`
+//    DROP COLUMN `bsl_sample_data_image_insert_date`,
+//    DROP COLUMN `bsl_sample_data_image_date`,
+//    DROP COLUMN `bsl_sample_data_image_size`,
+//    DROP COLUMN `bsl_sample_data_image`;
+//    ALTER TABLE `bslonc02_bslonc`.`bsl_sample_data`
+//    ADD COLUMN `bsl_sample_data_insert_timestamp` DATETIME NULL AFTER `bsl_sample_data_permission`;
+//    ALTER TABLE `bslonc02_bslonc`.`bsl_sample_data`
+//    ADD COLUMN `bsl_sample_data_amount_of_images` INT NOT NULL AFTER `bsl_sample_data_insert_timestamp`,
+//    CHANGE COLUMN `bsl_sample_data_insert_timestamp` `bsl_sample_data_insert_timestamp` DATETIME NOT NULL ;
+
 
 
 ?>

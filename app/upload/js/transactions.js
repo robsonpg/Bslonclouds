@@ -12,9 +12,10 @@ let images_properties = [];
 let image_info_list = [];
 
 let OBJECT_IMAGE_INDEX = 0;
-let IMAGE_TIMESTAMP = 1;
-let IMAGE_WIDTH = 2;
-let IMAGE_HEIGTH = 3;
+let FILE_NAME = 1;
+let IMAGE_TIMESTAMP = 2;
+let IMAGE_WIDTH = 3;
+let IMAGE_HEIGTH = 4;
 
 
 //#######################################################################
@@ -24,6 +25,18 @@ let IMAGE_HEIGTH = 3;
 function readURL(input, id) {
     let main_width = 0;
     let main_height = 0;
+    image_info_list = [];
+
+    //#################################################################
+    // Analisar nomes das imagens, devem ser somente números
+    for (let i=0; i<input.files.length; i++) {
+        // pega o primeiro nome
+        let main_name = input.files[i].name.split(".");
+        if (isNaN(main_name[0])) {
+            alert("Invalid file name");
+            return;
+        }
+    }
 
     let tumb_div = document.querySelector("#tumbnails");
     tumb_div.innerHTML = "";
@@ -97,7 +110,7 @@ function readURL(input, id) {
 
         //#####################################################
         // Guarda as informações colhidas sobre o arquivo
-        image_info_list.push([input.files[i], input.files[i].lastModified, 0, 0]);
+        image_info_list.push([input.files[i], input.files[i].name, input.files[i].lastModified, 0, 0]);
 
         if ((image_info_list.length > 0) && (images_properties.length > 0)) {
             let btn_send = document.getElementById("btn_send_modal");
@@ -118,6 +131,7 @@ $(document).ready(function() {
     // Quando usuário clicar em salvar será feito todos os passo abaixo
     //#########################################################################
     $('#sample_data_confirm').click(function() {
+        let sample_unique_id = document.getElementById("sample_id");
         let sample_name = document.getElementById("sample_name");
         let sample_frames = document.getElementById("sample_frames");
         let sample_config = document.querySelector('input[name="sample_config"]:checked');
@@ -127,6 +141,7 @@ $(document).ready(function() {
 
 
         // verify field empty
+        if (!shakeDOM(sample_unique_id)) return false;
         if (!shakeDOM(sample_name)) return false;
         if (!shakeDOM(sample_frames)) return false;
         if (sample_config === null) {
@@ -164,6 +179,7 @@ $(document).ready(function() {
         //###################################################################
         // Salva os dados para inserir no banco de dados
         images_properties = [];
+        images_properties.push(sample_unique_id.value);
         images_properties.push(sample_name.value);
         images_properties.push(sample_frames.value);
         images_properties.push(sample_config.value);
@@ -220,6 +236,8 @@ $(document).ready(function() {
     $('#btn_prop_modal').click( function () {
        let i;
         // Limpa o modal
+        let sample_id = document.getElementById("sample_id");
+        sample_id.value = "";
         let sample_name = document.getElementById("sample_name");
         sample_name.value = "";
         let sample_frames = document.getElementById("sample_frames");
@@ -256,19 +274,21 @@ function enableOtherType() {
 //############################################################################
 // Abre modal das propiedades com os valores preenchidos
 function showPropertiesModal() {
+    let sample_unique_id = document.getElementById("sample_id");
+    sample_unique_id.value = images_properties[0];
     let sample_name = document.getElementById("sample_name");
-    sample_name.value = images_properties[0];
+    sample_name.value = images_properties[1];
     let sample_frames = document.getElementById("sample_frames");
-    sample_frames.value = images_properties[1];
+    sample_frames.value = images_properties[2];
 
-    let checked = images_properties[2];
+    let checked = images_properties[3];
     if (checked === CONFIG_BACKSCATTERING) {
         document.getElementById("sample_config1").checked = true;
     } else {
         document.getElementById("sample_config2").checked = true;
     }
 
-    checked = images_properties[3];
+    checked = images_properties[4];
     if (checked === HENE_LASER_TYPE) {
         document.getElementById("sample_laser_type1").checked = true;
     } else {
@@ -276,7 +296,7 @@ function showPropertiesModal() {
             document.getElementById("sample_laser_type2").checked = true;
         } else {
             document.getElementById("sample_laser_type3").checked = true;
-            document.getElementById("other_laser_type").value = images_properties[4];
+            document.getElementById("other_laser_type").value = images_properties[5];
         }
     }
     // let radio_config = document.getElementsByName("sample_config");
@@ -287,9 +307,9 @@ function showPropertiesModal() {
     //     laser_type[i].checked = false;
 
     let sample_wavelength = document.getElementById("sample_wavelength");
-    sample_wavelength.value = images_properties[5];
+    sample_wavelength.value = images_properties[6];
 
-    checked = images_properties[6];
+    checked = images_properties[7];
     if (checked === PERMISSION_PUBLIC) {
         document.getElementById("sample_permission1").checked = true;
     } else {
@@ -301,6 +321,7 @@ function showPropertiesModal() {
     $('#properties-modal').modal('show');
 }
 
+
 //#########################################################################
 // Envia imagens para o servidor na nuvem
 function sendImagesToServer() {
@@ -309,21 +330,61 @@ function sendImagesToServer() {
     message_place.innerText = "Start process images...";
     let progress_bar = document.getElementById("progress_bar");
     let messages_place = document.getElementById("messages_place");
-    let sample_name = images_properties[0];
-    let sample_frame_rate = images_properties[1];
-    let sample_config = images_properties[2];
-    let sample_laser_type = images_properties[3];
-    let other_laser_type = images_properties[4];
-    let sample_wavelength = images_properties[5];
-    let sample_permission = images_properties[6];
+    let sample_unique_id = images_properties[0];
+    let sample_name = images_properties[1];
+    let sample_frame_rate = images_properties[2];
+    let sample_config = images_properties[3];
+    let sample_laser_type = images_properties[4];
+    let other_laser_type = images_properties[5];
+    let sample_wavelength = images_properties[6];
+    let sample_permission = images_properties[7];
+    let amount_of_images = image_info_list.length;
+    let sample_owner = user_id;
+    let sample_database_id = -1;
     progress_bar.style.width = "0%";
 
+    //###################################################
+    // Envia as propriedades do experimento
+    // Monta o cabeçalho para todas imagens do stream
+    let header = sample_unique_id + "&" + sample_name + "&" + sample_frame_rate + "&" + sample_config + "&" +
+        sample_laser_type + "&" + other_laser_type + "&" + sample_wavelength + "&" + sample_permission + "&" +
+        amount_of_images + "&" + sample_owner;
+
+    let ajaxRequest = $.ajax({
+        type: 'POST',
+        url: 'upload_sample_data.php',
+        dataType: "text",
+        //async: true,
+        data: header,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            //location.reload();
+            if (response.includes('id')) {
+                //messages_place.innerHTML = response.toString();
+                sample_database_id = parseInt(response.toString().split("=")[1]);
+                //messages_place.innerHTML = sample_database_id;
+                // Insere as imagens da maostra
+                sendImages(sample_database_id);
+            } else {
+                messages_place.innerText = "Fail to insert data in database.";
+                //messages_place.innerText = response.toString();
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("Error: " + textStatus + " - " + errorThrown);
+            console.log(textStatus, errorThrown);
+        }
+    });
+}
+
+function sendImages(sample_database_id) {
+    let message_place = document.getElementById("message_place");
+    message_place.innerText = "Start process images...";
+    let progress_bar = document.getElementById("progress_bar");
+    let messages_place = document.getElementById("messages_place");
     let progress_steps = 100 / image_info_list.length;
     let progress_value = 0;
-
-    // Monta o cabeçalho para todas imagens do stream
-    let header = sample_name + "&" + sample_frame_rate + "&" + sample_config + "&" +
-        sample_laser_type + "&" + other_laser_type + "&" + sample_wavelength + "&" + sample_permission;
 
     //###################################################
     // Loop de envio das imagens
@@ -337,13 +398,14 @@ function sendImagesToServer() {
             // $('#tumb' + i)
             //     .attr('src', e.target.result);
             // Cada imagem vai com sua lasgura e altura
-            let image_size_date = "&" + image_info_list[idx][IMAGE_TIMESTAMP] + "&" + image_info_list[idx][IMAGE_WIDTH] +
+            let image_size_date = image_info_list[idx][FILE_NAME] + "&" + sample_database_id + "&" +
+                image_info_list[idx][IMAGE_TIMESTAMP] + "&" + image_info_list[idx][IMAGE_WIDTH] +
                 "&" + image_info_list[idx][IMAGE_HEIGTH];
-            let data = header + image_size_date + "&" + e.target.result;
+            let data = image_size_date + "&" + e.target.result;
 
             let ajaxRequest = $.ajax({
                 type: 'POST',
-                url: 'upload_images.php',
+                url: 'upload_image.php',
                 dataType: "text",
                 //async: true,
                 data: data,
@@ -358,7 +420,7 @@ function sendImagesToServer() {
                         //window.location.href = 'reg_user_type.php';
                         progress_value = progress_value + progress_steps;
                         progress_bar.style.width = progress_value + "%";
-                        progress_bar.innerText = "Sending image " + (idx+1) + " of " + image_info_list.length + "...";
+                        //progress_bar.innerText = "Sending image " + (idx+1) + " of " + image_info_list.length + "...";
                     } else {
                         messages_place.innerText = response.toString();
                     }
@@ -372,4 +434,14 @@ function sendImagesToServer() {
     }
 }
 
+//########################################################################
+// Futura feature de renomear aquivos
+function renameFiles(input, id) {
 
+    let a_file = input.files[0].pathname;
+    const myRenamedFile = new File([a_file], '/renamed.bmp');
+    const myReader = new FileReader();
+    myReader.readAsDataURL(myRenamedFile);
+    myReader.onload = () => console.log(myReader.result);
+    alert("renamed");
+}

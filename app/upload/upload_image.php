@@ -6,7 +6,6 @@
  */
 
 require_once '../../users/init.php';
-require_once $abs_us_root . $us_url_root . 'users/includes/template/prep.php';
 
 if (!$user->isLoggedIn()) {
     echo "<br><br><label style=\"color:floralwhite; font: bold 16px arial, serif\">Você não está logado no site!</label>";
@@ -14,9 +13,6 @@ if (!$user->isLoggedIn()) {
 }
 
 require_once "../database_layer.php";
-//let header = "sn=" + sample_name + "&sfr=" + sample_frame_rate + "&sc=" + sample_config + "&slt=" +
-//    sample_laser_type + "&olt=" + other_laser_type + "&sw=" + sample_wavelength + "&sp=" + sample_permission;
-//$data = $_POST["data"];
 
 $post = file_get_contents('php://input');
 //$myfile = fopen("testfile.txt", "w");
@@ -25,19 +21,14 @@ $post = file_get_contents('php://input');
 
 $all_data = explode("&", $post);
 
-$sample_name = $all_data[0];
-$sample_frame_rate = $all_data[1];
-$sample_config = $all_data[2];
-$sample_laser_type = $all_data[3];
-$sample_other_lt = $all_data[4];
-$sample_wavelength = $all_data[5];
-$sample_permission = $all_data[6];
+$sample_file_name = $all_data[0];
+$sample_data_id = $all_data[1];
 // Recuperando imagem em base64
 // Exemplo: data:image/png;base64,AAAFBfj42Pj4
-$sample_image_timestamp = $all_data[7];
-$sample_image_width = $all_data[8];
-$sample_image_height = $all_data[9];
-$sample_image = $all_data[10];
+$sample_image_timestamp = $all_data[2];
+$sample_image_width = $all_data[3];
+$sample_image_height = $all_data[4];
+$sample_image = $all_data[5];
 
 //###########################################################################
 // Nesse ponto vamos criar o identificador da pesquisa
@@ -67,9 +58,11 @@ if (strpos($type, "bmp") == true) {
     //fwrite($myfile, $sample_image);
     //fclose($myfile);
 
-    // Gerando nome aleatório para a imagem
-    $filename = "img/temp.image.bmp"; //md5(uniqid(time()));
-    //$sample_image_data = addslashs($data);
+    // ###############################################################
+    // Gerando nome sequencial para a imagem
+    // Usaremos o microtime para garantir milisegundos de precisão
+    $milliseconds = floor(microtime(true) * 1000);
+    $filename = "img/temp-{$milliseconds}-image.bmp"; //md5(uniqid(time()));
 
     // Salvando imagem em disco
     file_put_contents($filename, $sample_image_data);
@@ -87,9 +80,14 @@ if (strpos($type, "bmp") == true) {
 
         //#############################
         // insere no banco de dados
-//        $res = insertSampleDataImage($sample_name, $sample_frame_rate, $sample_config, $sample_laser_type, $sample_other_lt,
-//            $sample_wavelength, $sample_permission, $imgData, $sample_image_width,
-//            $sample_image_height, $sample_image_timestamp);
+        $res = insertSampleImage($sample_file_name, $sample_data_id, $imgData, $sample_image_width, $sample_image_height,
+            $sample_image_timestamp);
+
+        //####################################
+        // Apaga arquivo depois de inserido
+        If (!unlink($filename)) {
+            // there was a problem deleting the file
+        }
     } else {
         $res = lang("FILE_ERROR");
     }
@@ -97,7 +95,8 @@ if (strpos($type, "bmp") == true) {
     $res = lang("IMAGE_FORMAT_ERROR");
 }
 //$myfile = fopen("refile.txt", "w");
-//fwrite($myfile, $res);
+//$milliseconds = floor(microtime(true) * 1000);
+//fwrite($myfile, $milliseconds);
 //fclose($myfile);
 
 echo $res;

@@ -17,6 +17,20 @@
             </div>
             <div class="container bg-light">
                 <div class="row justify-content-between align-items-center border">
+                    <div class="col"><?=lang("SAMPLE_IDENTIFICATION"); ?></div>
+                    <div class="col"><input type="text" id="sample_id" onchange="uniqueIDValidation()"></div>
+                </div>
+                <div class="row justify-content-between align-items-center border">
+                    <div class="col-1">
+                        <i style="color: orangered" class="fa fa-long-arrow-up fa-2x"></i>
+                    </div>
+                    <div class="col">
+                        <div role="alert" class="mt-1 alert alert-primary show">
+                            <span class="font-weight-bold"><?=lang("SAMPLE_ID_ESPECS"); ?></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-between align-items-center border">
                     <div class="col"><?=lang("ILLUMINATED_SAMPLE"); ?></div>
                     <div class="col"><input type="text" id="sample_name"></div>
                 </div>
