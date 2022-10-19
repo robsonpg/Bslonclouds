@@ -23,13 +23,17 @@ $btn_remove_text = lang("BTN_REMOVE_IMAGE");
 $btn_edit_text = lang("BTN_EDIT_PROP");
 $user_id = $user->data()->id;
 
+$msg_exist = lang("EXIST_UNIQUE_ID");
+$msg_min = lang("MIN_UNIQUE_ID_CHARS");
+$msg_ok = lang("UNIQUE_ID_OK");
+
 require_once "properties_modal.php";
 require_once "send_images_modal.php";
 require_once "../database_layer.php";
 
 //#############################################################
 // Carrega todas as pesquisas
-$all_researches = getAllResearches($user_id);
+$all_researches = getAllResearchesID();
 ?>
 
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
@@ -40,42 +44,78 @@ $all_researches = getAllResearches($user_id);
     let image_size = "<?=$image_size; ?>";
     let btn_remove_text = "<?=$btn_remove_text; ?>";
     let btn_edit_text = "<?=$btn_edit_text; ?>";
+    let msg_exist = "<?=$msg_exist; ?>";
+    let msg_min = "<?=$msg_min; ?>";
+    let msg_ok = "<?=$msg_ok; ?>";
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {
         echo json_encode("none");
     } else {
-        echo json_encode($all_researches[0]);
+        echo json_encode($all_researches);
     } ?>;
-        let user_id = <?php echo $user_id; ?>;
+    let user_id = <?php echo $user_id; ?>;
 </script>
 
 <br><br>
 <div class="container">
-    <h2><?=lang("SELECT_IMAGES");?></h2>
-
-        <!--div class="progress" style="color: red; height: 30px; font-size: large">
-            <div id="progresso" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0"
-                 aria-valuemin="0" aria-valuemax="100" style="padding: 8px; width: 0%; font-size: large;"></div>
-        </div-->
-
+    <h2><?=lang("MENU_IMAGE_MANAGER");?></h2>
         <div class="row">
-            <div class="col">
+            <div class="col-2 align-self-center">
                 <input type="file" id="getfiles" style="display: none;" capture="camera"
                        onchange="readURL(this,'mini_foto_new');" multiple accept=".bmp"/>
                 <input type="button" value="<?=lang("SELECT_IMAGES_BTN");?>"
-                       onclick="document.getElementById('getfiles').click();" class="btn btn-default"/>
+                       onclick="document.getElementById('getfiles').click();" class="btn btn-primary"/>
+            </div>
+            <div class="col align-self-center">
+                <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
+                    <span class="font-weight-bold"><?=lang("SELECT_IMAGES_TITLE");?></span><br>
+                    <?=lang("SELECT_IMAGES_TEXT"); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 align-self-center">
                 <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
                        id="btn_prop_modal" data-target='#properties-modal' data-backdrop="static"
-                       class="btn btn-default"/>
+                       class="btn btn-primary"/>
+            </div>
+            <div class="col align-self-center">
+                <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
+                    <span class="font-weight-bold"><?=lang("IMAGES_PROPERTIES_TITLE");?></span><br>
+                    <?=lang("IMAGES_PROPERTIES_TEXT"); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 align-self-center">
                 <input type="button" value="<?=lang("SEND_IMAGES");?>" data-toggle='modal'
                        id="btn_send_modal" data-target='#send-images-modal' data-backdrop="static"
-                       class="btn btn-default" onclick="sendImagesToServer()" disabled/>
-                <!--input type="file" id="getfilesrename" style="display: none;"
-                       onchange="renameFiles(this,'mini_foto_new');" multiple accept=".bmp"/>
-                <input type="button" value="Rename" id="btn_rename" class="btn btn-default"
-                       onclick="document.getElementById('getfilesrename').click();"/>
-                <hr-->
+                       class="btn btn-primary" onclick="sendImagesToServer()" disabled/>
+            </div>
+            <div class="col align-self-center">
+                <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
+                    <span class="font-weight-bold"><?=lang("SEND_IMAGES_TITLE");?></span><br>
+                    <?=lang("SEND_IMAGES_TEXT"); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 align-self-center">
+                <input type="button" value="<?=lang("CLEAR_ALL");?>" data-toggle='modal'
+                       id="btn_clear"  class="btn btn-warning" onclick="clearAllData()" />
+            </div>
+            <div class="col align-self-center">
+                <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
+                    <span class="font-weight-bold"><?=lang("CLEAR_ALL_TITLE");?></span><br>
+                    <?=lang("CLEAR_ALL_TEXT"); ?>
+                </div>
+            </div>
+            <!--input type="file" id="getfilesrename" style="display: none;"
+                   onchange="renameFiles(this,'mini_foto_new');" multiple accept=".bmp"/>
+            <input type="button" value="Rename" id="btn_rename" class="btn btn-default"
+                   onclick="document.getElementById('getfilesrename').click();"/>
+            <hr-->
             </div>
         </div>
         <div class="row">

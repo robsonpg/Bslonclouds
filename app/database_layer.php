@@ -47,33 +47,6 @@ function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $
                     '$sample_unique_id',
                     $sample_owner);";
 
-//    $sql = "INSERT INTO bsl_sample_data (
-//                    bsl_sample_data_name,
-//                    bsl_sample_data_frame_rate,
-//                    bsl_sample_data_configuration_type,
-//                    bsl_sample_data_laser_type,
-//                    bsl_sample_data_other_laser_type,
-//                    bsl_sample_data_laser_wavelength,
-//                    bsl_sample_data_image,
-//                    bsl_sample_data_image_size,
-//                    bsl_sample_data_image_date,
-//                    bsl_sample_data_image_insert_date,
-//                    bsl_sample_data_permission)
-//            VALUES (
-//                    '$sample_name',
-//                    $sample_frame_rate,
-//                    $sample_config,
-//                    $sample_laser_type,
-//                    '$sample_other_lt',
-//                    $sample_wavelength,
-//                    '$sample_image',
-//                    '$image_size',
-//                    '$sample_image_date',
-//                    now(),
-//                    $sample_permission);";
-//
-
-
     $res = $db->query($sql);
 
     // Pega id da amostra inserida
@@ -121,13 +94,26 @@ function insertSampleImage($sample_file_name, $sample_data_id, $sample_image_blo
 
 }
 
-function getAllResearches($user_id): array
+//##########################################################
+// Retorna todos identificadores das pesquisas, usado para
+// Validação
+function getAllResearchesID(): array
 {
     $db = DB::getInstance();
-    $sql = "SELECT * FROM bsl_sample_data where bsl_sample_data_owner_id = $user_id or bsl_sample_data_permission =" .
-        PERMISSION_PUBLIC . " order by bsl_sample_data_unique_id";
+    $sql = "SELECT bsl_sample_data_unique_id FROM bsl_sample_data order by bsl_sample_data_unique_id";
     $res = $db->query($sql);
     return $res->results();
+}
+
+//##############################################################################
+// Retorna todas as pesquisas do usuário e as publicas
+function getUserAndPublicResearches($userid) {
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM bsl_sample_data where bsl_sample_data_owner_id = $userid or 
+                                    bsl_sample_data_permission = " . PERMISSION_PUBLIC . " 
+                                    order by bsl_sample_data_unique_id";
+    $res = $db->query($sql);
+    return $res;
 }
 
 //##############################################################################

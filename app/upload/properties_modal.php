@@ -18,7 +18,11 @@
             <div class="container bg-light">
                 <div class="row justify-content-between align-items-center border">
                     <div class="col"><?=lang("SAMPLE_IDENTIFICATION"); ?></div>
-                    <div class="col"><input type="text" id="sample_id" onchange="uniqueIDValidation()"></div>
+                    <div class="col"><input type="text" id="sample_id" onkeyup="uniqueIDValidation()"
+                                            onblur="uniqueIDValidation()" maxlength="20"></div>
+                </div>
+                <div class="row justify-content-between align-items-center border">
+                    <div class="col" id="unique_id_help"><?=lang("MISSING_UNIQUE_ID"); ?></div>
                 </div>
                 <div class="row justify-content-between align-items-center border">
                     <div class="col-1">
@@ -32,11 +36,11 @@
                 </div>
                 <div class="row justify-content-between align-items-center border">
                     <div class="col"><?=lang("ILLUMINATED_SAMPLE"); ?></div>
-                    <div class="col"><input type="text" id="sample_name"></div>
+                    <div class="col"><input type="text" id="sample_name" maxlength="10"></div>
                 </div>
                 <div class="row justify-content-between align-items-center border">
                     <div class="col"><?=lang("TIME_RATE"); ?></div>
-                    <div class="col"><input type="number" id="sample_frames"></div>
+                    <div class="col"><input type="number" id="sample_frames" maxlength="3"></div>
                 </div>
                 <div class="row justify-content-between align-items-center border">
                     <div class="col" id="sample_config_label"><?=lang("SAMPLE_CONFIG"); ?></div>
@@ -82,7 +86,7 @@
                                 <label class="form-check-label" for="sample_laser_type3"><?=lang("OTHER"); ?></label>
                             </div>
                             <div class="col">
-                                <input type="text" id="other_laser_type" disabled>
+                                <input type="text" id="other_laser_type" disabled maxlength="10">
                             </div>
                         </div>
                     </div>
