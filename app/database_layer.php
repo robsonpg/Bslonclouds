@@ -117,6 +117,24 @@ function getUserAndPublicResearches($userid) {
 }
 
 //##############################################################################
+// Apaga a pesquisa (TOTALMENTE)
+function deleteResearch($uid) {
+    $db = DB::getInstance();
+    // Pega o identificador da pesquisa
+    $sql = "SELECT bsl_sample_data_id FROM bsl_sample_data WHERE bsl_sample_data_unique_id = '$uid'";
+    $res = $db->query($sql);
+
+    if ($res->count() > 0) {
+        $sample_data_id = $res->results()[0]->bsl_sample_data_id;
+        // Apaga todasa imagens da pesquisa
+        $sql = DELETE FROM `bslonc02_bslonc`.`bsl_sample_images`
+WHERE <{where_expression}>;
+    } else {
+        return "Error while deleting";
+    }
+}
+
+//##############################################################################
 // Tabelas no banco de dados
 //##############################################################################
 //CREATE TABLE `bslonc02_bslonc`.`bsl_sample_data` (

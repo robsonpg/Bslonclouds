@@ -62,6 +62,19 @@ $all_researches = getAllResearchesID();
     <h2><?=lang("MENU_IMAGE_MANAGER");?></h2>
         <div class="row">
             <div class="col-2 align-self-center">
+                <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
+                       id="btn_prop_modal" data-target='#properties-modal' data-backdrop="static"
+                       class="btn btn-primary"/>
+            </div>
+            <div class="col align-self-center">
+                <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
+                    <span class="font-weight-bold"><?=lang("IMAGES_PROPERTIES_TITLE");?></span><br>
+                    <?=lang("IMAGES_PROPERTIES_TEXT"); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 align-self-center">
                 <input type="file" id="getfiles" style="display: none;" capture="camera"
                        onchange="readURL(this,'mini_foto_new');" multiple accept=".bmp"/>
                 <input type="button" value="<?=lang("SELECT_IMAGES_BTN");?>"
@@ -71,19 +84,6 @@ $all_researches = getAllResearchesID();
                 <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
                     <span class="font-weight-bold"><?=lang("SELECT_IMAGES_TITLE");?></span><br>
                     <?=lang("SELECT_IMAGES_TEXT"); ?>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2 align-self-center">
-                <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
-                       id="btn_prop_modal" data-target='#properties-modal' data-backdrop="static"
-                       class="btn btn-primary"/>
-            </div>
-            <div class="col align-self-center">
-                <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
-                    <span class="font-weight-bold"><?=lang("IMAGES_PROPERTIES_TITLE");?></span><br>
-                    <?=lang("IMAGES_PROPERTIES_TEXT"); ?>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ if (!$user->isLoggedIn()) {
 }
 
 $user_id = $user->data()->id;
-
+require_once "delete_modal.php";
 require_once "../database_layer.php";
 
 //#############################################################
@@ -44,7 +44,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                 <span class="font-weight-bold">Research Description</span>
             </div>
         </div>
-        <div class="col align-self-center">
+        <div class="col-3 align-self-center">
             <div role="alert" class="mt-1 alert alert-primary">
                 <span class="font-weight-bold">Actions</span>
             </div>
@@ -58,36 +58,59 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                 $sn = $research_item->bsl_sample_data_name;
                 $sfr = $research_item->bsl_sample_data_frame_rate;
                 $sc = $research_item->bsl_sample_data_configuration_type;
-                $slt = $research_item->bsl_sample_data_laser_type;
                 $slto = $research_item->bsl_sample_data_other_laser_type;
+                if ($sc == CONFIG_BACKSCATTERING) {
+                    $sc_text = lang("BACKSCATTERING");
+                } else {
+                    $sc_text = lang("FWD_SCATTERING");
+                }
+                $slt = $research_item->bsl_sample_data_laser_type;
+                if ($slt == HENE_LASER_TYPE) {
+                    $slt_text = lang("HENE");
+                } else {
+                    if ($slt == DIODE_LASER_TYPE) {
+                        $slt_text = lang("DIODE");
+                    } else {
+                        $slt_text = lang("OTHER") . " : " . $slto ;
+                    }
+                }
+
                 $sw = $research_item->bsl_sample_data_laser_wavelength;
                 $sp = $research_item->bsl_sample_data_permission;
                 $sai = $research_item->bsl_sample_data_amount_of_images;
                 $so = $research_item->bsl_sample_data_owner_id;
+                if ($sp == PERMISSION_PUBLIC) {
+                    $sp_text = lang("PERMISSION_PUBLIC");
+                } else {
+                    $sp_text = lang("PERMISSION_PRIVATE_OWNER");
+                }
                 ?>
                 <div class="row">
                     <div class="col align-self-center">
-                </div>
-                    <div class="col align-self-center">
+                        <div role="alert" class="mt-1 alert alert-primary bg-primary text-white ">
+                            Research ID: <b><?=$uid; ?></b> Sample name: <b><?=$sn;?></b> Frames per second:
+                            <b><?=$sfr;?></b> Configuration: <b><?=$sc_text;?></b> Laser Type : <b>
+                            <?=$slt_text;?></b> Wavelength: <b><?=$sw;?></b> Access Permission: <b>
+                            <?=$sp_text;?></b> Number of images: <b><?=$sai; ?>
+                            </b>
+
+                        </div>
+                    </div>
+                    <div class="col-3 align-self-center">
+                        <input type="button" value="<?=lang("DOWNLOAD_RESEARCH_BTN");?>"
+                               onclick="downloadResearch()" class="btn btn-primary"/>
+                        <?php
+                            if ($so == $user_id) { ?>
+                        <input type="button" value="<?=lang("DELETE_RESEARCH_BTN");?>"
+                               onclick="deleteResearch('<?=$uid;?>')" class="btn btn-warning"/>
+                        <?php
+                            } ?>
+                    </div>
                 </div>
     <?php
             }
         }
     ?>
-        <div class="row">
-            <div class="col-2 align-self-center">
-                <input type="file" id="getfiles" style="display: none;" capture="camera"
-                       onchange="readURL(this,'mini_foto_new');" multiple accept=".bmp"/>
-                <input type="button" value="<?=lang("SELECT_IMAGES_BTN");?>"
-                       onclick="document.getElementById('getfiles').click();" class="btn btn-primary"/>
-            </div>
-            <div class="col align-self-center">
-                <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
-                    <span class="font-weight-bold"><?=lang("SELECT_IMAGES_TITLE");?></span><br>
-                    <?=lang("SELECT_IMAGES_TEXT"); ?>
-                </div>
-            </div>
-        </div>
 
 </div>
 
