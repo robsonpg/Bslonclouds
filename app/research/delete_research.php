@@ -32,4 +32,4 @@ try {
 //fwrite($myfile, $milliseconds);
 //fclose($myfile);
 
-echo $res;
+echo $res->errorString();

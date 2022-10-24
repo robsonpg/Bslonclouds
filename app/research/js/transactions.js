@@ -39,6 +39,7 @@ $(document).ready(function() {
                 //location.reload();
                 if (response.includes('')) {
                     // Apagou
+                    location.reload();
                 } else {
                     alert("Fail to delete in database.");
                     //messages_place.innerText = response.toString();

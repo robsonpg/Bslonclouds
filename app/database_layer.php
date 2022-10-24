@@ -127,8 +127,12 @@ function deleteResearch($uid) {
     if ($res->count() > 0) {
         $sample_data_id = $res->results()[0]->bsl_sample_data_id;
         // Apaga todasa imagens da pesquisa
-        $sql = DELETE FROM `bslonc02_bslonc`.`bsl_sample_images`
-WHERE <{where_expression}>;
+        $sql = "DELETE FROM bsl_sample_images WHERE bsl_sample_images_data_id = $sample_data_id";
+        $res = $db->query($sql);
+        // Apaga os dados da pesquisa
+        $sql = "DELETE FROM bsl_sample_data WHERE bsl_sample_data_id = $sample_data_id";
+        $res = $db->query($sql);
+        return $res;
     } else {
         return "Error while deleting";
     }
