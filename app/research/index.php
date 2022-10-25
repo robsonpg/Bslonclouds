@@ -98,7 +98,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                     </div>
                     <div class="col-3 align-self-center">
                         <input type="button" value="<?=lang("DOWNLOAD_RESEARCH_BTN");?>"
-                               onclick="downloadResearch()" class="btn btn-primary"/>
+                               onclick="downloadResearch('<?=$uid;?>')" class="btn btn-primary"/>
                         <?php
                             if ($so == $user_id) { ?>
                         <input type="button" value="<?=lang("DELETE_RESEARCH_BTN");?>"
@@ -116,6 +116,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
 
 <script type="text/javascript" src="js/transactions.js"></script>
 <script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="js/FileSaver.min.js"></script>
 
 
 

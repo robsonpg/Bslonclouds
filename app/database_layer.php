@@ -57,8 +57,8 @@ function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $
 
 //##############################################################################
 // Função para inserir as propriedades da amostra e sua imagem
-function insertSampleImage($sample_file_name, $sample_data_id, $sample_image_blob, $sample_image_width,
-                               $sample_image_height, $sample_image_timestamp) {
+function insertSampleImage($sample_file_name, $sample_data_id, $sample_image_width,
+                               $sample_image_height, $sample_image_timestamp, $base64) {
 
     $image_size = $sample_image_width . 'x' . $sample_image_height;
 
@@ -72,16 +72,16 @@ function insertSampleImage($sample_file_name, $sample_data_id, $sample_image_blo
                     bsl_sample_images_name,
                     bsl_sample_images_data_id,
                     bsl_sample_images_size,
-                    bsl_sample_images_blob,
                     bsl_sample_images_timestamp,
-                    bsl_sample_images_insert_timestamp)
+                    bsl_sample_images_insert_timestamp,
+                    bsl_sample_images_base64)
             VALUES (
                     '$sample_file_name',
                     $sample_data_id,
                     '$image_size',
-                    '$sample_image_blob',
                     '$sample_image_date',
-                    now());";
+                    now(),
+                    '$base64');";
 
 
 
@@ -136,6 +136,13 @@ function deleteResearch($uid) {
     } else {
         return "Error while deleting";
     }
+}
+
+function getResearchImage($imageID) {
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM bsl_sample_images where bsl_sample_images_id = $imageID limit 1";
+    $res = $db->query($sql);
+    return $res;
 }
 
 //##############################################################################

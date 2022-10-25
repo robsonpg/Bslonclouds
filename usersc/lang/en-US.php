@@ -77,6 +77,7 @@
     "DELETE_RESEARCH_BTN" => "Delete",
     "DELETE_MODAL_TITLE" => "Delete Research",
     "BTN_CONFIRM" => "Confirm",
+    "BTN_HIDE" => "Hide"
  ));
 
 

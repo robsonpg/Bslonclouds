@@ -434,6 +434,9 @@ function sendImages(sample_database_id) {
                         progress_value = progress_value + progress_steps;
                         progress_bar.style.width = progress_value + "%";
                         //progress_bar.innerText = "Sending image " + (idx+1) + " of " + image_info_list.length + "...";
+                        if (idx === (image_info_list.length - 1)) {
+                            $('#send-images-modal').modal('hide');
+                        }
                     } else {
                         messages_place.innerText = response.toString();
                     }

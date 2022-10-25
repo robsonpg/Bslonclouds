@@ -80,12 +80,12 @@ if (strpos($type, "bmp") == true) {
 
         //#############################
         // insere no banco de dados
-        $res = insertSampleImage($sample_file_name, $sample_data_id, $imgData, $sample_image_width, $sample_image_height,
-            $sample_image_timestamp);
+        $res = insertSampleImage($sample_file_name, $sample_data_id, $sample_image_width, $sample_image_height,
+            $sample_image_timestamp, $data);
 
         //####################################
         // Apaga arquivo depois de inserido
-        If (!unlink($filename)) {
+        if (!unlink($filename)) {
             // there was a problem deleting the file
         }
     } else {
