@@ -138,9 +138,31 @@ function deleteResearch($uid) {
     }
 }
 
+//############################################################################
+// Retorna uma imagem armazenada
 function getResearchImage($imageID) {
     $db = DB::getInstance();
     $sql = "SELECT * FROM bsl_sample_images where bsl_sample_images_id = $imageID limit 1";
+    $res = $db->query($sql);
+    return $res;
+}
+
+//############################################################################
+// Retorna todas imagens de uma pesquisa
+function getResearchImagesIDs($research_ID) {
+    $db = DB::getInstance();
+    $sql = "SELECT bsl_sample_images_id, bsl_sample_images_name FROM bsl_sample_images where 
+        bsl_sample_images_data_id = $research_ID order by bsl_sample_images_name";
+    $res = $db->query($sql);
+    return $res;
+}
+
+//############################################################################
+// Retorna os dados de uma pesquisa
+function getResearchData($research_uID) {
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM bsl_sample_data where 
+        bsl_sample_data_unique_id = '$research_uID' limit 1";
     $res = $db->query($sql);
     return $res;
 }

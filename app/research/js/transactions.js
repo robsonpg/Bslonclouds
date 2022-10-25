@@ -111,17 +111,12 @@ function downloadResearch(uid_text) {
                 //location.reload();
                 // Faz split
                 alert(response.toString());
-                let b64Data = response.toString();
-                const byteCharacters = atob(b64Data);
-                const byteNumbers = new Array(byteCharacters.length);
-                for (let i = 0; i < byteCharacters.length; i++) {
-                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                if (response.toString() === '0') {
+                    const link = document.createElement("a");
+                    link.href = "http://localhost/app/research/" + uid_text + ".zip";
+                    //link.download =  uid_text + ".zip";
+                    link.click();
                 }
-                const byteArray = new Uint8Array(byteNumbers);
-                const blob = new Blob([byteArray], {type: "image/bmp"});
-                alert("save");
-                //let blob = new Blob([atob(response.toString())], {type: "image/bmp"});
-                saveAs(blob, "text.bmp");
             } else {
                 alert("Fail to get in database.");
                 //messages_place.innerText = response.toString();
