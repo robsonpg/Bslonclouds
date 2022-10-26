@@ -18,8 +18,10 @@
             </div>
             <div class="container bg-light">
                 <div class="col my-2">
-                    <div class="text-info" id="messages_place"><?=lang("MODAL_PROCESSING_IMAGES_MSG")?></div>
-                    <img src="../images/progress.gif">
+                    <div class="text-info" id="messages_place"><?=lang("MODAL_PROCESSING_IMAGES_MSG")?>
+                        <img src="../images/progress.gif">
+                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">
