@@ -78,9 +78,12 @@
     "DELETE_MODAL_TITLE" => "Delete Research",
     "BTN_CONFIRM" => "Confirm",
     "BTN_HIDE" => "Hide",
+    "BTN_CLOSE" => "Close",
     "NUMBER_OF_IMAGES" => "Number of images",
     "MODAL_PROCESSING_IMAGES_TITLE" => "Research Request",
-    "MODAL_PROCESSING_IMAGES_MSG" => "Processing research request..."
+    "MODAL_PROCESSING_IMAGES_MSG" => "Processing research request...",
+    "MODAL_ABOUT_TITLE" => "About the project",
+    "MODAL_ABOUT_MSG" => "Lorem lipsum manager",
  ));
 
 
