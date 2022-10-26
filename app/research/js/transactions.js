@@ -74,6 +74,8 @@ function deleteResearch(uid_text) {
 function downloadResearch(uid_text) {
 
     let download_str = uid_text;
+    // Abrir modal de processamento
+    $('#processing-images-modal').modal('show');
 
     let ajaxRequest = $.ajax({
         type: 'POST',
@@ -90,6 +92,7 @@ function downloadResearch(uid_text) {
                 //location.reload();
                 // Faz split
                 //alert(response.toString());
+                $('#processing-images-modal').modal('hide');
                 if (response.toString() === '0') {
                     const link = document.createElement("a");
                     link.href = "./" + uid_text + ".zip";

@@ -79,6 +79,8 @@
     "BTN_CONFIRM" => "Confirm",
     "BTN_HIDE" => "Hide",
     "NUMBER_OF_IMAGES" => "Number of images",
+    "MODAL_PROCESSING_IMAGES_TITLE" => "Research Request",
+    "MODAL_PROCESSING_IMAGES_MSG" => "Processing research request..."
  ));
 
 
