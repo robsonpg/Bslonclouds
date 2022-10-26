@@ -17,6 +17,7 @@ if (!$user->isLoggedIn()) {
 
 $user_id = $user->data()->id;
 require_once "delete_modal.php";
+require_once "processing_images_modal.php";
 require_once "../database_layer.php";
 
 //#############################################################
