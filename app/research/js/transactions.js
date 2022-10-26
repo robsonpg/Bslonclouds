@@ -92,7 +92,7 @@ function downloadResearch(uid_text) {
                 alert(response.toString());
                 if (response.toString() === '0') {
                     const link = document.createElement("a");
-                    link.href = "http://localhost/app/research/" + uid_text + ".zip";
+                    link.href = "system/app/research/" + uid_text + ".zip";
                     //link.download =  uid_text + ".zip";
                     link.click();
                 }
