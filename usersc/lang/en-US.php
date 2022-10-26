@@ -51,7 +51,7 @@
     "MODAL_SEND_IMAGES_TITLE" => "Send All Research Data to Server",
     "IMAGE_FORMAT_ERROR" => "File format not suported.",
     "FILE_ERROR" => "Read image file error.",
-    "SAMPLE_IDENTIFICATION" => "Research Identification:",
+    "SAMPLE_IDENTIFICATION" => "Research Identification",
     "SAMPLE_ID_ESPECS" => "This field will be the identification in research catalog, is the unique ID for your 
     research. Use wisely!",
     "MISSING_UNIQUE_ID" => "Missing research Identification",
@@ -77,7 +77,8 @@
     "DELETE_RESEARCH_BTN" => "Delete",
     "DELETE_MODAL_TITLE" => "Delete Research",
     "BTN_CONFIRM" => "Confirm",
-    "BTN_HIDE" => "Hide"
+    "BTN_HIDE" => "Hide",
+    "NUMBER_OF_IMAGES" => "Number of images",
  ));
 
 

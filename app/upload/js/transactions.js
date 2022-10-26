@@ -127,6 +127,15 @@ function readURL(input, id) {
 $(document).ready(function() {
 
     //#########################################################################
+    // Não permite espaços na identificação da amostra
+    $('#sample_id').on('keypress', function(e) {
+        if (e.which === 32){
+            //console.log('Space Detected');
+            return false;
+        }
+    });
+
+    //#########################################################################
     // Salva inserido os dados em banco de dados
     // Quando usuário clicar em salvar será feito todos os passo abaixo
     //#########################################################################
@@ -216,11 +225,13 @@ $(document).ready(function() {
         let permission_id = sample_permission.getAttribute("id").toString();
         let permission_text = $("label[for='" + permission_id + "']").text();
 
-        col_prop.innerHTML = "Sample unique ID: " + "<b>" + sample_unique_id.value + "</b>" + " sample Name: " +
-            "<b>" + sample_name.value + "</b>" + " Frames per second: " +
-            "<b>" + sample_frames.value + "</b>" + " Configuration: " + "<b>" + config_text + "</b>" +
-            " Laser Type : " + "<b>" + laser_type_text + "</b>" + " Wavelength: " + "<b>" +
-            sample_wavelength.value + " nm</b> Access Permission: " + "<b>" + permission_text + "</b>" ;
+        col_prop.innerHTML = msg_uid + ": <b>" + sample_unique_id.value + "</b> " +
+            msg_illumi + ": <b>" + sample_name.value + "</b> " +
+            msg_fr + ": <b>" + sample_frames.value + "</b> " +
+            msg_config + ": <b>" + config_text + "</b> " +
+            msg_lt + ": <b>" + laser_type_text + "</b> " +
+            msg_lw + ": <b>" + sample_wavelength.value + " nm</b> " +
+            msg_per + ": <b>" + permission_text + "</b>";
 
         //#############################################################
         // Botão de editar as propriedades

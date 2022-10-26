@@ -88,12 +88,14 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                 <div class="row">
                     <div class="col align-self-center">
                         <div role="alert" class="mt-1 alert alert-primary bg-primary text-white ">
-                            Research ID: <b><?=$uid; ?></b> Sample name: <b><?=$sn;?></b> Frames per second:
-                            <b><?=$sfr;?></b> Configuration: <b><?=$sc_text;?></b> Laser Type : <b>
-                            <?=$slt_text;?></b> Wavelength: <b><?=$sw;?></b> Access Permission: <b>
-                            <?=$sp_text;?></b> Number of images: <b><?=$sai; ?>
-                            </b>
-
+                            <div class="col"><?=lang("SAMPLE_IDENTIFICATION");?>: <b><?=$uid; ?></b></div>
+                            <div class="col"><?=lang("ILLUMINATED_SAMPLE");?>: <b><?=$sn;?></b></div>
+                            <div class="col"><?=lang("TIME_RATE");?>: <b><?=$sfr;?></b></div>
+                            <div class="col"><?=lang("SAMPLE_CONFIG");?>: <b><?=$sc_text;?></b></div>
+                            <div class="col"><?=lang("LASER_TYPE");?>: <b><?=$slt_text;?></b></div>
+                            <div class="col"><?=lang("LASER_WAVELENGTH");?>: <b><?=$sw;?></b></div>
+                            <div class="col"><?=lang("IMAGES_PERMISSION");?>: <b><?=$sp_text;?></b></div>
+                            <div class="col"><?=lang("NUMBER_OF_IMAGES");?>: <b><?=$sai; ?></b></div>
                         </div>
                     </div>
                     <div class="col-3 align-self-center">

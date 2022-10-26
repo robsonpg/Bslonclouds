@@ -21,6 +21,7 @@ $image_date = lang("IMAGE_DATE");
 $image_size = lang("IMAGE_SIZE");
 $btn_remove_text = lang("BTN_REMOVE_IMAGE");
 $btn_edit_text = lang("BTN_EDIT_PROP");
+
 $user_id = $user->data()->id;
 
 $msg_exist = lang("EXIST_UNIQUE_ID");
@@ -47,6 +48,14 @@ $all_researches = getAllResearchesID();
     let msg_exist = "<?=$msg_exist; ?>";
     let msg_min = "<?=$msg_min; ?>";
     let msg_ok = "<?=$msg_ok; ?>";
+
+    let msg_uid = "<?=lang("SAMPLE_IDENTIFICATION");?>";
+    let msg_illumi = "<?=lang("ILLUMINATED_SAMPLE");?>";
+    let msg_fr = "<?=lang("TIME_RATE");?>";
+    let msg_config = "<?=lang("SAMPLE_CONFIG");?>";
+    let msg_lt = "<?=lang("LASER_TYPE");?>";
+    let msg_lw = "<?=lang("LASER_WAVELENGTH");?>";
+    let msg_per = "<?=lang("IMAGES_PERMISSION");?>";
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {

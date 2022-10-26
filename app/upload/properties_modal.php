@@ -46,7 +46,7 @@
                     <div class="col" id="sample_config_label"><?=lang("SAMPLE_CONFIG"); ?></div>
                     <div class="col">
                         <div class="row">
-                            <div class="form-check ">
+                            <div class="col">
                                 <input class="form-check-input" id="sample_config1" type="radio" name="sample_config"
                                        value="1"/>
                                 <label class="form-check-label" for="sample_config1">
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-check ">
+                            <div class="col">
                                 <input class="form-check-input" id="sample_config2" type="radio" name="sample_config" value="2" />
                                 <label class="form-check-label" for="sample_config2"><?=lang("FWD_SCATTERING"); ?></label>
                             </div>

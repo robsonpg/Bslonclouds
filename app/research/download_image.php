@@ -26,8 +26,20 @@ $research_uid = file_get_contents('php://input');
 //fclose($myfile);
 
 try {
+    // Apaga o arquivo de pesquisa
+    $scan_dir = scandir("./");
+    foreach ($scan_dir as $file) {
+        if (!is_dir("./$file")) {
+            if (strpos($file, ".zip")) {
+                unlink($file);
+            }
+        }
+    }
+
     // Buscar dados da pesquisa no banco de dados
     $research_data = getResearchData($research_uid);
+    $res_data = $research_data->results()[0];
+
     // Verifica se achou a pesquisa
     if (!($research_data->count() > 0)){
         echo "Error: Fail find research";
@@ -69,25 +81,47 @@ try {
             exit("cannot open <$filename>\n");
         }
 
-        $res_data = $research_data->results()[0];
-//        $str_info_research = "Sample unique ID: " $res_data->+ sample_unique_id.value + "</b>" + " sample Name: " +
-//            "<b>" + sample_name.value + "</b>" + " Frames per second: " +
-//            "<b>" + sample_frames.value + "</b>" + " Configuration: " + "<b>" + config_text + "</b>" +
-//            " Laser Type : " + "<b>" + laser_type_text + "</b>" + " Wavelength: " + "<b>" +
-//            sample_wavelength.value + " nm</b> Access Permission: " + "<b>" + permission_text + "</b>" ;
-//        bsl_sample_data_name,
-//                    bsl_sample_data_frame_rate,
-//                    bsl_sample_data_configuration_type,
-//                    bsl_sample_data_laser_type,
-//                    bsl_sample_data_other_laser_type,
-//                    bsl_sample_data_laser_wavelength,
-//                    bsl_sample_data_permission,
-//                    bsl_sample_data_insert_timestamp,
-//                    bsl_sample_data_amount_of_images,
-//                    bsl_sample_data_unique_id,
-//                    bsl_sample_data_owner_id
+        $uid = $res_data->bsl_sample_data_unique_id;
+        $sn = $res_data->bsl_sample_data_name;
+        $sfr = $res_data->bsl_sample_data_frame_rate;
+        $sc = $res_data->bsl_sample_data_configuration_type;
+        $slto = $res_data->bsl_sample_data_other_laser_type;
+        if ($sc == CONFIG_BACKSCATTERING) {
+            $sc_text = lang("BACKSCATTERING");
+        } else {
+            $sc_text = lang("FWD_SCATTERING");
+        }
+        $slt = $res_data->bsl_sample_data_laser_type;
+        if ($slt == HENE_LASER_TYPE) {
+            $slt_text = lang("HENE");
+        } else {
+            if ($slt == DIODE_LASER_TYPE) {
+                $slt_text = lang("DIODE");
+            } else {
+                $slt_text = lang("OTHER") . " : " . $slto ;
+            }
+        }
 
-        $zip->addFromString("research_info.txt", "#1 This is a test string added as testfilephp.txt.\n");
+        $sw = $res_data->bsl_sample_data_laser_wavelength;
+        $sp = $res_data->bsl_sample_data_permission;
+        $sai = $res_data->bsl_sample_data_amount_of_images;
+        $so = $res_data->bsl_sample_data_owner_id;
+        if ($sp == PERMISSION_PUBLIC) {
+            $sp_text = lang("PERMISSION_PUBLIC");
+        } else {
+            $sp_text = lang("PERMISSION_PRIVATE_OWNER");
+        }
+
+        $str_info_research = lang("SAMPLE_IDENTIFICATION") . ": " . $uid . "\n" .
+            lang("ILLUMINATED_SAMPLE") . ": " . $sn . "\n" .
+            lang("TIME_RATE") . ": ". $sfr . "\n" .
+            lang("SAMPLE_CONFIG") . ": " . $sc_text . "\n" .
+            lang("LASER_TYPE"). ": " . $slt_text . "\n" .
+            lang("LASER_WAVELENGTH") . ": " . $sw . "\n" .
+            lang("IMAGES_PERMISSION") . ": " . $sp_text . "\n" .
+            lang("NUMBER_OF_IMAGES") . ": " . $sai;
+
+        $zip->addFromString("research_info.txt", $str_info_research);
 //        $zip->addFromString("testfilephp2.txt" . time(), "#2 This is a test string added as testfilephp2.txt.\n");
         // Adiciona as imagens no arquivo
         foreach ($IDs as $ID) {
