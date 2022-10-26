@@ -83,7 +83,7 @@
     "MODAL_PROCESSING_IMAGES_TITLE" => "Research Request",
     "MODAL_PROCESSING_IMAGES_MSG" => "Processing research request...",
     "MODAL_ABOUT_TITLE" => "About the project",
-    "MODAL_ABOUT_MSG" => "Lorem lipsum manager",
+    "MODAL_ABOUT_MSG" => "Lorem lipsum RPG Software and research",
  ));
 
 
