@@ -89,10 +89,10 @@ function downloadResearch(uid_text) {
                 // Apagou
                 //location.reload();
                 // Faz split
-                alert(response.toString());
+                //alert(response.toString());
                 if (response.toString() === '0') {
                     const link = document.createElement("a");
-                    link.href = "system/app/research/" + uid_text + ".zip";
+                    link.href = "./" + uid_text + ".zip";
                     //link.download =  uid_text + ".zip";
                     link.click();
                 }
