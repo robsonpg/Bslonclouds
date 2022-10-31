@@ -1,5 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/bslonc02/public_html
-    - /bin/cp -r * $DEPLOYPATH
