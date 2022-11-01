@@ -34,6 +34,7 @@ $sample_wavelength = $all_data[6];
 $sample_permission = $all_data[7];
 $sample_amount_of_images = $all_data[8];
 $sample_owner = $all_data[9];
+$sample_pub = $all_data[10];
 // Recuperando imagem em base64
 // Exemplo: data:image/png;base64,AAAFBfj42Pj4
 
@@ -41,7 +42,7 @@ try {
     //#############################
     // insere no banco de dados
     $res = insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type, $sample_other_lt,
-        $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner);
+        $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner, $sample_pub);
 
     $res = "id=" . $res;
 } catch (Exception $e) {

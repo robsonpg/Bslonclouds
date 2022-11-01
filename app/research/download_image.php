@@ -111,6 +111,7 @@ try {
         } else {
             $sp_text = lang("PERMISSION_PRIVATE_OWNER");
         }
+        $spub = $res_data->bsl_sample_data_published_DOI_URL;
 
         $str_info_research = lang("SAMPLE_IDENTIFICATION") . ": " . $uid . "\n" .
             lang("ILLUMINATED_SAMPLE") . ": " . $sn . "\n" .
@@ -119,9 +120,10 @@ try {
             lang("LASER_TYPE"). ": " . $slt_text . "\n" .
             lang("LASER_WAVELENGTH") . ": " . $sw . "\n" .
             lang("IMAGES_PERMISSION") . ": " . $sp_text . "\n" .
-            lang("NUMBER_OF_IMAGES") . ": " . $sai;
+            lang("NUMBER_OF_IMAGES") . ": " . $sai . "\n" .
+            lang("RESEARCH_PUBLIC_ID") . ": " . $spub;
 
-        $zip->addFromString("research_info.txt", $str_info_research);
+            $zip->addFromString("research_info.txt", $str_info_research);
 //        $zip->addFromString("testfilephp2.txt" . time(), "#2 This is a test string added as testfilephp2.txt.\n");
         // Adiciona as imagens no arquivo
         foreach ($IDs as $ID) {

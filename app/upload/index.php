@@ -15,18 +15,7 @@ if (!$user->isLoggedIn()) {
     exit;
 }
 
-$image_name_msg = lang("IMAGE_NAME_MSG");
-$no_image_information = lang("NO_IMAGE_INFORMATION");
-$image_date = lang("IMAGE_DATE");
-$image_size = lang("IMAGE_SIZE");
-$btn_remove_text = lang("BTN_REMOVE_IMAGE");
-$btn_edit_text = lang("BTN_EDIT_PROP");
-
 $user_id = $user->data()->id;
-
-$msg_exist = lang("EXIST_UNIQUE_ID");
-$msg_min = lang("MIN_UNIQUE_ID_CHARS");
-$msg_ok = lang("UNIQUE_ID_OK");
 
 require_once "properties_modal.php";
 require_once "send_images_modal.php";
@@ -39,15 +28,15 @@ $all_researches = getAllResearchesID();
 
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
 <script type="text/javascript">
-    let filename_msg = "<?=$image_name_msg; ?>";
-    let no_image_info = "<?=$no_image_information; ?>";
-    let image_date = "<?=$image_date; ?>";
-    let image_size = "<?=$image_size; ?>";
-    let btn_remove_text = "<?=$btn_remove_text; ?>";
-    let btn_edit_text = "<?=$btn_edit_text; ?>";
-    let msg_exist = "<?=$msg_exist; ?>";
-    let msg_min = "<?=$msg_min; ?>";
-    let msg_ok = "<?=$msg_ok; ?>";
+    let filename_msg = "<?=lang("IMAGE_NAME_MSG"); ?>";
+    let no_image_info = "<?=lang("NO_IMAGE_INFORMATION"); ?>";
+    let image_date = "<?=lang("IMAGE_DATE"); ?>";
+    let image_size = "<?=lang("IMAGE_SIZE");?>";
+    let btn_remove_text = "<?=lang("BTN_REMOVE_IMAGE") ?>";
+    let btn_edit_text = "<?=lang("BTN_EDIT_PROP"); ?>";
+    let msg_exist = "<?=lang("EXIST_UNIQUE_ID"); ?>";
+    let msg_min = "<?=lang("MIN_UNIQUE_ID_CHARS"); ?>";
+    let msg_ok = "<?=lang("UNIQUE_ID_OK"); ?>";
 
     let msg_uid = "<?=lang("SAMPLE_IDENTIFICATION");?>";
     let msg_illumi = "<?=lang("ILLUMINATED_SAMPLE");?>";
@@ -56,6 +45,7 @@ $all_researches = getAllResearchesID();
     let msg_lt = "<?=lang("LASER_TYPE");?>";
     let msg_lw = "<?=lang("LASER_WAVELENGTH");?>";
     let msg_per = "<?=lang("IMAGES_PERMISSION");?>";
+    let msg_pub = "<?=lang("RESEARCH_PUBLIC_ID");?>";
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {
@@ -70,7 +60,7 @@ $all_researches = getAllResearchesID();
 <div class="container">
     <h2><?=lang("MENU_IMAGE_MANAGER");?></h2>
         <div class="row">
-            <div class="col-2 align-self-center">
+            <div class="col-3 align-self-center">
                 <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
                        id="btn_prop_modal" data-target='#properties-modal' data-backdrop="static"
                        class="btn btn-primary"/>
@@ -83,7 +73,7 @@ $all_researches = getAllResearchesID();
             </div>
         </div>
         <div class="row">
-            <div class="col-2 align-self-center">
+            <div class="col-3 align-self-center">
                 <input type="file" id="getfiles" style="display: none;" capture="camera"
                        onchange="readURL(this,'mini_foto_new');" multiple accept=".bmp"/>
                 <input type="button" value="<?=lang("SELECT_IMAGES_BTN");?>"
@@ -97,7 +87,7 @@ $all_researches = getAllResearchesID();
             </div>
         </div>
         <div class="row">
-            <div class="col-2 align-self-center">
+            <div class="col-3 align-self-center">
                 <input type="button" value="<?=lang("SEND_IMAGES");?>" data-toggle='modal'
                        id="btn_send_modal" data-target='#send-images-modal' data-backdrop="static"
                        class="btn btn-primary" onclick="sendImagesToServer()" disabled/>
@@ -110,7 +100,7 @@ $all_researches = getAllResearchesID();
             </div>
         </div>
         <div class="row">
-            <div class="col-2 align-self-center">
+            <div class="col-3 align-self-center">
                 <input type="button" value="<?=lang("CLEAR_ALL");?>" data-toggle='modal'
                        id="btn_clear"  class="btn btn-warning" onclick="clearAllData()" />
             </div>

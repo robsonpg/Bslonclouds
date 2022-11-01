@@ -27,7 +27,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
 
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
 <script type="text/javascript">
-    let researchers = <?php
+    let public_researchers = <?php
     if ($user_public_researches->count() > 0) {
         echo json_encode($user_public_researches->results());
     } else {
@@ -85,6 +85,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                 } else {
                     $sp_text = lang("PERMISSION_PRIVATE_OWNER");
                 }
+                $spub = $research_item->bsl_sample_data_published_DOI_URL;
                 ?>
                 <div class="row">
                     <div class="col align-self-center">
@@ -97,6 +98,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             <div class="col"><?=lang("LASER_WAVELENGTH");?>: <b><?=$sw;?></b></div>
                             <div class="col"><?=lang("IMAGES_PERMISSION");?>: <b><?=$sp_text;?></b></div>
                             <div class="col"><?=lang("NUMBER_OF_IMAGES");?>: <b><?=$sai; ?></b></div>
+                            <div class="col"><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
                         </div>
                     </div>
                     <div class="col-3 align-self-center">

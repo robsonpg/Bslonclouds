@@ -147,6 +147,7 @@ $(document).ready(function() {
         let sample_laser_type = document.querySelector('input[name="sample_laser_type"]:checked');
         let sample_wavelength = document.getElementById("sample_wavelength");
         let sample_permission = document.querySelector('input[name="sample_permission"]:checked');
+        let sample_pub_doi = document.getElementById("research_public_id");
 
         // Se o id da amostra tem menos que 6 caracteres, não aceita
         let id_text = sample_unique_id.value;
@@ -209,6 +210,7 @@ $(document).ready(function() {
         images_properties.push(other_laser_type.value);
         images_properties.push(sample_wavelength.value);
         images_properties.push(sample_permission.value);
+        images_properties.push(sample_pub_doi.value);
         //####################################################################
         // Preenche a interface
         let image_properties = document.getElementById("images_properties");
@@ -231,7 +233,8 @@ $(document).ready(function() {
             msg_config + ": <b>" + config_text + "</b> " +
             msg_lt + ": <b>" + laser_type_text + "</b> " +
             msg_lw + ": <b>" + sample_wavelength.value + " nm</b> " +
-            msg_per + ": <b>" + permission_text + "</b>";
+            msg_per + ": <b>" + permission_text + "</b> " +
+            msg_pub + ": <b>" + sample_pub_doi.value + "</b>";
 
         //#############################################################
         // Botão de editar as propriedades
@@ -281,6 +284,8 @@ $(document).ready(function() {
         let permission = document.getElementsByName("sample_permission");
         for(i = 0; i<permission.length; i++)
             permission[i].checked = false;
+        let sample_pub = document.getElementById("research_public_id");
+        sample_pub.value = "";
 
     });
 })
@@ -341,6 +346,9 @@ function showPropertiesModal() {
             document.getElementById("sample_permission2").checked = true;
         }
     }
+
+    let sample_pub = document.getElementById("research_public_id");
+    sample_pub.value = images_properties[8];
     // Exibe o modal
     $('#properties-modal').modal('show');
 }
@@ -362,6 +370,7 @@ function sendImagesToServer() {
     let other_laser_type = images_properties[5];
     let sample_wavelength = images_properties[6];
     let sample_permission = images_properties[7];
+    let sample_pub = images_properties[8];
     let amount_of_images = image_info_list.length;
     let sample_owner = user_id;
     let sample_database_id = -1;
@@ -372,7 +381,7 @@ function sendImagesToServer() {
     // Monta o cabeçalho para todas imagens do stream
     let header = sample_unique_id + "&" + sample_name + "&" + sample_frame_rate + "&" + sample_config + "&" +
         sample_laser_type + "&" + other_laser_type + "&" + sample_wavelength + "&" + sample_permission + "&" +
-        amount_of_images + "&" + sample_owner;
+        amount_of_images + "&" + sample_owner + "&" + sample_pub;
 
     let ajaxRequest = $.ajax({
         type: 'POST',
