@@ -69,6 +69,68 @@ function deleteResearch(uid_text) {
     $('#delete-modal').modal('show');
 }
 
+//############################################################################
+// Abre modal das propiedades com os valores preenchidos
+function editResearch(uid_text) {
+    //alert(uid_text);
+    // Pega a pesquisa
+    let selected_research = null;
+    for (let idx=0; idx<public_researchers.length; idx++) {
+        if (public_researchers[idx]["bsl_sample_data_unique_id"] === uid_text) {
+            selected_research = public_researchers[idx];
+;
+        }
+    }
+
+    let sample_unique_id = document.getElementById("sample_id");
+    sample_unique_id.value = selected_research["bsl_sample_data_unique_id"];
+    sample_unique_id.setAttribute('disabled', '');
+    let sample_help_id = document.getElementById("unique_id_help");
+    sample_help_id.innerHTML = msg_cannot_change;
+
+    let sample_name = document.getElementById("sample_name");
+    sample_name.value = selected_research["bsl_sample_data_name"]
+    let sample_frames = document.getElementById("sample_frames");
+    sample_frames.value = selected_research["bsl_sample_data_frame_rate"];
+
+    let checked = selected_research["bsl_sample_data_configuration_type"];
+    if (checked === CONFIG_BACKSCATTERING) {
+        document.getElementById("sample_config1").checked = true;
+    } else {
+        document.getElementById("sample_config2").checked = true;
+    }
+
+    checked = selected_research["bsl_sample_data_laser_type"];
+    if (checked === HENE_LASER_TYPE) {
+        document.getElementById("sample_laser_type1").checked = true;
+    } else {
+        if (checked === DIODE_LASER_TYPE) {
+            document.getElementById("sample_laser_type2").checked = true;
+        } else {
+            document.getElementById("sample_laser_type3").checked = true;
+            document.getElementById("other_laser_type").value =
+                selected_research["bsl_sample_data_other_laser_type"];
+        }
+    }
+    let sample_wavelength = document.getElementById("sample_wavelength");
+    sample_wavelength.value = selected_research["bsl_sample_data_laser_wavelength"];
+
+    checked = selected_research["bsl_sample_data_permission"];
+    if (checked === PERMISSION_PUBLIC) {
+        document.getElementById("sample_permission1").checked = true;
+    } else {
+        if (checked === PERMISSION_PRIVATE) {
+            document.getElementById("sample_permission2").checked = true;
+        }
+    }
+
+    let sample_pub = document.getElementById("research_public_id");
+    sample_pub.value = selected_research["bsl_sample_data_published_DOI_URL"];
+
+    // Exibe o modal
+    $('#properties-modal').modal('show');
+}
+
 //###########################################################################
 // Faz download da pesquisa
 function downloadResearch(uid_text) {

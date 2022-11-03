@@ -135,131 +135,6 @@ $(document).ready(function() {
         }
     });
 
-    //#########################################################################
-    // Salva inserido os dados em banco de dados
-    // Quando usuário clicar em salvar será feito todos os passo abaixo
-    //#########################################################################
-    $('#sample_data_confirm').click(function() {
-        let sample_unique_id = document.getElementById("sample_id");
-        let sample_name = document.getElementById("sample_name");
-        let sample_frames = document.getElementById("sample_frames");
-        let sample_config = document.querySelector('input[name="sample_config"]:checked');
-        let sample_laser_type = document.querySelector('input[name="sample_laser_type"]:checked');
-        let sample_wavelength = document.getElementById("sample_wavelength");
-        let sample_permission = document.querySelector('input[name="sample_permission"]:checked');
-        let sample_pub_doi = document.getElementById("research_public_id");
-
-        // Se o id da amostra tem menos que 6 caracteres, não aceita
-        let id_text = sample_unique_id.value;
-        if ((id_text.length <= 5) || (JSON.stringify(researchers).includes(id_text))) {
-            // Sacode a entrada
-            sample_unique_id.focus();
-            sample_unique_id.style.borderColor = "red";
-            sample_unique_id.className = "shake";
-            sample_unique_id.addEventListener("webkitAnimationEnd", function endEdit() {
-                sample_unique_id.style.borderColor = "#A9A9A9";
-                sample_unique_id.className = "";
-            });
-            return false;
-        }
-        // verify field empty
-        if (!shakeDOM(sample_unique_id)) return false;
-        if (!shakeDOM(sample_name)) return false;
-        if (!shakeDOM(sample_frames)) return false;
-        if (sample_config === null) {
-            let sample_config_label = document.getElementById("sample_config_label");
-            sample_config_label.style.borderColor = "red";
-            sample_config_label.className = "col shake";
-            sample_config_label.addEventListener("webkitAnimationEnd", function endEdit() {
-                sample_config_label.style.borderColor = "#A9A9A9";
-                sample_config_label.className = "col";
-            });
-            return false;
-        }
-        if (sample_laser_type === null) {
-            let sample_laser_type_label = document.getElementById("sample_laser_type_label");
-            sample_laser_type_label.style.borderColor = "red";
-            sample_laser_type_label.className = "col shake";
-            sample_laser_type_label.addEventListener("webkitAnimationEnd", function endEdit() {
-                sample_laser_type_label.style.borderColor = "#A9A9A9";
-                sample_laser_type_label.className = "col";
-            });
-            return false;
-        }
-        if (!shakeDOM(sample_wavelength)) return false;
-        if (sample_permission === null) {
-            let sample_permission_label = document.getElementById("sample_permission_label");
-            sample_permission_label.style.borderColor = "red";
-            sample_permission_label.className = "col shake";
-            sample_permission_label.addEventListener("webkitAnimationEnd", function endEdit() {
-                sample_permission_label.style.borderColor = "#A9A9A9";
-                sample_permission_label.className = "col";
-            });
-            return false;
-        }
-
-        //###################################################################
-        // Salva os dados para inserir no banco de dados
-        images_properties = [];
-        images_properties.push(sample_unique_id.value.trim());
-        images_properties.push(sample_name.value);
-        images_properties.push(sample_frames.value);
-        images_properties.push(sample_config.value);
-        images_properties.push(sample_laser_type.value);
-        let other_laser_type = document.getElementById("other_laser_type");
-        images_properties.push(other_laser_type.value);
-        images_properties.push(sample_wavelength.value);
-        images_properties.push(sample_permission.value);
-        images_properties.push(sample_pub_doi.value);
-        //####################################################################
-        // Preenche a interface
-        let image_properties = document.getElementById("images_properties");
-        image_properties.innerHTML = "";
-        let row_prop = document.createElement("div");
-        row_prop.className = "row justify-content-between align-items-center";
-        let col_prop = document.createElement("div");
-        col_prop.className = "col-10";
-
-        let config_id = sample_config.getAttribute("id").toString();
-        let config_text = $("label[for='" + config_id + "']").text();
-        let laser_type_id = sample_laser_type.getAttribute("id").toString();
-        let laser_type_text = $("label[for='" + laser_type_id + "']").text();
-        let permission_id = sample_permission.getAttribute("id").toString();
-        let permission_text = $("label[for='" + permission_id + "']").text();
-
-        col_prop.innerHTML = msg_uid + ": <b>" + sample_unique_id.value + "</b> " +
-            msg_illumi + ": <b>" + sample_name.value + "</b> " +
-            msg_fr + ": <b>" + sample_frames.value + "</b> " +
-            msg_config + ": <b>" + config_text + "</b> " +
-            msg_lt + ": <b>" + laser_type_text + "</b> " +
-            msg_lw + ": <b>" + sample_wavelength.value + " nm</b> " +
-            msg_per + ": <b>" + permission_text + "</b> " +
-            msg_pub + ": <b>" + sample_pub_doi.value + "</b>";
-
-        //#############################################################
-        // Botão de editar as propriedades
-        let col_prop_edit = document.createElement("div");
-        col_prop_edit.className = "col-2";
-        let btn_edit = document.createElement("a");
-        btn_edit.className = "btn btn-info";
-        btn_edit.setAttribute("id", "properties_edit");
-        btn_edit.onclick = showPropertiesModal;
-        btn_edit.innerHTML = "<a style='color: white'>" + btn_edit_text + "</a>";
-        //<a id="sample_data_confirm" className="btn btn-primary delete" href="#"><?=lang("BTN_ACCEPT")?></a>
-        col_prop_edit.append(btn_edit);
-
-        row_prop.append(col_prop);
-        row_prop.append(col_prop_edit);
-        image_properties.append(row_prop);
-        image_properties.style.display = "block";
-        // Preencheu as propriedades, ativa o botão de envio
-        if ((image_info_list.length > 0) && (images_properties.length > 0)) {
-            let btn_send = document.getElementById("btn_send_modal");
-            btn_send.disabled = false;
-        }
-        //alert("confirm");
-    });
-
     $('#btn_prop_modal').click( function () {
        let i;
         // Limpa o modal
@@ -303,6 +178,7 @@ function enableOtherType() {
 //############################################################################
 // Abre modal das propiedades com os valores preenchidos
 function showPropertiesModal() {
+    //document.getElementById('sample_id').removeAttribute("disabled");
     let sample_unique_id = document.getElementById("sample_id");
     sample_unique_id.value = images_properties[0];
     let sample_name = document.getElementById("sample_name");
@@ -466,36 +342,6 @@ function sendImages(sample_database_id) {
                     console.log(textStatus, errorThrown);
                 }
             });
-        }
-    }
-}
-
-//########################################################################
-// Validação da chave unica
-// Comparar a chave digitada com as exsitentes e fazer o box ficar
-// vermelho em caso de igualdade
-function uniqueIDValidation() {
-    let sample_id = document.getElementById("sample_id");
-    let id_text = sample_id.value.trim();
-    let unique_id_help = document.getElementById("unique_id_help");
-
-    // Verifica se o digitado está na lista
-    for (let idx=0; idx < researchers.length; idx++) {
-         if (researchers[idx]["bsl_sample_data_unique_id"] === id_text) {
-             sample_id.style.backgroundColor = "#efc1c1";
-             unique_id_help.innerHTML = "<b>" + msg_exist + "</b>";
-             return false;
-             //alert(id_text.length);
-        } else {
-             if (id_text.length <= 5) {
-                 // Fazer a borda ficar normal
-                 sample_id.style.backgroundColor = "#efc1c1";
-                 unique_id_help.innerHTML = "<b>" + msg_min + "</b>";
-                 return false;
-             } else {
-                 sample_id.style.backgroundColor = "white";
-                 unique_id_help.innerHTML = msg_ok;
-             }
         }
     }
 }

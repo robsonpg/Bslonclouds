@@ -161,6 +161,28 @@ function getResearchData($research_uID) {
     return $res;
 }
 
+//#############################################################################
+// Faz update nas propriedades da pesquisa
+function updateSampleData($sample_uid, $sample_name, $sample_frame_rate, $sample_config,
+                          $sample_laser_type, $sample_other_lt, $sample_wavelength, $sample_permission,
+                          $sample_pub) {
+    $db = DB::getInstance();
+    $sql = "UPDATE bsl_sample_data
+                SET
+                    bsl_sample_data_name = '$sample_name',
+                    bsl_sample_data_frame_rate = $sample_frame_rate,
+                    bsl_sample_data_configuration_type = $sample_config,
+                    bsl_sample_data_laser_type = $sample_laser_type,
+                    bsl_sample_data_other_laser_type = '$sample_other_lt',
+                    bsl_sample_data_laser_wavelength = $sample_wavelength,
+                    bsl_sample_data_permission = $sample_permission,
+                    bsl_sample_data_insert_timestamp = now(),
+                    bsl_sample_data_published_DOI_URL = '$sample_pub'
+            WHERE bsl_sample_data_unique_id = '$sample_uid'";
+    $res = $db->query($sql);
+    return $res;
+}
+
 //##############################################################################
 // Tabelas no banco de dados
 //##############################################################################

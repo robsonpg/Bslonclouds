@@ -18,6 +18,7 @@ if (!$user->isLoggedIn()) {
 $user_id = $user->data()->id;
 require_once "delete_modal.php";
 require_once "processing_images_modal.php";
+require_once "../upload/properties_modal.php";
 require_once "../database_layer.php";
 
 //#############################################################
@@ -34,6 +35,10 @@ $user_public_researches = getUserAndPublicResearches($user_id);
         echo json_encode("none");
     } ?>;
     let user_id = <?php echo $user_id; ?>;
+    let msg_exist = "<?=lang("EXIST_UNIQUE_ID"); ?>";
+    let msg_min = "<?=lang("MIN_UNIQUE_ID_CHARS"); ?>";
+    let msg_ok = "<?=lang("UNIQUE_ID_OK"); ?>";
+    let msg_cannot_change = "<?=lang("CANNOT_CHANGE_ID"); ?>";
 </script>
 
 <br><br>
@@ -45,7 +50,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                 <span class="font-weight-bold">Research Description</span>
             </div>
         </div>
-        <div class="col-3 align-self-center">
+        <div class="col-5 align-self-center">
             <div role="alert" class="mt-1 alert alert-primary">
                 <span class="font-weight-bold">Actions</span>
             </div>
@@ -101,13 +106,27 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             <div class="col"><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
                         </div>
                     </div>
-                    <div class="col-3 align-self-center">
-                        <input type="button" value="<?=lang("DOWNLOAD_RESEARCH_BTN");?>"
-                               onclick="downloadResearch('<?=$uid;?>')" class="btn btn-primary"/>
+                    <div class="col-5">
+                        <div class="row p-2">
+                            <div class="col align-self-center">
+                                <input type="button" value="<?=lang("DOWNLOAD_RESEARCH_BTN");?>"
+                                       onclick="downloadResearch('<?=$uid;?>')" class="btn btn-primary"/>
+                            </div>
+                        </div>
                         <?php
                             if ($so == $user_id) { ?>
-                        <input type="button" value="<?=lang("DELETE_RESEARCH_BTN");?>"
+                        <div class="row p-2">
+                            <div class="col">
+                            <input type="button" value="<?=lang("DELETE_RESEARCH_BTN");?>"
                                onclick="deleteResearch('<?=$uid;?>')" class="btn btn-warning"/>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col">
+                            <input type="button" value="<?=lang("EDIT_RESEARCH_BTN");?>"
+                                   onclick="editResearch('<?=$uid;?>')" class="btn btn-info"/>
+                            </div>
+                        </div>
                         <?php
                             } ?>
                     </div>
