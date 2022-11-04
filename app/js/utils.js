@@ -146,7 +146,7 @@ $(document).ready(function() {
             contentType: false,
             success: function (response) {
                 //location.reload();
-                if (response.includes('')) {
+                if (response.includes('ERROR #0:')) {
                     //messages_place.innerHTML = response.toString();
                     location.reload();
                 } else {
@@ -155,7 +155,7 @@ $(document).ready(function() {
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert("Error: " + textStatus + " - " + errorThrown);
+                alert("Error: A" + textStatus + " - " + errorThrown);
                 console.log(textStatus, errorThrown);
             }
         });

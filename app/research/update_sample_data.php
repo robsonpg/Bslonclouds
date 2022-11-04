@@ -35,7 +35,8 @@ $sample_permission = $all_data[7];
 $sample_pub = $all_data[8];
 // Recuperando imagem em base64
 // Exemplo: data:image/png;base64,AAAFBfj42Pj4
-
+$error = '';
+$res = '';
 try {
     //#############################
     // insere no banco de dados
@@ -43,7 +44,7 @@ try {
         $sample_laser_type, $sample_other_lt, $sample_wavelength, $sample_permission, $sample_pub);
 
 } catch (Exception $e) {
-    $res = $e->getMessage();
+    $error = $e->getMessage();
 }
 
 //$myfile = fopen("refile.txt", "w");
@@ -51,4 +52,4 @@ try {
 //fwrite($myfile, $milliseconds);
 //fclose($myfile);
 
-echo $res;
+echo $res->errorString() . ':' . $error;
