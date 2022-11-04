@@ -293,8 +293,6 @@ function sendImagesToServer() {
 }
 
 function sendImages(sample_database_id) {
-    let message_place = document.getElementById("message_place");
-    message_place.innerText = "Start process images...";
     let progress_bar = document.getElementById("progress_bar");
     let messages_place = document.getElementById("messages_place");
     let progress_steps = 100 / image_info_list.length;

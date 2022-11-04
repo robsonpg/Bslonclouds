@@ -16,6 +16,7 @@ if (!$user->isLoggedIn()) {
 }
 
 $user_id = $user->data()->id;
+$user_name = $user->data()->fname;
 
 require_once "properties_modal.php";
 require_once "send_images_modal.php";
@@ -47,6 +48,7 @@ $all_researches = getAllResearchesID();
     let msg_lw = "<?=lang("LASER_WAVELENGTH");?>";
     let msg_per = "<?=lang("IMAGES_PERMISSION");?>";
     let msg_pub = "<?=lang("RESEARCH_PUBLIC_ID");?>";
+    let msg_user_name = "<?=lang("MSG_RESEARCH_NAME");?>";
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {
@@ -55,6 +57,7 @@ $all_researches = getAllResearchesID();
         echo json_encode($all_researches);
     } ?>;
     let user_id = <?php echo $user_id; ?>;
+    let login_user_name = "<?php echo $user_name; ?>";
 </script>
 
 <br><br>

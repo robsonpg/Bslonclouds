@@ -189,7 +189,8 @@ $(document).ready(function() {
             let permission_id = sample_permission.getAttribute("id").toString();
             let permission_text = $("label[for='" + permission_id + "']").text();
 
-            col_prop.innerHTML = msg_uid + ": <b>" + sample_unique_id.value + "</b> " +
+            col_prop.innerHTML = msg_user_name + ": <b>" + login_user_name + "</b><br>" +
+                msg_uid + ": <b>" + sample_unique_id.value + "</b> " +
                 msg_illumi + ": <b>" + sample_name.value + "</b> " +
                 msg_fr + ": <b>" + sample_frames.value + "</b> " +
                 msg_config + ": <b>" + config_text + "</b> " +
