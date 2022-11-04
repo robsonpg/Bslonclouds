@@ -81,6 +81,7 @@
     "MODAL_ABOUT_MSG" => "Author: Roberto Alves Braga Jr; Developer: RPG Software and Research",
     "RESEARCH_PUBLIC_ID" => "Published in DOI/URL (optional)",
     "CANNOT_CHANGE_ID" => "Unique ID <b>CANNOT</b> be changed",
+    "MODEL_START_SEND_IMAGES" => "Starting processing the images. It can take some minutes."
  ));
 
 

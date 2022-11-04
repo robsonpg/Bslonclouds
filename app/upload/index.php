@@ -37,6 +37,7 @@ $all_researches = getAllResearchesID();
     let msg_exist = "<?=lang("EXIST_UNIQUE_ID"); ?>";
     let msg_min = "<?=lang("MIN_UNIQUE_ID_CHARS"); ?>";
     let msg_ok = "<?=lang("UNIQUE_ID_OK"); ?>";
+    let msg_send_images = "<?=lang("MODEL_START_SEND_IMAGES");?>";
 
     let msg_uid = "<?=lang("SAMPLE_IDENTIFICATION");?>";
     let msg_illumi = "<?=lang("ILLUMINATED_SAMPLE");?>";

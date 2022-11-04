@@ -38,7 +38,7 @@
                         </div>
                         <div class="row justify-content-between align-items-center border">
                             <div class="col"><?=lang("ILLUMINATED_SAMPLE"); ?></div>
-                            <div class="col"><input type="text" id="sample_name" maxlength="10"></div>
+                            <div class="col"><input type="text" id="sample_name" maxlength="20"></div>
                         </div>
                         <div class="row justify-content-between align-items-center border">
                             <div class="col"><?=lang("TIME_RATE"); ?></div>

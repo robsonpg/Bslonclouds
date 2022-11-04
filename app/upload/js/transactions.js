@@ -31,11 +31,16 @@ function readURL(input, id) {
     // Analisar nomes das imagens, devem ser somente números
     for (let i=0; i<input.files.length; i++) {
         // pega o primeiro nome
-        let main_name = input.files[i].name.split(".");
-        if (isNaN(main_name[0])) {
-            alert("Invalid file name");
-            return;
-        }
+        //
+        //######################################################
+        //
+        // Vamos desativar a verificação dos nomes na primeira edição
+        //
+        // let main_name = input.files[i].name.split(".");
+        // if (isNaN(main_name[0])) {
+        //     alert("Invalid file name");
+        //     return;
+        // }
     }
 
     let tumb_div = document.querySelector("#tumbnails");
@@ -235,7 +240,7 @@ function showPropertiesModal() {
 function sendImagesToServer() {
     //alert("click");
     let message_place = document.getElementById("message_place");
-    message_place.innerText = "Start process images...";
+    message_place.innerText = msg_send_images;
     let progress_bar = document.getElementById("progress_bar");
     let messages_place = document.getElementById("messages_place");
     let sample_unique_id = images_properties[0];

@@ -136,8 +136,6 @@ $(document).ready(function() {
             sample_config.value + "&" + sample_laser_type.value + "&" + other_laser_type.value + "&" +
             sample_wavelength.value + "&" + sample_permission.value + "&" + sample_pub_doi.value;
 
-        alert(header);
-
         let ajaxRequest = $.ajax({
             type: 'POST',
             url: 'update_sample_data.php',
