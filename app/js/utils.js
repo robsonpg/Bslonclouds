@@ -130,39 +130,95 @@ $(document).ready(function() {
         }
 
         //###################################################################
-        // Faz o update no banco de dados
+        // Faz o update no banco de dados em caso de edição
+        if (editting) {
 
-        let header = id_text + "&" + sample_name.value + "&" + sample_frames.value + "&" +
-            sample_config.value + "&" + sample_laser_type.value + "&" + other_laser_type.value + "&" +
-            sample_wavelength.value + "&" + sample_permission.value + "&" + sample_pub_doi.value;
+            let header = id_text + "&" + sample_name.value + "&" + sample_frames.value + "&" +
+                sample_config.value + "&" + sample_laser_type.value + "&" + other_laser_type.value + "&" +
+                sample_wavelength.value + "&" + sample_permission.value + "&" + sample_pub_doi.value;
 
-        let ajaxRequest = $.ajax({
-            type: 'POST',
-            url: 'update_sample_data.php',
-            dataType: "text",
-            //async: true,
-            data: header,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                //location.reload();
-                if (response.includes('ERROR #0:')) {
-                    //messages_place.innerHTML = response.toString();
-                    location.reload();
-                } else {
-                    messages_place.innerText = "Fail to update data in database.";
-                    //messages_place.innerText = response.toString();
+            let ajaxRequest = $.ajax({
+                type: 'POST',
+                url: 'update_sample_data.php',
+                dataType: "text",
+                //async: true,
+                data: header,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    //location.reload();
+                    if (response.includes('ERROR #0:')) {
+                        //messages_place.innerHTML = response.toString();
+                        location.reload();
+                    } else {
+                        messages_place.innerText = "Fail to update data in database.";
+                        //messages_place.innerText = response.toString();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error: A" + textStatus + " - " + errorThrown);
+                    console.log(textStatus, errorThrown);
                 }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("Error: A" + textStatus + " - " + errorThrown);
-                console.log(textStatus, errorThrown);
+            });
+        } else {
+            //###################################################################
+            // Salva os dados para inserir no banco de dados
+            images_properties = [];
+            images_properties.push(sample_unique_id.value.trim());
+            images_properties.push(sample_name.value);
+            images_properties.push(sample_frames.value);
+            images_properties.push(sample_config.value);
+            images_properties.push(sample_laser_type.value);
+            let other_laser_type = document.getElementById("other_laser_type");
+            images_properties.push(other_laser_type.value);
+            images_properties.push(sample_wavelength.value);
+            images_properties.push(sample_permission.value);
+            //####################################################################
+            // Preenche a interface
+            let image_properties = document.getElementById("images_properties");
+            image_properties.innerHTML = "";
+            let row_prop = document.createElement("div");
+            row_prop.className = "row justify-content-between align-items-center";
+            let col_prop = document.createElement("div");
+            col_prop.className = "col-10";
+
+            let config_id = sample_config.getAttribute("id").toString();
+            let config_text = $("label[for='" + config_id + "']").text();
+            let laser_type_id = sample_laser_type.getAttribute("id").toString();
+            let laser_type_text = $("label[for='" + laser_type_id + "']").text();
+            let permission_id = sample_permission.getAttribute("id").toString();
+            let permission_text = $("label[for='" + permission_id + "']").text();
+
+            col_prop.innerHTML = msg_uid + ": <b>" + sample_unique_id.value + "</b> " +
+                msg_illumi + ": <b>" + sample_name.value + "</b> " +
+                msg_fr + ": <b>" + sample_frames.value + "</b> " +
+                msg_config + ": <b>" + config_text + "</b> " +
+                msg_lt + ": <b>" + laser_type_text + "</b> " +
+                msg_lw + ": <b>" + sample_wavelength.value + " nm</b> " +
+                msg_per + ": <b>" + permission_text + "</b>";
+
+            //#############################################################
+            // Botão de editar as propriedades
+            let col_prop_edit = document.createElement("div");
+            col_prop_edit.className = "col-2";
+            let btn_edit = document.createElement("a");
+            btn_edit.className = "btn btn-info";
+            btn_edit.setAttribute("id", "properties_edit");
+            btn_edit.onclick = showPropertiesModal;
+            btn_edit.innerHTML = "<a style='color: white'>" + btn_edit_text + "</a>";
+            //<a id="sample_data_confirm" className="btn btn-primary delete" href="#"><?=lang("BTN_ACCEPT")?></a>
+            col_prop_edit.append(btn_edit);
+
+            row_prop.append(col_prop);
+            row_prop.append(col_prop_edit);
+            image_properties.append(row_prop);
+            image_properties.style.display = "block";
+            // Preencheu as propriedades, ativa o botão de envio
+            if ((image_info_list.length > 0) && (images_properties.length > 0)) {
+                let btn_send = document.getElementById("btn_send_modal");
+                btn_send.disabled = false;
             }
-        });
-
-        //####################################################################
-        // Faz update no banco de dados
-
+        }
         //alert("confirm");
     });
 })
