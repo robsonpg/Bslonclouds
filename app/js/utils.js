@@ -146,7 +146,7 @@ $(document).ready(function() {
             contentType: false,
             success: function (response) {
                 //location.reload();
-                if (response.includes('id')) {
+                if (response.includes('')) {
                     //messages_place.innerHTML = response.toString();
                     location.reload();
                 } else {
