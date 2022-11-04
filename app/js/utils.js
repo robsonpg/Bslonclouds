@@ -173,6 +173,7 @@ $(document).ready(function() {
             images_properties.push(other_laser_type.value);
             images_properties.push(sample_wavelength.value);
             images_properties.push(sample_permission.value);
+            images_properties.push(sample_pub_doi.value);
             //####################################################################
             // Preenche a interface
             let image_properties = document.getElementById("images_properties");
@@ -188,6 +189,7 @@ $(document).ready(function() {
             let laser_type_text = $("label[for='" + laser_type_id + "']").text();
             let permission_id = sample_permission.getAttribute("id").toString();
             let permission_text = $("label[for='" + permission_id + "']").text();
+            let pub_text = sample_pub_doi.value;
 
             col_prop.innerHTML = msg_user_name + ": <b>" + login_user_name + "</b><br>" +
                 msg_uid + ": <b>" + sample_unique_id.value + "</b> " +
@@ -196,7 +198,8 @@ $(document).ready(function() {
                 msg_config + ": <b>" + config_text + "</b> " +
                 msg_lt + ": <b>" + laser_type_text + "</b> " +
                 msg_lw + ": <b>" + sample_wavelength.value + " nm</b> " +
-                msg_per + ": <b>" + permission_text + "</b>";
+                msg_per + ": <b>" + permission_text + "</b> " +
+                msg_pub + ": <b>" + pub_text + "</b>";
 
             //#############################################################
             // Botão de editar as propriedades
