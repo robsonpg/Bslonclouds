@@ -148,7 +148,7 @@ $(document).ready(function() {
                 //location.reload();
                 if (response.includes('id')) {
                     //messages_place.innerHTML = response.toString();
-
+                    location.reload();
                 } else {
                     messages_place.innerText = "Fail to update data in database.";
                     //messages_place.innerText = response.toString();
