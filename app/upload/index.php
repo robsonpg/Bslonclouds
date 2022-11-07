@@ -49,7 +49,7 @@ $all_researches = getAllResearchesID();
     let msg_per = "<?=lang("IMAGES_PERMISSION");?>";
     let msg_pub = "<?=lang("RESEARCH_PUBLIC_ID");?>";
     let msg_user_name = "<?=lang("MSG_RESEARCH_NAME");?>";
-    let msg_sending = "<?=lang("MSG_SENDING");?>;
+    let msg_sending = "<?=lang("MSG_SENDING");?>";
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {
