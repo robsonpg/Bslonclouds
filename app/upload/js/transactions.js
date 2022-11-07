@@ -62,14 +62,14 @@ function readURL(input, id) {
             image_main.onload = function() {
                 // Determna o tamanho padrão
                 if (i === 0) {
-                    main_width = this.width;
-                    main_height = this.height;
+                    main_width = image_main.width;
+                    main_height = image_main.height;
                 }
                 // access image size here
-                image_info_list[i][IMAGE_WIDTH] = this.width;
-                image_info_list[i][IMAGE_HEIGTH] = this.height;
+                image_info_list[i][IMAGE_WIDTH] = image_main.width;
+                image_info_list[i][IMAGE_HEIGTH] = image_main.height;
                 let tumb_msg = document.querySelector("#image_info" + i);
-                if ((this.width !== main_width) || (this.height !== main_height)) {
+                if ((image_main.width !== main_width) || (image_main.height !== main_height)) {
                     tumb_msg.innerHTML = tumb_msg.innerHTML + "<a style='color: orange'>" + image_size + "<b>" + this.width + "x" +
                         this.height + "</b></a>";
                 } else {
