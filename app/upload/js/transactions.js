@@ -27,6 +27,9 @@ function readURL(input, id) {
     let main_height = 0;
     image_info_list = [];
 
+    let btn_send = document.getElementById("btn_send_modal");
+    btn_send.value = msg_loading;
+
     //#################################################################
     // Analisar nomes das imagens, devem ser somente números
     for (let i=0; i<input.files.length; i++) {
@@ -78,6 +81,10 @@ function readURL(input, id) {
                 // } else {
                     tumb_msg.innerHTML = tumb_msg.innerHTML + image_size + "<b>" + this.width + "x" +
                         this.height + "</b>";
+                    if (i === (input.files.length - 1)) {
+                        btn_send.disabled = false;
+                        btn_send.value = msg_upload_images;
+                    }
                 // }
             };
         }
@@ -120,10 +127,10 @@ function readURL(input, id) {
         // Guarda as informações colhidas sobre o arquivo
         image_info_list.push([input.files[i], input.files[i].name, input.files[i].lastModified, 0, 0]);
 
-        if ((image_info_list.length > 0) && (images_properties.length > 0)) {
-            let btn_send = document.getElementById("btn_send_modal");
-            btn_send.disabled = false;
-        }
+        // if ((image_info_list.length > 0) && (images_properties.length > 0)) {
+        //     let btn_send = document.getElementById("btn_send_modal");
+        //     btn_send.disabled = false;
+        // }
 
     }
 

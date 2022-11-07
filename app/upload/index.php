@@ -50,6 +50,8 @@ $all_researches = getAllResearchesID();
     let msg_pub = "<?=lang("RESEARCH_PUBLIC_ID");?>";
     let msg_user_name = "<?=lang("MSG_RESEARCH_NAME");?>";
     let msg_sending = "<?=lang("MSG_SENDING");?>";
+    let msg_loading = "<?=lang("MSG_LOADING_IMAGES");?>";
+    let msg_upload_images = "<?=lang("SEND_IMAGES");?>";
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {

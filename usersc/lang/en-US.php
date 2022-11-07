@@ -84,6 +84,7 @@
     "MODEL_START_SEND_IMAGES" => "Starting processing the images. It can take some minutes.",
     "MSG_RESEARCH_NAME" => "Research Name",
     "MSG_SENDING" => "Sending ",
+    "MSG_LOADING_IMAGES" => "Loading images...",
  ));
 
 
