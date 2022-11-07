@@ -56,7 +56,7 @@
     "UNIQUE_ID_OK" => "Identification Ok",
     "CLEAR_ALL" => "Clear the form",
     "SELECT_IMAGES_TITLE" => "Image Selection",
-    "SELECT_IMAGES_TEXT" => "Select the research data (images) you will up-load.<br><b>Remenber these files must be named as ordinal numbers in sequence (Ex: 1.bmp, 2.bmp, ...)</b>",
+    "SELECT_IMAGES_TEXT" => "Select the research data (images) you will up-load.",
     "IMAGES_PROPERTIES_TITLE" => "Research Data's Properties",
     "IMAGES_PROPERTIES_TEXT" => "Enter the research data information.",
     "SEND_IMAGES_TITLE" => "Up-load the research data (images) to BSL ON CLOUDS",

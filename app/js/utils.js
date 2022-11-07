@@ -217,6 +217,10 @@ $(document).ready(function() {
             row_prop.append(col_prop_edit);
             image_properties.append(row_prop);
             image_properties.style.display = "block";
+            // Aiva o botão de selecionar imagens
+            let btn_get_files = document.getElementById("btn_get_files");
+            btn_get_files.disabled = false;
+
             // Preencheu as propriedades, ativa o botão de envio
             if ((image_info_list.length > 0) && (images_properties.length > 0)) {
                 let btn_send = document.getElementById("btn_send_modal");

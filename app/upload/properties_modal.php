@@ -49,17 +49,14 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <input class="form-check-input" id="sample_config1" type="radio" name="sample_config"
-                                               value="1"/>
-                                        <label class="form-check-label" for="sample_config1">
-                                            <?=lang("BACKSCATTERING"); ?>
-                                        </label>
+                                        <input id="sample_config1" type="radio" name="sample_config"
+                                               value="1"/>&nbsp;<?=lang("BACKSCATTERING"); ?>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <input class="form-check-input" id="sample_config2" type="radio" name="sample_config" value="2" />
-                                        <label class="form-check-label" for="sample_config2"><?=lang("FWD_SCATTERING"); ?></label>
+                                        <input id="sample_config2" type="radio" name="sample_config"
+                                               value="2" />&nbsp;<?=lang("FWD_SCATTERING"); ?>
                                     </div>
                                 </div>
                             </div>
@@ -73,21 +70,21 @@
                                     <div class="col">
                                         <input class="form-check-input" id="sample_laser_type1" type="radio"
                                                name="sample_laser_type" value="1" onclick="enableOtherType()"/>
-                                        <label class="form-check-label" for="sample_laser_type1"><?=lang("HENE"); ?></label>
+                                            &nbsp;<?=lang("HENE"); ?>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <input class="form-check-input" id="sample_laser_type2" type="radio"
                                                name="sample_laser_type" value="2" onclick="enableOtherType()"/>
-                                        <label class="form-check-label" for="sample_laser_type2"><?=lang("DIODE"); ?></label>
+                                            &nbsp;<?=lang("DIODE"); ?>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <input class="form-check-input" id="sample_laser_type3" type="radio"
                                                name="sample_laser_type" value="3" onclick="enableOtherType()"/>
-                                        <label class="form-check-label" for="sample_laser_type3"><?=lang("OTHER"); ?></label>
+                                            &nbsp;<?=lang("OTHER"); ?>
                                     </div>
                                     <div class="col">
                                         <input type="text" id="other_laser_type" disabled maxlength="10">
@@ -104,10 +101,8 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="form-check ">
-                                        <input class="form-check-input" id="sample_permission1" type="radio" name="sample_permission"
-                                               value="1"/>
-                                        <label class="form-check-label" for="sample_permission1">
-                                            <?=lang("PERMISSION_PUBLIC"); ?>
+                                        <input class="form-check-input" id="sample_permission1" type="radio"
+                                               name="sample_permission" value="1"/>&nbsp;<?=lang("PERMISSION_PUBLIC"); ?>
                                         </label>
                                     </div>
                                 </div>
@@ -116,8 +111,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-check ">
-                                        <input class="form-check-input" id="sample_permission2" type="radio" name="sample_permission" value="2" />
-                                        <label class="form-check-label" for="sample_permission2"><?=lang("PERMISSION_PRIVATE"); ?></label>
+                                        <input class="form-check-input" id="sample_permission2" type="radio"
+                                               name="sample_permission" value="2" />&nbsp;<?=lang("PERMISSION_PRIVATE"); ?>
                                     </div>
                                 </div>
                                 <div class="row">

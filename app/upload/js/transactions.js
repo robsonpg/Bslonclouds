@@ -69,13 +69,16 @@ function readURL(input, id) {
                 image_info_list[i][IMAGE_WIDTH] = image_main.width;
                 image_info_list[i][IMAGE_HEIGTH] = image_main.height;
                 let tumb_msg = document.querySelector("#image_info" + i);
-                if ((image_main.width !== main_width) || (image_main.height !== main_height)) {
-                    tumb_msg.innerHTML = tumb_msg.innerHTML + "<a style='color: orange'>" + image_size + "<b>" + this.width + "x" +
-                        this.height + "</b></a>";
-                } else {
+                // Retirado algoritmo de laranja porque a leitura não é sequencial
+                // #####################################################################
+                // if ((image_main.width !== main_width) || (image_main.height !== main_height)) {
+                //     alert(i);
+                //     tumb_msg.innerHTML = tumb_msg.innerHTML + "<a style='color: orange'>" + image_size + "<b>" + this.width + "x" +
+                //         this.height + "</b></a>";
+                // } else {
                     tumb_msg.innerHTML = tumb_msg.innerHTML + image_size + "<b>" + this.width + "x" +
                         this.height + "</b>";
-                }
+                // }
             };
         }
         reader.readAsDataURL(input.files[i]);
@@ -354,6 +357,8 @@ function sendImages(sample_database_id) {
 function clearAllData() {
     images_properties = [];
     image_info_list = [];
+    let btn_get_files = document.getElementById("btn_get_files");
+    btn_get_files.disabled = true;
     window.location.reload();
 }
 

@@ -80,8 +80,8 @@ $all_researches = getAllResearchesID();
             <div class="col-3 align-self-center">
                 <input type="file" id="getfiles" style="display: none;" capture="camera"
                        onchange="readURL(this,'mini_foto_new');" multiple accept=".bmp"/>
-                <input type="button" value="<?=lang("SELECT_IMAGES_BTN");?>"
-                       onclick="document.getElementById('getfiles').click();" class="btn btn-primary"/>
+                <input type="button" id="btn_get_files" value="<?=lang("SELECT_IMAGES_BTN");?>"
+                       onclick="document.getElementById('getfiles').click();" class="btn btn-primary" disabled/>
             </div>
             <div class="col align-self-center">
                 <div role="alert" class="mt-1 alert alert-info alert-dismissible fade show">
