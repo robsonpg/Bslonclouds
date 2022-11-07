@@ -82,7 +82,7 @@ $(document).ready(function() {
             search_id = public_researchers;
             editting = true;
         }
-        if (((id_text.length <= 5) || (JSON.stringify(search_id).includes(id_text))) && (!editting)) {
+        if (((id_text.length <= 5) || (JSON.stringify(search_id).includes('"' + id_text + '"'))) && (!editting)) {
             // Sacode a entrada
             sample_unique_id.focus();
             sample_unique_id.style.borderColor = "red";

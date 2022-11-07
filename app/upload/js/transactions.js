@@ -295,60 +295,70 @@ function sendImagesToServer() {
     });
 }
 
+//#####################################################################
+// Envia as imagens para o servidor
+// Obs: os envios assíncronos estão causando sobrecarga na hospedagem
+//
 function sendImages(sample_database_id) {
-    let progress_bar = document.getElementById("progress_bar");
-    let messages_place = document.getElementById("messages_place");
-    let progress_steps = 100 / image_info_list.length;
-    let progress_value = 0;
-
+    let idx = 0;
     //###################################################
     // Loop de envio das imagens
-    for (let idx = 0; idx < image_info_list.length; idx++)
-    {
-        // Monta a linha de inserção
-        const reader = new FileReader();
-        //let idx = 0;
-        reader.readAsDataURL(image_info_list[idx][OBJECT_IMAGE_INDEX]);
-        reader.onload = function (e) {
-            // $('#tumb' + i)
-            //     .attr('src', e.target.result);
-            // Cada imagem vai com sua lasgura e altura
-            let image_size_date = image_info_list[idx][FILE_NAME] + "&" + sample_database_id + "&" +
-                image_info_list[idx][IMAGE_TIMESTAMP] + "&" + image_info_list[idx][IMAGE_WIDTH] +
-                "&" + image_info_list[idx][IMAGE_HEIGTH];
-            let data = image_size_date + "&" + e.target.result;
+    sendImage(sample_database_id, idx);
+}
 
-            let ajaxRequest = $.ajax({
-                type: 'POST',
-                url: 'upload_image.php',
-                dataType: "text",
-                //async: true,
-                data: data,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    //location.reload();
-                    if (response.includes('')) {
-                        //alert("Image Sent..");
-                        // Assim que o registro for salvo, vai para o registro de
-                        // Dados dos seus contato
-                        //window.location.href = 'reg_user_type.php';
-                        progress_value = progress_value + progress_steps;
-                        progress_bar.style.width = progress_value + "%";
-                        //progress_bar.innerText = "Sending image " + (idx+1) + " of " + image_info_list.length + "...";
-                        if (idx === (image_info_list.length - 1)) {
-                            $('#send-images-modal').modal('hide');
-                        }
-                    } else {
-                        messages_place.innerText = response.toString();
+function sendImage(sample_database_id ,idx) {
+
+    let progress_bar = document.getElementById("progress_bar");
+    // Monta a linha de inserção
+    const reader = new FileReader();
+    //let idx = 0;
+    let messages_proc_place = document.getElementById("proc_img_place");
+    messages_proc_place.innerText = "Sending " + image_info_list[idx][FILE_NAME] + "...";
+    reader.readAsDataURL(image_info_list[idx][OBJECT_IMAGE_INDEX]);
+    reader.onload = function (e) {
+        // $('#tumb' + i)
+        //     .attr('src', e.target.result);
+        // Cada imagem vai com sua lasgura e altura
+        // A função a seguir será um código reentrante
+        let image_size_date = image_info_list[idx][FILE_NAME] + "&" + sample_database_id + "&" +
+            image_info_list[idx][IMAGE_TIMESTAMP] + "&" + image_info_list[idx][IMAGE_WIDTH] +
+            "&" + image_info_list[idx][IMAGE_HEIGTH];
+        let data = image_size_date + "&" + e.target.result;
+
+        let ajaxRequest = $.ajax({
+            type: 'POST',
+            url: 'upload_image.php',
+            dataType: "text",
+            //async: true,
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                //location.reload();
+                if (response.includes('')) {
+                    //alert("Image Sent..");
+                    // Assim que o registro for salvo, vai para o registro de
+                    // Dados dos seus contato
+                    //window.location.href = 'reg_user_type.php';
+                    let progress_value = (idx / image_info_list.length) * 100;
+                    progress_bar.style.width = progress_value + "%";
+                    //progress_bar.innerText = "Sending image " + (idx+1) + " of " + image_info_list.length + "...";
+                    if (idx === (image_info_list.length - 1)) {
+                        $('#send-images-modal').modal('hide');
+                        return;
                     }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Error: " + textStatus + " - " + errorThrown);
-                    console.log(textStatus, errorThrown);
+                    // Acabou de enviar a imagem, passa para a próxima
+                    idx++;
+                    sendImage(sample_database_id, idx);
+                } else {
+                    messages_proc_place.innerText = response.toString();
                 }
-            });
-        }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error: " + textStatus + " - " + errorThrown);
+                console.log(textStatus, errorThrown);
+            }
+        });
     }
 }
 

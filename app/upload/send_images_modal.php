@@ -17,11 +17,15 @@
                     <span aria-hidden="true">&times;</span></button>
             </div>
             <div class="container bg-light">
-                <div class="col my-2">
-                    <div class="card card-body p-3"><span class="text-primary" id="message_place">
-                            <span class="badge badge-primary float-right">+ 13%</span> XXXXX </span>
-                        <div class="progress mt-4">
-                            <div class="progress-bar bg-primary" id="progress_bar" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="row">
+                    <div class="col my-2">
+                        <div class="card card-body p-3"><span class="text-primary" id="message_place">
+                                <span class="badge badge-primary float-right">+ 13%</span> XXXXX </span>
+                            <div class="progress mt-4">
+                                <div class="progress-bar bg-primary" id="progress_bar" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="text-info" id="proc_img_place">
+                            </div>
                         </div>
                     </div>
                 </div>

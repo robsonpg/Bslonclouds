@@ -17,11 +17,12 @@
                     <span aria-hidden="true">&times;</span></button>
             </div>
             <div class="container bg-light">
-                <div class="col my-2">
-                    <div class="text-info" id="messages_place"><?=lang("MODAL_PROCESSING_IMAGES_MSG")?>
-                        <img src="../images/progress.gif">
+                <div class="row">
+                    <div class="col my-2">
+                        <div class="text-info" id="proc_messages_place"><?=lang("MODAL_PROCESSING_IMAGES_MSG")?>
+                            <img src="../images/progress.gif">
+                        </div>
                     </div>
-
                 </div>
             </div>
             <div class="modal-footer">

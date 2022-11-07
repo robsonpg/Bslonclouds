@@ -83,6 +83,7 @@
     "CANNOT_CHANGE_ID" => "Unique ID <b>CANNOT</b> be changed",
     "MODEL_START_SEND_IMAGES" => "Starting processing the images. It can take some minutes.",
     "MSG_RESEARCH_NAME" => "Research Name",
+    "MSG_SENDING" => "Sending ",
  ));
 
 
