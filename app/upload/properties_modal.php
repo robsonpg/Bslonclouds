@@ -126,6 +126,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="row justify-content-between align-items-center border">
+                    <div class="col-4">
+                        <div class="row">
+                            <div class="col"><?=lang("SELECT_RESEARCH_IMAGE"); ?></div>
+                        </div>
+                        <div class="row" id="image_max_size">
+                            <div class="col"><b>Image max size 300x300 pixels</b></div>
+                        </div>
+                    </div>
+                    <div class="col-4 align-self-center">
+                        <input type="file" id="getfiles" style="display: none;"
+                               onchange="readCoverURL(this,'mini_foto_new');" accept=".bmp"/>
+                        <input type="button" id="btn_get_files" value="<?=lang("SELECT_COVER_IMAGE_BTN");?>"
+                               onclick="document.getElementById('getfiles').click();" class="btn btn-primary"/>
+                    </div>
+                    <div class="col align-self-center">
+                        <hr>
+                        <img id="cover_image" src="img/default.png" style="height: 20mm">
+                        <hr>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <a id="sample_data_confirm" class="btn btn-primary" style="color: whitesmoke" data-dismiss="modal"><?=lang("BTN_ACCEPT")?></a>

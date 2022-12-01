@@ -144,8 +144,8 @@ $all_researches = getAllResearchesID();
         </div>
 </div>
 
-<script type="text/javascript" src="js/transactions.js"></script>
 <script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="js/transactions.js"></script>
 
 
 

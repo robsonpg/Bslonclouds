@@ -85,6 +85,8 @@
     "MSG_RESEARCH_NAME" => "Research Name",
     "MSG_SENDING" => "Sending ",
     "MSG_LOADING_IMAGES" => "Loading images...",
+    "SELECT_RESEARCH_IMAGE" => "Select research cover image",
+    "SELECT_COVER_IMAGE_BTN" => "Select image",
  ));
 
 
