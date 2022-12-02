@@ -52,6 +52,9 @@ $all_researches = getAllResearchesID();
     let msg_sending = "<?=lang("MSG_SENDING");?>";
     let msg_loading = "<?=lang("MSG_LOADING_IMAGES");?>";
     let msg_upload_images = "<?=lang("SEND_IMAGES");?>";
+    let msg_cover = "<?=lang("COVER_IMAGE_MSG");?>";
+    let msg_sending_done = "<?=lang("SEND_IMAGES_DONE_MSG");?>";
+
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {
@@ -65,6 +68,7 @@ $all_researches = getAllResearchesID();
 
 <br><br>
 <div class="container">
+    <div id="error_messages_place"></div>
     <h2><?=lang("MENU_IMAGE_MANAGER");?></h2>
         <div class="row">
             <div class="col-3 align-self-center">

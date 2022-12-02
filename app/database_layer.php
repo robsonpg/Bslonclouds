@@ -10,7 +10,7 @@ require_once "constants.php";
 // Função para inserir as propriedades da amostra e sua imagem
 function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type,
                           $sample_other_lt, $sample_wavelength, $sample_permission, $sample_amount_of_images,
-                          $sample_owner, $sample_pub) {
+                          $sample_owner, $sample_pub, $sample_cover_image_data) {
 
     $db = DB::getInstance();
 
@@ -26,7 +26,8 @@ function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $
                     bsl_sample_data_amount_of_images,
                     bsl_sample_data_unique_id,
                     bsl_sample_data_owner_id,
-                    bsl_sample_data_published_DOI_URL)
+                    bsl_sample_data_published_DOI_URL,
+                    bsl_sample_data_cover_image)
             VALUES (
                     '$sample_name',
                     $sample_frame_rate,
@@ -39,7 +40,8 @@ function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $
                     $sample_amount_of_images,
                     '$sample_unique_id',
                     $sample_owner,
-                    '$sample_pub');";
+                    '$sample_pub',
+                    '$sample_cover_image_data');";
 
     $res = $db->query($sql);
 

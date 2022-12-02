@@ -287,7 +287,7 @@ function sendImagesToServer() {
     let message_place = document.getElementById("message_place");
     message_place.innerText = msg_send_images;
     let progress_bar = document.getElementById("progress_bar");
-    let messages_place = document.getElementById("messages_place");
+    let error_messages_place = document.getElementById("error_messages_place");
     let sample_unique_id = images_properties[0];
     let sample_name = images_properties[1];
     let sample_frame_rate = images_properties[2];
@@ -297,6 +297,9 @@ function sendImagesToServer() {
     let sample_wavelength = images_properties[6];
     let sample_permission = images_properties[7];
     let sample_pub = images_properties[8];
+    //#########################################################
+    // Imagem de capa
+    let sample_cover_image = images_properties[9];
     let amount_of_images = image_info_list.length;
     let sample_owner = user_id;
     let sample_database_id = -1;
@@ -307,7 +310,7 @@ function sendImagesToServer() {
     // Monta o cabeçalho para todas imagens do stream
     let header = sample_unique_id + "&" + sample_name + "&" + sample_frame_rate + "&" + sample_config + "&" +
         sample_laser_type + "&" + other_laser_type + "&" + sample_wavelength + "&" + sample_permission + "&" +
-        amount_of_images + "&" + sample_owner + "&" + sample_pub;
+        amount_of_images + "&" + sample_owner + "&" + sample_pub + "&" + sample_cover_image;
 
     let ajaxRequest = $.ajax({
         type: 'POST',
@@ -326,8 +329,8 @@ function sendImagesToServer() {
                 // Insere as imagens da maostra
                 sendImages(sample_database_id);
             } else {
-                messages_place.innerText = "Fail to insert data in database.";
-                //messages_place.innerText = response.toString();
+                error_messages_place.innerText = "Fail to insert data in database.";
+                //error_messages_place.innerText = response.toString();
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -355,8 +358,7 @@ function sendImage(sample_database_id ,idx) {
     const reader = new FileReader();
     //let idx = 0;
     let messages_proc_place = document.getElementById("proc_img_place");
-    messages_proc_place.innerText = "Sending " + image_info_list[idx][FILE_NAME] + "...";
-    reader.readAsDataURL(image_info_list[idx][OBJECT_IMAGE_INDEX]);
+    messages_proc_place.innerText = msg_sending + image_info_list[idx][FILE_NAME] + "...";
     reader.onload = function (e) {
         // $('#tumb' + i)
         //     .attr('src', e.target.result);
@@ -386,7 +388,14 @@ function sendImage(sample_database_id ,idx) {
                     progress_bar.style.width = progress_value + "%";
                     //progress_bar.innerText = "Sending image " + (idx+1) + " of " + image_info_list.length + "...";
                     if (idx === (image_info_list.length - 1)) {
-                        $('#send-images-modal').modal('hide');
+                        // Avisa que todas imagens já foram enviadas
+                        progress_bar.style.width = "100%";
+                        messages_proc_place.innerText = "All images uploaded to server. You can access by Research Catalog.";
+                        setTimeout(function () {
+                            $('#send-images-modal').modal('hide');
+                            // Limpa o formulário de envio
+                            clearAllData();
+                        }, 10000);
                         return;
                     }
                     // Acabou de enviar a imagem, passa para a próxima
@@ -402,6 +411,7 @@ function sendImage(sample_database_id ,idx) {
             }
         });
     }
+    reader.readAsDataURL(image_info_list[idx][OBJECT_IMAGE_INDEX]);
 }
 
 //########################################################################

@@ -71,6 +71,7 @@ $(document).ready(function() {
         let sample_permission = document.querySelector('input[name="sample_permission"]:checked');
         let sample_pub_doi = document.getElementById("research_public_id");
         let messages_place = document.getElementById("messages_place");
+        let cover_image = document.getElementById("cover_image");
 
         // Se o id da amostra tem menos que 6 caracteres, não aceita
         let id_text = sample_unique_id.value;
@@ -135,7 +136,8 @@ $(document).ready(function() {
 
             let header = id_text + "&" + sample_name.value + "&" + sample_frames.value + "&" +
                 sample_config.value + "&" + sample_laser_type.value + "&" + other_laser_type.value + "&" +
-                sample_wavelength.value + "&" + sample_permission.value + "&" + sample_pub_doi.value;
+                sample_wavelength.value + "&" + sample_permission.value + "&" + sample_pub_doi.value + "&" +
+                cover_image.src;
 
             let ajaxRequest = $.ajax({
                 type: 'POST',
@@ -175,6 +177,10 @@ $(document).ready(function() {
             images_properties.push(sample_permission.value);
             images_properties.push(sample_pub_doi.value);
             //####################################################################
+            // Coloca a imagem de capa na list
+            images_properties.push(cover_image.getAttribute("src"));
+
+            //####################################################################
             // Preenche a interface
             let image_properties = document.getElementById("images_properties");
             image_properties.innerHTML = "";
@@ -192,7 +198,8 @@ $(document).ready(function() {
             let pub_text = sample_pub_doi.value;
 
             col_prop.innerHTML = msg_user_name + ": <b>" + login_user_name + "</b><br>" +
-                msg_uid + ": <b>" + sample_unique_id.value + "</b> " +
+                msg_uid + ": <b>" + sample_unique_id.value + "</b><br><br>" + msg_cover + ": " +
+                "<img id='cover_image_prop' src='" + cover_image.getAttribute("src") + "' style='height: 20mm'><br><br>" +
                 msg_illumi + ": <b>" + sample_name.value + "</b> " +
                 msg_fr + ": <b>" + sample_frames.value + "</b> " +
                 msg_config + ": <b>" + config_text + "</b> " +

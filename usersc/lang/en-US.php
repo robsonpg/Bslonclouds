@@ -87,6 +87,9 @@
     "MSG_LOADING_IMAGES" => "Loading images...",
     "SELECT_RESEARCH_IMAGE" => "Select research cover image",
     "SELECT_COVER_IMAGE_BTN" => "Select image",
+    "COVER_IMAGE_MSG" => "Cover image",
+    "SEND_IMAGES_SENDING_MSG" => "Sending ",
+    "SEND_IMAGES_DONE_MSG" => "All images uploaded to server. You can access by Research Catalog.",
  ));
 
 

@@ -136,10 +136,10 @@
                         </div>
                     </div>
                     <div class="col-4 align-self-center">
-                        <input type="file" id="getfiles" style="display: none;"
-                               onchange="readCoverURL(this,'mini_foto_new');" accept=".bmp"/>
-                        <input type="button" id="btn_get_files" value="<?=lang("SELECT_COVER_IMAGE_BTN");?>"
-                               onclick="document.getElementById('getfiles').click();" class="btn btn-primary"/>
+                        <input type="file" id="getcoverimage" style="display: none;"
+                               onchange="readCoverURL(this);" accept=".bmp"/>
+                        <input type="button" id="btn_get_cover_img" value="<?=lang("SELECT_COVER_IMAGE_BTN");?>"
+                               onclick="document.getElementById('getcoverimage').click();" class="btn btn-primary"/>
                     </div>
                     <div class="col align-self-center">
                         <hr>

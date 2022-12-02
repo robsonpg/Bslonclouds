@@ -35,20 +35,34 @@ $sample_permission = $all_data[7];
 $sample_amount_of_images = $all_data[8];
 $sample_owner = $all_data[9];
 $sample_pub = $all_data[10];
+$sample_cover_image = $all_data[11];
 // Recuperando imagem em base64
 // Exemplo: data:image/png;base64,AAAFBfj42Pj4
+//#######################################################
+// Tratamento para a imagem de capa
+list($type, $data) = explode(';', $sample_cover_image);
 
-try {
-    //#############################
-    // insere no banco de dados
-    $res = insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type, $sample_other_lt,
-        $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner, $sample_pub);
+// Isolando apenas o tipo da imagem
+// $tipo: image/png
+list(, $type) = explode(':', $type);
 
-    $res = "id=" . $res;
-} catch (Exception $e) {
-    $res = $e->getMessage();
+// Isolando apenas os dados da imagem
+// $dados: AAAFBfj42Pj4
+list(, $sample_cover_image_data) = explode(',', $data);
+
+if (strpos($type, "bmp") == true) {
+
+    try {
+        //#############################
+        // insere no banco de dados
+        $res = insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type, $sample_other_lt,
+            $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner, $sample_pub, $sample_cover_image_data);
+
+        $res = "id=" . $res;
+    } catch (Exception $e) {
+        $res = $e->getMessage();
+    }
 }
-
 //$myfile = fopen("refile.txt", "w");
 //$milliseconds = floor(microtime(true) * 1000);
 //fwrite($myfile, $milliseconds);
