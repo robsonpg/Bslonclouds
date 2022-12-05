@@ -29,9 +29,9 @@ $(document).ready(function() {
         research_id.innerHTML = "<b>" + msg_deleting + ": " + delete_str + "...</b>"
         // Desabilitar botão de apagar e cancelar
         let delete_btn = document.getElementById("btn_research_delete_confirm");
-        delete_btn.setAttribute("disabled", 'true');
+        delete_btn.setAttribute("disabled", "");
         let cancel_btn = document.getElementById("cancel_delete");
-        cancel_btn.setAttribute("disabled", 'true');
+        cancel_btn.setAttribute("disabled", "");
 
         let ajaxRequest = $.ajax({
             type: 'POST',
