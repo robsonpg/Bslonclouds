@@ -182,7 +182,7 @@ $(document).ready(function() {
         toDataURL('img/default.bmp', function(dataUrl) {
             cover_img.src = dataUrl;
         })
-        cover_img.src = "img/default.bmp";
+        //cover_img.src = "img/default.bmp";
     });
 })
 

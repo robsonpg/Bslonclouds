@@ -97,11 +97,25 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                 if ($owner_data != null) {
                     $owner_name = $owner_data->lname . ", " . $owner_data->fname;
                 }
+                // Tratamento da imagem
+                $image_data = $research_item->bsl_sample_data_cover_image;
+                if ($image_data === null) {
+                    // Para que a imagem seja carregada no formato correto
+                    $filename = '../images/default.bmp';
+                    $fp = fopen($filename, "r");
+                    $filesize = filesize($filename);
+                    // If successful, read from the file pointer using the size of the file (in bytes) as the length.
+                    if ($fp) {
+                        $content = fread($fp, $filesize);
+                        fclose($fp);
+                        $image_data = base64_encode($content);
+                    }
+                }
                 ?>
                 <div class="row">
                     <div class="col align-self-center">
                         <div role="alert" class="mt-1 alert alert-primary bg-primary text-white ">
-                            <img class="tumbnail" src="<?="data:image/bmp;base64," . $research_item->bsl_sample_data_cover_image;?>" style="height: 20mm;">
+                            <img class="tumbnail" src="<?="data:image/bmp;base64," . $image_data;?>" style="height: 20mm;">
                             <div><?=lang("RESEARCH_OWNER_NAME");?>: <b><?=$owner_name; ?></b></div>
                             <div><?=lang("SAMPLE_IDENTIFICATION_MSG");?>: <b><?=$uid; ?></b></div>
                             <div><?=lang("ILLUMINATED_SAMPLE");?>: <b><?=$sn;?></b></div>
