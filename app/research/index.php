@@ -39,6 +39,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
     let msg_min = "<?=lang("MIN_UNIQUE_ID_CHARS"); ?>";
     let msg_ok = "<?=lang("UNIQUE_ID_OK"); ?>";
     let msg_cannot_change = "<?=lang("CANNOT_CHANGE_ID"); ?>";
+    let msg_deleting = "<?=lang("DELETING_MSG"); ?>";
 </script>
 
 <br><br>

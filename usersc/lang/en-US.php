@@ -92,6 +92,7 @@
     "SEND_IMAGES_DONE_MSG" => "All images uploaded to server. You can access by Research Catalog.",
     "SAMPLE_IDENTIFICATION_MSG" => "Research data indentification",
     "RESEARCH_OWNER_NAME" => "Researcher",
+    "DELETING_MSG" => "Deleting ",
  ));
 
 

@@ -26,6 +26,12 @@ $(document).ready(function() {
         // Apaga a pesquisa através de um endpoint
         let research_id = document.getElementById("delete_uid");
         let delete_str = research_id.innerText;
+        research_id.innerHTML = "<b>" + msg_deleting + ": " + delete_str + "...</b>"
+        // Desabilitar botão de apagar e cancelar
+        let delete_btn = document.getElementById("btn_research_delete_confirm");
+        delete_btn.setAttribute("disabled", 'true');
+        let cancel_btn = document.getElementById("cancel_delete");
+        cancel_btn.setAttribute("disabled", 'true');
 
         let ajaxRequest = $.ajax({
             type: 'POST',
@@ -39,6 +45,9 @@ $(document).ready(function() {
                 //location.reload();
                 if (response.includes('')) {
                     // Apagou
+                    $('#delete-modal').modal('hide');
+                    delete_btn.removeAttribute("disabled");
+                    cancel_btn.removeAttribute("disabled");
                     location.reload();
                 } else {
                     alert("Fail to delete in database.");

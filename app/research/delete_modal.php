@@ -22,9 +22,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="btn_research_delete_confirm" class="btn btn-primary" style="color: whitesmoke" data-dismiss="modal">
+                <a id="btn_research_delete_confirm" class="btn btn-primary" style="color: whitesmoke">
                     <?=lang("BTN_CONFIRM")?></a>
-                <a id="cancel" class="btn btn-default" data-dismiss="modal"><?=lang("BTN_CANCEL")?></a>
+                <a id="cancel_delete" class="btn btn-default" data-dismiss="modal"><?=lang("BTN_CANCEL")?></a>
             </div>
         </div>
     </div>
