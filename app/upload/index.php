@@ -137,13 +137,6 @@ $all_researches = getAllResearchesID();
         <hr>
         <div class="row">
             <div class="container bg-light" id="tumbnails">
-                <!-- Exibir a imagem que irá para o upload -->
-                <!--img id="mini_foto_new" width=90% class="mini_foto" src="img/default.png" /-->
-                <!--div class="row justify-content-between align-items-center border">
-                    <div class="col">Image file name:</div>
-                    <div class="col">1.bmp</div>
-                    <div class="col-auto"><img class="img-fluid" id="mini_foto_new" src="img/default.png" style="width: 100px"/></div>
-                </div-->
             </div>
         </div>
 </div>

@@ -143,7 +143,7 @@
                     </div>
                     <div class="col align-self-center">
                         <hr>
-                        <img id="cover_image" src="img/default.png" style="height: 20mm">
+                        <img id="cover_image" src="" style="height: 20mm">
                         <hr>
                     </div>
                 </div>

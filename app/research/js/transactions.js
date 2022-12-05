@@ -127,6 +127,11 @@ function editResearch(uid_text) {
     let sample_pub = document.getElementById("research_public_id");
     sample_pub.value = selected_research["bsl_sample_data_published_DOI_URL"];
 
+    //############################
+    // Cover
+    let img_cover = document.getElementById("cover_image");
+    img_cover.src = "data:image/bmp;base64," + selected_research["bsl_sample_data_cover_image"];
+
     // Exibe o modal
     $('#properties-modal').modal('show');
 }

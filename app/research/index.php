@@ -91,19 +91,27 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                     $sp_text = lang("PERMISSION_PRIVATE_OWNER");
                 }
                 $spub = $research_item->bsl_sample_data_published_DOI_URL;
+                // Busca o dono da pesquisa
+                $owner_data = getResearchOwnerData($research_item->bsl_sample_data_owner_id);
+                $owner_name = "...";
+                if ($owner_data != null) {
+                    $owner_name = $owner_data->lname . ", " . $owner_data->fname;
+                }
                 ?>
                 <div class="row">
                     <div class="col align-self-center">
                         <div role="alert" class="mt-1 alert alert-primary bg-primary text-white ">
-                            <div class="col"><?=lang("SAMPLE_IDENTIFICATION");?>: <b><?=$uid; ?></b></div>
-                            <div class="col"><?=lang("ILLUMINATED_SAMPLE");?>: <b><?=$sn;?></b></div>
-                            <div class="col"><?=lang("TIME_RATE");?>: <b><?=$sfr;?></b></div>
-                            <div class="col"><?=lang("SAMPLE_CONFIG");?>: <b><?=$sc_text;?></b></div>
-                            <div class="col"><?=lang("LASER_TYPE");?>: <b><?=$slt_text;?></b></div>
-                            <div class="col"><?=lang("LASER_WAVELENGTH");?>: <b><?=$sw;?></b></div>
-                            <div class="col"><?=lang("IMAGES_PERMISSION");?>: <b><?=$sp_text;?></b></div>
-                            <div class="col"><?=lang("NUMBER_OF_IMAGES");?>: <b><?=$sai; ?></b></div>
-                            <div class="col"><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
+                            <img class="tumbnail" src="<?="data:image/bmp;base64," . $research_item->bsl_sample_data_cover_image;?>" style="height: 20mm;">
+                            <div><?=lang("RESEARCH_OWNER_NAME");?>: <b><?=$owner_name; ?></b></div>
+                            <div><?=lang("SAMPLE_IDENTIFICATION_MSG");?>: <b><?=$uid; ?></b></div>
+                            <div><?=lang("ILLUMINATED_SAMPLE");?>: <b><?=$sn;?></b></div>
+                            <div><?=lang("TIME_RATE");?>: <b><?=$sfr;?></b></div>
+                            <div><?=lang("SAMPLE_CONFIG");?>: <b><?=$sc_text;?></b></div>
+                            <div><?=lang("LASER_TYPE");?>: <b><?=$slt_text;?></b></div>
+                            <div><?=lang("LASER_WAVELENGTH");?>: <b><?=$sw;?></b></div>
+                            <div><?=lang("IMAGES_PERMISSION");?>: <b><?=$sp_text;?></b></div>
+                            <div><?=lang("NUMBER_OF_IMAGES");?>: <b><?=$sai; ?></b></div>
+                            <div><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
                         </div>
                     </div>
                     <div class="col-5">

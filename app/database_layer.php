@@ -167,7 +167,7 @@ function getResearchData($research_uID) {
 // Faz update nas propriedades da pesquisa
 function updateSampleData($sample_uid, $sample_name, $sample_frame_rate, $sample_config,
                           $sample_laser_type, $sample_other_lt, $sample_wavelength, $sample_permission,
-                          $sample_pub) {
+                          $sample_pub, $sample_cover_image_data) {
     $db = DB::getInstance();
     $sql = "UPDATE bsl_sample_data
                 SET
@@ -179,9 +179,24 @@ function updateSampleData($sample_uid, $sample_name, $sample_frame_rate, $sample
                     bsl_sample_data_laser_wavelength = $sample_wavelength,
                     bsl_sample_data_permission = $sample_permission,
                     bsl_sample_data_insert_timestamp = now(),
-                    bsl_sample_data_published_DOI_URL = '$sample_pub'
+                    bsl_sample_data_published_DOI_URL = '$sample_pub',
+                    bsl_sample_data_cover_image = '$sample_cover_image_data'
             WHERE bsl_sample_data_unique_id = '$sample_uid'";
     $res = $db->query($sql);
+    return $res;
+}
+
+//############################################################################
+// Retorna os dados de uma pesquisa
+function getResearchOwnerData($owner_ID) {
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM users where id = '$owner_ID' limit 1";
+    $res = $db->query($sql);
+    if ($res->count() > 0) {
+        $res = $res->results()[0];
+    } else {
+        $res = null;
+    }
     return $res;
 }
 

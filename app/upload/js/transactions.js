@@ -136,38 +136,6 @@ function readURL(input, id) {
 
 }
 
-
-//#######################################################################
-// Função de leitura da imagem de capa
-function readCoverURL(input) {
-    let cover_img = document.getElementById("cover_image");
-    cover_img.style.height = "20mm";
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        // Verificar se a imagem está dentro do tamanho máximo
-        let image_main = new Image();
-        image_main.src = e.target.result;
-        image_main.onload = function () {
-            // Determna o tamanho padrão
-            if ((image_main.height > 300) || (image_main.width > 300)) {
-                let warn_msg = document.getElementById("image_max_size");
-                warn_msg.style.borderColor = "red";
-                warn_msg.className = "row shake";
-                warn_msg.addEventListener("webkitAnimationEnd", function endEdit() {
-                    warn_msg.style.borderColor = "#A9A9A9";
-                    warn_msg.className = "row";
-                });
-            } else {
-                $('#cover_image')
-                    .attr('src', e.target.result);
-            }
-        };
-    }
-
-    reader.readAsDataURL(input.files[0]);
-}
-
-
 //##############################################################################
 // Scripts para depois que o form for carregado
 //##############################################################################
@@ -210,10 +178,28 @@ $(document).ready(function() {
         sample_pub.value = "";
 
         let cover_img = document.getElementById("cover_image");
-        cover_img.src = "img/default.png";
-
+        // Para que a imagem seja carregada no formato correto
+        toDataURL('img/default.bmp', function(dataUrl) {
+            cover_img.src = dataUrl;
+        })
+        cover_img.src = "img/default.bmp";
     });
 })
+
+function toDataURL(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            callback(reader.result);
+        }
+        reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+}
+
 
 function enableOtherType() {
     let value = document.querySelector('input[name="sample_laser_type"]:checked').value;
@@ -395,7 +381,7 @@ function sendImage(sample_database_id ,idx) {
                             $('#send-images-modal').modal('hide');
                             // Limpa o formulário de envio
                             clearAllData();
-                        }, 10000);
+                        }, 5000);
                         return;
                     }
                     // Acabou de enviar a imagem, passa para a próxima
