@@ -12,3 +12,8 @@ const OTHER_LASER_TYPE = "3";
 
 const PERMISSION_PUBLIC = 1;
 const PERMISSION_PRIVATE = 2;
+
+const ATTR_USER = 1;
+const ATTR_ADMIN = 2;
+const ATTR_RESEARCHER = 3;
+const ATTR_MODERATOR = 4;

@@ -15,11 +15,15 @@ if (!$user->isLoggedIn()) {
     exit;
 }
 
-$user_id = $user->data()->id;
+
 require_once "delete_modal.php";
 require_once "processing_images_modal.php";
 require_once "../upload/properties_modal.php";
 require_once "../database_layer.php";
+require_once "../constants.php";
+
+$user_id = $user->data()->id;
+$user_per = hasPerm([ATTR_MODERATOR], $user->data()->id);
 
 //#############################################################
 // Carrega todas as pesquisas
@@ -137,19 +141,19 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             </div>
                         </div>
                         <?php
-                            if ($so == $user_id) { ?>
-                        <div class="row p-2">
-                            <div class="col">
-                            <input type="button" value="<?=lang("DELETE_RESEARCH_BTN");?>"
-                               onclick="deleteResearch('<?=$uid;?>')" class="btn btn-warning"/>
+                            if (($so == $user_id) || ($user_per)) { ?>
+                            <div class="row p-2">
+                                <div class="col">
+                                <input type="button" value="<?=lang("DELETE_RESEARCH_BTN");?>"
+                                   onclick="deleteResearch('<?=$uid;?>')" class="btn btn-warning"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row p-2">
-                            <div class="col">
-                            <input type="button" value="<?=lang("EDIT_RESEARCH_BTN");?>"
-                                   onclick="editResearch('<?=$uid;?>')" class="btn btn-info"/>
+                            <div class="row p-2">
+                                <div class="col">
+                                <input type="button" value="<?=lang("EDIT_RESEARCH_BTN");?>"
+                                       onclick="editResearch('<?=$uid;?>')" class="btn btn-info"/>
+                                </div>
                             </div>
-                        </div>
                         <?php
                             } ?>
                     </div>
