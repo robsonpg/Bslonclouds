@@ -27,7 +27,8 @@ function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $
                     bsl_sample_data_unique_id,
                     bsl_sample_data_owner_id,
                     bsl_sample_data_published_DOI_URL,
-                    bsl_sample_data_cover_image)
+                    bsl_sample_data_cover_image,
+                    bsl_sample_data_status)
             VALUES (
                     '$sample_name',
                     $sample_frame_rate,
@@ -41,7 +42,8 @@ function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $
                     '$sample_unique_id',
                     $sample_owner,
                     '$sample_pub',
-                    '$sample_cover_image_data');";
+                    '$sample_cover_image_data',
+                    " . RESEARCH_STATUS_WAINTING_REVISION . ");";
 
     $res = $db->query($sql);
 
@@ -197,6 +199,19 @@ function getResearchOwnerData($owner_ID) {
     } else {
         $res = null;
     }
+    return $res;
+}
+
+//##############################################################################
+// Aceita a pesquisa enviado por um pesquisador
+function acceptResearch($sample_uid): ?DB
+{
+    $db = DB::getInstance();
+    $sql = "UPDATE bsl_sample_data
+                SET
+                    bsl_sample_data_status = " . RESEARCH_STATUS_ACCEPTED . "
+            WHERE bsl_sample_data_unique_id = '$sample_uid'";
+    $res = $db->query($sql);
     return $res;
 }
 

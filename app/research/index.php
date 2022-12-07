@@ -18,6 +18,7 @@ if (!$user->isLoggedIn()) {
 
 require_once "delete_modal.php";
 require_once "processing_images_modal.php";
+require_once "accept_modal.php";
 require_once "../upload/properties_modal.php";
 require_once "../database_layer.php";
 require_once "../constants.php";
@@ -44,6 +45,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
     let msg_ok = "<?=lang("UNIQUE_ID_OK"); ?>";
     let msg_cannot_change = "<?=lang("CANNOT_CHANGE_ID"); ?>";
     let msg_deleting = "<?=lang("DELETING_MSG"); ?>";
+    let msg_accepting = "<?=lang("ACCEPTING_MSG"); ?>";
 </script>
 
 <br><br>
@@ -96,6 +98,8 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                     $sp_text = lang("PERMISSION_PRIVATE_OWNER");
                 }
                 $spub = $research_item->bsl_sample_data_published_DOI_URL;
+                // Status da pesquisa - aceita ou rejeitada ou aguardando verificação
+                $sstatus = $research_item->bsl_sample_data_status;
                 // Busca o dono da pesquisa
                 $owner_data = getResearchOwnerData($research_item->bsl_sample_data_owner_id);
                 $owner_name = "...";
@@ -131,6 +135,17 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             <div><?=lang("IMAGES_PERMISSION");?>: <b><?=$sp_text;?></b></div>
                             <div><?=lang("NUMBER_OF_IMAGES");?>: <b><?=$sai; ?></b></div>
                             <div><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
+                            <?php
+                                // Tratamento para aceite de pesquisa
+                                if ($sstatus == RESEARCH_STATUS_WAINTING_REVISION) {
+                            ?>
+                                <div>
+                                    <br>
+                                    <h4 style="color: #9a161a"><?=lang("RESEARCH_WAINTING_APPROVAL"); ?></h4>
+                                </div>
+                            <?php
+                                }
+                            ?>
                         </div>
                     </div>
                     <div class="col-5">
@@ -156,6 +171,19 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             </div>
                         <?php
                             } ?>
+                        <?php
+                        // Tratamento para aceite de pesquisa
+                        if ($sstatus == RESEARCH_STATUS_WAINTING_REVISION) {
+                            ?>
+                            <div class="row p-2">
+                                <div class="col">
+                                <input type="button" value="<?=lang("APPROVAL_RESEARCH_BTN");?>"
+                                       onclick="acceptResearch('<?=$uid;?>')" class="btn btn-danger"/>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
     <?php

@@ -93,6 +93,10 @@
     "SAMPLE_IDENTIFICATION_MSG" => "Research data indentification",
     "RESEARCH_OWNER_NAME" => "Researcher",
     "DELETING_MSG" => "Deleting ",
+    "RESEARCH_WAINTING_APPROVAL" => "Research waiting approval",
+    "APPROVAL_RESEARCH_BTN" => "Accept Research",
+    "ACCEPT_MODAL_TITLE" => "Accept Research to Catalog",
+    "ACCEPTING_MSG" => "Accepting research ",
  ));
 
 

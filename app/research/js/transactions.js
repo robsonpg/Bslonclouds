@@ -22,6 +22,8 @@ let IMAGE_HEIGTH = 4;
 //##############################################################################
 $(document).ready(function() {
 
+    //#####################################################
+    // Apaga a pesquisa
     $('#btn_research_delete_confirm').click( function () {
         // Apaga a pesquisa através de um endpoint
         let research_id = document.getElementById("delete_uid");
@@ -51,6 +53,40 @@ $(document).ready(function() {
                     location.reload();
                 } else {
                     alert("Fail to delete in database.");
+                    //messages_place.innerText = response.toString();
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error: " + textStatus + " - " + errorThrown);
+                console.log(textStatus, errorThrown);
+            }
+        });
+    });
+
+    //####################################################
+    // Aceita a pesquisa
+    $('#btn_research_accept_confirm').click( function () {
+        // Apaga a pesquisa através de um endpoint
+        let research_id = document.getElementById("accept_uid");
+        let accept_str = research_id.innerText;
+        research_id.innerHTML = "<b>" + msg_accepting + ": " + accept_str + "...</b>"
+
+        let ajaxRequest = $.ajax({
+            type: 'POST',
+            url: 'accept_research.php',
+            dataType: "text",
+            //async: true,
+            data: accept_str,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                //location.reload();
+                if (response.includes('')) {
+                    // Aceitou
+                    $('#accept-modal').modal('hide');
+                    location.reload();
+                } else {
+                    alert("Fail to accept in database.");
                     //messages_place.innerText = response.toString();
                 }
             },
@@ -185,7 +221,21 @@ function downloadResearch(uid_text) {
             console.log(textStatus, errorThrown);
         }
     });
-
-
 }
+
+//############################################################################
+// Abre modal de aceitação da pesquisa
+function acceptResearch(uid_text) {
+    let accept_unique_id = document.getElementById("accept_uid");
+    accept_unique_id.innerHTML = "<b>" + uid_text + "</b>";
+    // sample_unique_id.value = images_properties[0];
+    // let sample_name = document.getElementById("sample_name");
+    // sample_name.value = images_properties[1];
+    // let sample_frames = document.getElementById("sample_frames");
+    // sample_frames.value = images_properties[2];
+
+    // Exibe o modal
+    $('#accept-modal').modal('show');
+}
+
 

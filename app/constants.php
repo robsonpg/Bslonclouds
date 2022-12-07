@@ -17,3 +17,7 @@ const ATTR_USER = 1;
 const ATTR_ADMIN = 2;
 const ATTR_RESEARCHER = 3;
 const ATTR_MODERATOR = 4;
+
+const RESEARCH_STATUS_WAINTING_REVISION = 0; // Aguardando revisão
+const RESEARCH_STATUS_ACCEPTED = 1; // Pesquisa aceita para publicação
+const RESEARCH_STATUS_REJECTED = 2; // Pesquisa rejeitada
