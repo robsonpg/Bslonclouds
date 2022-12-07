@@ -69,7 +69,10 @@ if (Input::exists()) {
     $username = Input::get('username');
 
     $institution = Input::get('institution');
-    $country = Input::get('country');
+    //$country = Input::get('country');
+
+    $country = $_POST["country"];
+
     $skills = Input::get('skills');
     $newsletter = Input::get('newsletter');
     $agreement = Input::get('agreement');
@@ -131,7 +134,7 @@ if (Input::exists()) {
             'country' => [
                 'display' => lang('GEN_COUNTRY'),
                 'required' => true,
-                'min' => 5,
+                'min' => 4,
                 'max' => 100,
             ],
 
