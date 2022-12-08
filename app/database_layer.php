@@ -215,6 +215,26 @@ function acceptResearch($sample_uid): ?DB
     return $res;
 }
 
+//############################################################################
+// Retorna os dados de uma pesquisa
+function getModeratorsUsers(): ?array
+{
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM users where id in 
+                          (SELECT 
+                              user_id 
+                          FROM 
+                              user_permission_matches 
+                          where permission_id = " . ATTR_MODERATOR . ")";
+    $res = $db->query($sql);
+    if ($res->count() > 0) {
+        $res = $res->results();
+    } else {
+        $res = null;
+    }
+    return $res;
+}
+
 //##############################################################################
 // Tabelas no banco de dados
 //##############################################################################

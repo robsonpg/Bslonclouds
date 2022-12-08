@@ -97,6 +97,10 @@
     "APPROVAL_RESEARCH_BTN" => "Accept Research",
     "ACCEPT_MODAL_TITLE" => "Accept Research to Catalog",
     "ACCEPTING_MSG" => "Accepting research ",
+    "RECEIVE_RESERACH_TO_APPROVE" => "A research from user above was received to your approval.",
+    "RECEIVED_RESEARCH" => "Research received by server",
+    "RESEARCH_ID" => "Research identification",
+    "BSL_SIGNATURE" => "\n\nBsl on Cloud System",
  ));
 
 

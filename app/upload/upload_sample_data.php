@@ -13,6 +13,7 @@ if (!$user->isLoggedIn()) {
 }
 
 require_once "../database_layer.php";
+require_once "send_emails.php";
 //let header = "sn=" + sample_name + "&sfr=" + sample_frame_rate + "&sc=" + sample_config + "&slt=" +
 //    sample_laser_type + "&olt=" + other_laser_type + "&sw=" + sample_wavelength + "&sp=" + sample_permission;
 //$data = $_POST["data"];
@@ -59,6 +60,11 @@ if (strpos($type, "bmp") == true) {
             $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner, $sample_pub, $sample_cover_image_data);
 
         $res = "id=" . $res;
+
+        //##################################
+        // Envia emails para os moderadores
+        sendModeratorsEmail($sample_unique_id, $sample_owner);
+
     } catch (Exception $e) {
         $res = $e->getMessage();
     }
