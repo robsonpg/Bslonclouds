@@ -173,7 +173,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             } ?>
                         <?php
                         // Tratamento para aceite de pesquisa
-                        if ($sstatus == RESEARCH_STATUS_WAINTING_REVISION) {
+                        if (($sstatus == RESEARCH_STATUS_WAINTING_REVISION) && ($user_per)) {
                             ?>
                             <div class="row p-2">
                                 <div class="col">
