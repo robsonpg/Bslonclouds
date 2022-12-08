@@ -100,7 +100,8 @@
     "RECEIVE_RESERACH_TO_APPROVE" => "A research from user above was received to your approval.",
     "RECEIVED_RESEARCH" => "Research received by server",
     "RESEARCH_ID" => "Research identification",
-    "BSL_SIGNATURE" => "\n\nBsl on Cloud System",
+    "BSL_SIGNATURE" => "Bsl on Cloud System",
+    "RECEIVE_NAME" => "Reseracher",
  ));
 
 

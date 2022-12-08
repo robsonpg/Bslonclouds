@@ -28,12 +28,13 @@ function sendModeratorsEmail($research_uid, $owner_id)
         if (($owner_data != null) && ($moderators != null)) {
             foreach ($moderators as $moderator) {
                 $str_name = $owner_data->fname . " " . $owner_data->lname;
-                $str_email = $moderator->email;
+                $str_email = $owner_data->email;
                 //$str_msg = nl2br($_GET['contact_message']);
 
-                $str_msg = lang("GEN_FNAME") . ": " . $str_name . lang("GEN_EMAIL") . ": " . $str_email . "\n";
-                $str_msg = $str_msg . lang("RECEIVE_RESERACH_TO_APPROVE") . "\n\n" .
-                    lang("RESEARCH_ID") . ": " . $research_uid . lang("BSL_SIGNATURE");
+                $str_msg = lang("RECEIVE_NAME") . ": " . $str_name . "<br>" .
+                    lang("GEN_EMAIL") . ": " . $str_email . "<br>";
+                $str_msg = $str_msg . lang("RECEIVE_RESERACH_TO_APPROVE") . "<br>" .
+                    lang("RESEARCH_ID") . ": " . $research_uid . "<br><br>" . lang("BSL_SIGNATURE");
 
                 echo "Send mail";
                 email($str_email, lang("RECEIVED_RESEARCH"), $str_msg);
