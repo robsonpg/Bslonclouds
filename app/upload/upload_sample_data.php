@@ -56,8 +56,9 @@ if (strpos($type, "bmp") == true) {
     try {
         //#############################
         // insere no banco de dados
-        $res = insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type, $sample_other_lt,
-            $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner, $sample_pub, $sample_cover_image_data);
+        $res = insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type,
+            $sample_other_lt, $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner,
+            $sample_pub, $sample_cover_image_data);
 
         $res = "id=" . $res;
 

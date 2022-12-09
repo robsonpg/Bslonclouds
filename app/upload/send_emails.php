@@ -12,9 +12,9 @@ if (!$user->isLoggedIn()) {
 require_once "../database_layer.php";
 require_once "../constants.php";
 
-sendModeratorsEmail("Maize_123", 4);
-echo "Emails enviados";
-exit;
+//sendModeratorsEmail("Maize_123", 4);
+//echo "Emails enviados";
+//exit;
 
 
 function sendModeratorsEmail($research_uid, $owner_id)

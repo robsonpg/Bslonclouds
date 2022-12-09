@@ -308,6 +308,9 @@ function sendImagesToServer() {
         contentType: false,
         success: function (response) {
             //location.reload();
+            //#######################################################
+            // DEBUG
+            //error_messages_place.innerText = response.toString();
             if (response.includes('id')) {
                 //messages_place.innerHTML = response.toString();
                 sample_database_id = parseInt(response.toString().split("=")[1]);
@@ -315,7 +318,7 @@ function sendImagesToServer() {
                 // Insere as imagens da maostra
                 sendImages(sample_database_id);
             } else {
-                error_messages_place.innerText = "Fail to insert data in database.";
+                error_messages_place.innerText = "Fail to insert data in database: " + response.toString();
                 //error_messages_place.innerText = response.toString();
             }
         },
