@@ -137,7 +137,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             <div><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
                             <?php
                                 // Tratamento para aceite de pesquisa
-                                if ($sstatus == RESEARCH_STATUS_WAINTING_REVISION) {
+                                if (($sstatus == RESEARCH_STATUS_WAINTING_REVISION) && ($user_per)) {
                             ?>
                                 <div>
                                     <br>
