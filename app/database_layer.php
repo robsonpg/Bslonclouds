@@ -107,9 +107,20 @@ function getAllResearchesID(): array
 // Retorna todas as pesquisas do usuário e as publicas
 function getUserAndPublicResearches($userid) {
     $db = DB::getInstance();
-    $sql = "SELECT * FROM bsl_sample_data where bsl_sample_data_owner_id = $userid or 
-                                    bsl_sample_data_permission = " . PERMISSION_PUBLIC . " 
+    $sql = "SELECT * FROM bsl_sample_data where (bsl_sample_data_owner_id = $userid or 
+                                    bsl_sample_data_permission = " . PERMISSION_PUBLIC . ") and
+                                    bsl_sample_data_status = " . RESEARCH_STATUS_ACCEPTED ." 
                                     order by bsl_sample_data_unique_id";
+    $res = $db->query($sql);
+    return $res;
+}
+
+//##############################################################################
+// Retorna todas as pesquisas para que o moderador possa ver
+function getAllResearches(): ?DB
+{
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM bsl_sample_data order by bsl_sample_data_unique_id";
     $res = $db->query($sql);
     return $res;
 }

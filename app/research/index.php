@@ -24,11 +24,17 @@ require_once "../database_layer.php";
 require_once "../constants.php";
 
 $user_id = $user->data()->id;
-$user_per = hasPerm([ATTR_MODERATOR], $user->data()->id);
-
+$user_moderator = hasPerm([ATTR_MODERATOR], $user->data()->id);
+$user_public_researches = null;
+//###############################################################
+// Se for moderador, tem acesso a todas as pesquisas
+if ($user_moderator) {
+    $user_public_researches = getAllResearches();
+} else {
 //#############################################################
-// Carrega todas as pesquisas
-$user_public_researches = getUserAndPublicResearches($user_id);
+// Carrega todas as pesquisas do usuário e públicas
+    $user_public_researches = getUserAndPublicResearches($user_id);
+}
 ?>
 
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
@@ -137,7 +143,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             <div><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
                             <?php
                                 // Tratamento para aceite de pesquisa
-                                if (($sstatus == RESEARCH_STATUS_WAINTING_REVISION) && ($user_per)) {
+                                if (($sstatus == RESEARCH_STATUS_WAINTING_REVISION) && ($user_moderator)) {
                             ?>
                                 <div>
                                     <br>
@@ -156,7 +162,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             </div>
                         </div>
                         <?php
-                            if (($so == $user_id) || ($user_per)) { ?>
+                            if (($so == $user_id) || ($user_moderator)) { ?>
                             <div class="row p-2">
                                 <div class="col">
                                 <input type="button" value="<?=lang("DELETE_RESEARCH_BTN");?>"
@@ -173,7 +179,7 @@ $user_public_researches = getUserAndPublicResearches($user_id);
                             } ?>
                         <?php
                         // Tratamento para aceite de pesquisa
-                        if (($sstatus == RESEARCH_STATUS_WAINTING_REVISION) && ($user_per)) {
+                        if (($sstatus == RESEARCH_STATUS_WAINTING_REVISION) && ($user_moderator)) {
                             ?>
                             <div class="row p-2">
                                 <div class="col">
