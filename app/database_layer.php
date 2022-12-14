@@ -246,6 +246,36 @@ function getModeratorsUsers(): ?array
     return $res;
 }
 
+//############################################################################
+// Retorna o número de pesquisas públicas
+function getNumberPublicResearch() {
+    $db = DB::getInstance();
+    $sql = "SELECT count(*) as number FROM bsl_sample_data where bsl_sample_data_permission = " . PERMISSION_PUBLIC;
+    $res = $db->query($sql);
+    if ($res->count() > 0) {
+        $res = $res->results()[0]->number;
+    } else {
+        $res = null;
+    }
+    return $res;
+}
+
+function getNumberOfResearches() {
+    $db = DB::getInstance();
+    $sql = "SELECT count(*) as number FROM users where id in (SELECT 
+                              user_id 
+                          FROM 
+                              user_permission_matches 
+                          where permission_id != " . ATTR_ADMIN . ")";
+    $res = $db->query($sql);
+    if ($res->count() > 0) {
+        $res = $res->results()[0]->number;
+    } else {
+        $res = null;
+    }
+    return $res;
+
+}
 //##############################################################################
 // Tabelas no banco de dados
 //##############################################################################

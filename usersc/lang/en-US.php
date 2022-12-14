@@ -102,6 +102,10 @@
     "RESEARCH_ID" => "Research identification",
     "BSL_SIGNATURE" => "Bsl on Cloud System",
     "RECEIVE_NAME" => "Reseracher",
+    "WELCOME_MSG" => "The Bio-Speckle Laser (BSL) phenomenon can be studied by means of many techniques. 
+        This web portal was built so that the community of researchers on the subject can share their experiences.",
+    "LAND_PUBLISHED" => "Published Researches on database",
+    "LAND_RESEARCHES" => "Registered researches",
  ));
 
 
