@@ -64,7 +64,7 @@ if (strpos($type, "bmp") == true) {
 
         //##################################
         // Envia emails para os moderadores
-        //sendModeratorsEmail($sample_unique_id, $sample_owner);
+        sendModeratorsEmail($sample_unique_id, $sample_owner);
 
     } catch (Exception $e) {
         $res = $e->getMessage();
