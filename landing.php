@@ -19,7 +19,7 @@ if ($user->isLoggedIn()) {
     }
 </style>
 
-    <body>
+<body>
     <div class="row">
         <div class="col-md-12">
             <div role="alert" class="alert alert-success">
@@ -52,7 +52,7 @@ if ($user->isLoggedIn()) {
         </div><!-- end col -->
     </div>
     <div class="row">
-        <div class="col my-2">
+        <div class="col-12 my-2">
             <div class="card card-body p-3 text-black bg-dark">
                 <div class="list-group-item d-block">
                     <div class="row">

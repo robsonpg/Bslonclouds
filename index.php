@@ -24,9 +24,13 @@ if(isset($user) && $user->isLoggedIn()){
             require_once 'landing.php';
         }?>
     </p>
-    <br>
-<?php  languageSwitcher();?>
 
+<footer>
+<div>
+    <hr>
+<?php  languageSwitcher();?>
+</div>
+</footer>
 
 <!-- Place any per-page javascript here -->
 <?php require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php'; ?>
