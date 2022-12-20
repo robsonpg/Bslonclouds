@@ -37,7 +37,7 @@ function sendModeratorsEmail($research_uid, $owner_id)
                     lang("RESEARCH_ID") . ": " . $research_uid . "<br><br>" . lang("BSL_SIGNATURE");
 
                 echo "Send mail";
-                email($str_email, lang("RECEIVED_RESEARCH"), $str_msg);
+                email($moderator->email, lang("RECEIVED_RESEARCH"), $str_msg);
             }
             //$str_to_save = "Nome: " . $str_name . "#Mail: " . $str_email . "\r\n";
         } else {
