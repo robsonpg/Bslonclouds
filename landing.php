@@ -62,7 +62,13 @@ if ($user->isLoggedIn()) {
                         <div class="list-group-item d-block">
                             <div class="row">
                                 <div class="col-3">
-                                    <img src="<?='data:image/bmp;base64,' . $research->bsl_sample_data_cover_image;?>" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+                                    <?php if ($research->bsl_sample_data_cover_image == null) { ?>
+                                        <img src="app/images/default.bmp" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+                                    <?php
+                                    } else { ?>
+                                        <img src="<?='data:image/bmp;base64,' . $research->bsl_sample_data_cover_image;?>" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+                                    <?php
+                                    } ?>
                                 </div>
                                 <div class="col text-center text-sm-left">
                                     <h5><span class="text-muted">Research: <?=$research->bsl_sample_data_unique_id;?></span></h5>
