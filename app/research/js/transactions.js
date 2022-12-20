@@ -31,9 +31,9 @@ $(document).ready(function() {
         research_id.innerHTML = "<b>" + msg_deleting + ": " + delete_str + "...</b>"
         // Desabilitar botão de apagar e cancelar
         let delete_btn = document.getElementById("btn_research_delete_confirm");
-        delete_btn.setAttribute("disabled", "");
+        delete_btn.className = "btn btn-primary disabled";
         let cancel_btn = document.getElementById("cancel_delete");
-        cancel_btn.setAttribute("disabled", "");
+        cancel_btn.className = "btn btn-primary disabled";
 
         let ajaxRequest = $.ajax({
             type: 'POST',
@@ -48,8 +48,8 @@ $(document).ready(function() {
                 if (response.includes('')) {
                     // Apagou
                     $('#delete-modal').modal('hide');
-                    delete_btn.removeAttribute("disabled");
-                    cancel_btn.removeAttribute("disabled");
+                    delete_btn.className = "btn btn-primary";
+                    cancel_btn.className = "btn btn-primary";
                     location.reload();
                 } else {
                     alert("Fail to delete in database.");
