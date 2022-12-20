@@ -8,6 +8,7 @@ if ($user->isLoggedIn()) {
 } else {
     $projects = getNumberPublicResearch();
     $researches = getNumberOfResearches();
+    $public_researches = getPublicResearches();
     // Caso queiramos usar o font awesome do site
     // <script src="https://kit.fontawesome.com/b41bdf02f7.js" crossorigin="anonymous"></script>
 
@@ -51,26 +52,41 @@ if ($user->isLoggedIn()) {
             </h4>
         </div><!-- end col -->
     </div>
-    <div class="row">
-        <div class="col-12 my-2">
-            <div class="card card-body p-3 text-black bg-dark">
-                <div class="list-group-item d-block">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 col-md-2">
-                            <img src="app/images/default.bmp" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+    <?php
+    if ($public_researches->count() > 0) {
+        foreach ($public_researches->results() as $research) {
+    ?>
+            <div class="row">
+                <div class="col-12 my-2">
+                    <div class="card card-body p-3 text-black bg-dark">
+                        <div class="list-group-item d-block">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img src="<?='data:image/bmp;base64,' . $research->bsl_sample_data_cover_image;?>" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+                                </div>
+                                <div class="col text-center text-sm-left">
+                                    <h5><span class="text-muted">Research: <?=$research->bsl_sample_data_unique_id;?></span></h5>
+                                    <span class="text-muted">Researcher Name: <?=$research->lname . ', ' . $research->fname; ?></span>
+                                    <br>
+                                    <span class="badge badge-success">Country: <?=$research->locale; ?></span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-10 text-center text-sm-left">
-                            <h5><span class="text-muted">Research: Maize 123456789</span></h5>
-                            <span class="text-muted">Researcher Name: Roberto Braga</span>
-                            <br> <span class="badge badge-success">Country: Brazil</span>
+                        <div>
+                            <span class="text-primary">
+                                <a class="badge badge-primary float-right" href="<?=$research->bsl_sample_data_published_DOI_URL; ?>">
+                                    Published: <?=$research->bsl_sample_data_published_DOI_URL; ?></a>
+                            </span>
                         </div>
+                    </div>
                 </div>
-                <span class="text-primary">
-                    <span class="badge badge-primary float-right">Research count: 4</span></span>
             </div>
-        </div>
-        <br>
-    </div>
+    <?php
+        }
+    } else {
+
+    }
+    ?>
 </body>
 <script>
     // Fun Facts

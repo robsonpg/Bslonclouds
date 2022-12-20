@@ -276,6 +276,20 @@ function getNumberOfResearches() {
     return $res;
 
 }
+
+//##############################################################################
+// Retorna todas as pesquisas publicas
+function getPublicResearches(): ?DB
+{
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM bsl_sample_data sd, users u where 
+                                    sd.bsl_sample_data_permission = " . PERMISSION_PUBLIC . " and
+                                    sd.bsl_sample_data_status = " . RESEARCH_STATUS_ACCEPTED ." and
+                                    u.id = sd.bsl_sample_data_owner_id 
+                                    order by u.fname asc";
+    $res = $db->query($sql);
+    return $res;
+}
 //##############################################################################
 // Tabelas no banco de dados
 //##############################################################################
