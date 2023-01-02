@@ -106,6 +106,16 @@
         This web portal was built so that the community of researchers on the subject can share their experiences.",
     "LAND_PUBLISHED" => "Published Researches on database",
     "LAND_RESEARCHES" => "Registered researchers",
+    "NUMBER_OF_PUBLIC_IMAGES" => "Number of public images in database: ",
+    "AROUND_WORLD" => "around the world",
+    "GEN_CITY" => "City",
+    "GEN_CONTINENT" => "Continent Name",
+    "GEN_VISITORS" => "Visitors",
+    "TAB_HOME" => "Home",
+    "TAB_RESEARCHES" => "Researches",
+    "TAB_TUTORIALS" => "Tutorials",
+    "CLICK_TO_RESEARCH" => "Click here to see our public researches",
+    "CLICK_TO_TUTORIALS" => "Click here to see our tutorials"
  ));
 
 

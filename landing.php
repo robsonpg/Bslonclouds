@@ -8,9 +8,33 @@ if ($user->isLoggedIn()) {
 } else {
     $projects = getNumberPublicResearch();
     $researches = getNumberOfResearches();
-    $public_researches = getPublicResearches();
+    $public_researches = clone(getPublicResearches());
+
+    $public_images = getNumberofPublicImages();
     // Caso queiramos usar o font awesome do site
     // <script src="https://kit.fontawesome.com/b41bdf02f7.js" crossorigin="anonymous"></script>
+
+
+    // Use JSON encoded string and converts
+    // it into a PHP variable
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $ip = '177.66.50.245';
+    $visitor_data = @json_decode(file_get_contents(
+        "http://www.geoplugin.net/json.gp?ip=" . $ip));
+
+    insertDatabaseVisitorInfo($visitor_data);
+
+    $visitors_statistics = clone(getAllDatabaseVisitorInfo());
+
+//    echo 'Country Name: ' . $ipdat->geoplugin_countryName . "\n";
+//    echo 'City Name: ' . $ipdat->geoplugin_city . "\n";
+//    echo 'Continent Name: ' . $ipdat->geoplugin_continentName . "\n";
+//    echo 'Latitude: ' . $ipdat->geoplugin_latitude . "\n";
+//    echo 'Longitude: ' . $ipdat->geoplugin_longitude . "\n";
+//    echo 'Currency Symbol: ' . $ipdat->geoplugin_currencySymbol . "\n";
+//    echo 'Currency Code: ' . $ipdat->geoplugin_currencyCode . "\n";
+//    echo 'Timezone: ' . $ipdat->geoplugin_timezone;
+
 
 ?>
 <style>
@@ -24,9 +48,9 @@ if ($user->isLoggedIn()) {
 <div class="row">
     <div class="col-md-12">
         <ul id="tabsJustified" class="nav nav-tabs">
-            <li class="nav-item"><a href="" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show">Home</a></li>
-            <li class="nav-item"><a href="" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase">Researches</a></li>
-            <li class="nav-item"><a href="" data-target="#manuals" data-toggle="tab" class="nav-link small text-uppercase">Manuals</a></li>
+            <li class="nav-item"><a href="" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show"><?=lang("TAB_HOME");?></a></li>
+            <li class="nav-item"><a href="#tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase"><?=lang("TAB_RESEARCHES");?></a></li>
+            <li class="nav-item"><a href="#tab_tutorials" data-target="#manuals" data-toggle="tab" class="nav-link small text-uppercase"><?=lang("TAB_TUTORIALS");?></a></li>
         </ul>
         <br>
         <div id="tabsJustifiedContent" class="tab-content">
@@ -61,7 +85,72 @@ if ($user->isLoggedIn()) {
                         </div>
                         </h4>
                     </div><!-- end col -->
+                </div><!-- end row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div role="alert" class="alert alert-success">
+                            <span class="text-success font-weight-bold"><?=lang("NUMBER_OF_PUBLIC_IMAGES");?></span>
+                            <span class="font-weight-bold stat-timer badge badge-success float-right" ><?=$public_images;?></span>
+                        </div>
+                    </div>
                 </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div role="alert" class="alert alert-success">
+                            <div  class="text-success font-weight-bold">
+                                <a style="color: #02a7e9; font-family: 'Aeros',serif">B</a>
+                                <a style="color: #68b849; font-family: 'Aeros',serif">S</a>
+                                <a style="color: #f1893a; font-family: 'Aeros',serif">L</a>&nbsp;<?=lang("AROUND_WORLD");?></div>
+                        </div>
+                        <table class="table table-hover table-sm alert-primary">
+                            <thead>
+                            <tr>
+                                <th><?=lang("GEN_COUNTRY");?></th>
+                                <th><?=lang("GEN_CITY");?></th>
+                                <th><?=lang("GEN_CONTINENT");?></th>
+                                <th class="text-right"><?=lang("GEN_VISITORS");?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            if ($visitors_statistics->count() > 0) {
+                                foreach ($visitors_statistics->results() as $visitor) {
+                            ?>
+                                <tr>
+                                    <td><?=$visitor->bsl_visitors_data_country;?></td>
+                                    <td><?=$visitor->bsl_visitors_data_city;?></td>
+                                    <td><?=$visitor->bsl_visitors_data_continent;?></td>
+                                    <td class="text-right font-weight-bold"><?=$visitor->bsl_visitors_data_city_count;?></td>
+                                </tr>
+                            <?php
+                                }
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- end row -->
+                <div class="row">
+                    <div class="col">
+                        <ul id="tabsJustified" class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="" onclick="$('#tab_researches').trigger('click')" class="badge badge-info text-uppercase">
+                                    <?=lang("CLICK_TO_RESEARCH");?>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <ul id="tabsJustified1" class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="" data-target="#manuals" data-toggle="tab" class="badge badge-info text-uppercase">
+                                    <?=lang("CLICK_TO_TUTORIALS");?>
+                                </a>
+                            </li>
+                        </ul>
+                    </div><!-- end col -->
+                </div><!-- end row -->
             </div>
             <div id="researches" class="tab-pane fade">
                 <?php
@@ -126,6 +215,12 @@ if ($user->isLoggedIn()) {
 
 </body>
 <script>
+    function changeTab(tab) {
+        alert("show");
+        //e.preventDefault();
+        $('[href="#researches"').tab('show');
+        //$('#researches').tab('show');
+    }
     // Fun Facts
     function count($this) {
         var current = parseInt($this.html(), 10);
