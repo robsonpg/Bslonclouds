@@ -60,7 +60,7 @@ if ($user->isLoggedIn()) {
                     <?=lang("TAB_TUTORIALS");?>
                 </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#services" data-toggle="tab" class="nav-link small text-uppercase">
+            <li class="nav-item"><a href="" id="tab_services" data-target="#services" data-toggle="tab" class="nav-link small text-uppercase">
                     <?=lang("TAB_SERVICES");?>
                 </a>
             </li>
@@ -157,8 +157,17 @@ if ($user->isLoggedIn()) {
                     <div class="col">
                         <ul id="tabsJustified1" class="nav nav-tabs">
                             <li class="nav-item">
-                                <a href="" data-target="#manuals" data-toggle="tab" onclick="changeTabtoTutorial()"
+                                <a href="" data-target="#tutorials" data-toggle="tab" onclick="changeTabtoTutorial()"
                                    class="badge badge-info text-uppercase"><?=lang("CLICK_TO_TUTORIALS");?>
+                                </a>
+                            </li>
+                        </ul>
+                    </div><!-- end col -->
+                    <div class="col">
+                        <ul id="tabsJustified2" class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="" data-target="#services" data-toggle="tab" onclick="changeTabtoServices()"
+                                   class="badge badge-info text-uppercase"><?=lang("CLICK_TO_SERVICES");?>
                                 </a>
                             </li>
                         </ul>
@@ -262,12 +271,30 @@ if ($user->isLoggedIn()) {
         tab_elem.className = "nav-link small text-uppercase active show";
         let tab_elem1 = document.getElementById("tab_home");
         tab_elem1.className = "nav-link small text-uppercase";
+        let tab_elem2 = document.getElementById("home_bsl");
+        tab_elem2.className = "tab-pane fade";
+        let tab_elem3 = document.getElementById("researches");
+        tab_elem3.className = "tab-pane fade active show";
     }
     function changeTabtoTutorial() {
         let tab_elem = document.getElementById("tab_tutorials");
         tab_elem.className = "nav-link small text-uppercase active show";
         let tab_elem1 = document.getElementById("tab_home");
         tab_elem1.className = "nav-link small text-uppercase";
+        let tab_elem2 = document.getElementById("home_bsl");
+        tab_elem2.className = "tab-pane fade";
+        let tab_elem3 = document.getElementById("tutorials");
+        tab_elem3.className = "tab-pane fade active show";
+    }
+    function changeTabtoServices() {
+        let tab_elem = document.getElementById("tab_services");
+        tab_elem.className = "nav-link small text-uppercase active show";
+        let tab_elem1 = document.getElementById("tab_home");
+        tab_elem1.className = "nav-link small text-uppercase";
+        let tab_elem2 = document.getElementById("home_bsl");
+        tab_elem2.className = "tab-pane fade";
+        let tab_elem3 = document.getElementById("services");
+        tab_elem3.className = "tab-pane fade active show";
     }
     // Fun Facts
     function count($this) {
