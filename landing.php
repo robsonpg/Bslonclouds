@@ -48,19 +48,19 @@ if ($user->isLoggedIn()) {
     <div class="col-md-12">
         <ul id="tabsJustified" class="nav nav-tabs">
             <li class="nav-item">
-                <a href="" id="tab_home" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show">
+                <a href="" id="tab_home" data-target="#home_bsl" data-toggle="tab" class="nav-link text-uppercase active show">
                     <?=lang("TAB_HOME");?>
                 </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase">
+            <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link text-uppercase">
                     <?=lang("TAB_RESEARCHES");?>
                 </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#tutorials" data-toggle="tab" class="nav-link small text-uppercase">
+            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#tutorials" data-toggle="tab" class="nav-link text-uppercase">
                     <?=lang("TAB_TUTORIALS");?>
                 </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_services" data-target="#services" data-toggle="tab" class="nav-link small text-uppercase">
+            <li class="nav-item"><a href="" id="tab_services" data-target="#services" data-toggle="tab" class="nav-link text-uppercase">
                     <?=lang("TAB_SERVICES");?>
                 </a>
             </li>
