@@ -18,7 +18,6 @@ if ($user->isLoggedIn()) {
     // Use JSON encoded string and converts
     // it into a PHP variable
     $ip = $_SERVER['REMOTE_ADDR'];
-    $ip = '177.66.50.245';
     $visitor_data = @json_decode(file_get_contents(
         "http://www.geoplugin.net/json.gp?ip=" . $ip));
 
@@ -48,9 +47,11 @@ if ($user->isLoggedIn()) {
 <div class="row">
     <div class="col-md-12">
         <ul id="tabsJustified" class="nav nav-tabs">
-            <li class="nav-item"><a href="" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show"><?=lang("TAB_HOME");?></a></li>
-            <li class="nav-item"><a href="#tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase"><?=lang("TAB_RESEARCHES");?></a></li>
-            <li class="nav-item"><a href="#tab_tutorials" data-target="#manuals" data-toggle="tab" class="nav-link small text-uppercase"><?=lang("TAB_TUTORIALS");?></a></li>
+            <li class="nav-item">
+                <a href="" id="tab_home" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show"><?=lang("TAB_HOME");?></a>
+            </li>
+            <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase"><?=lang("TAB_RESEARCHES");?></a></li>
+            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#manuals" data-toggle="tab" class="nav-link small text-uppercase"><?=lang("TAB_TUTORIALS");?></a></li>
         </ul>
         <br>
         <div id="tabsJustifiedContent" class="tab-content">
@@ -96,7 +97,7 @@ if ($user->isLoggedIn()) {
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col">
                         <div role="alert" class="alert alert-success">
                             <div  class="text-success font-weight-bold">
                                 <a style="color: #02a7e9; font-family: 'Aeros',serif">B</a>
@@ -135,8 +136,8 @@ if ($user->isLoggedIn()) {
                     <div class="col">
                         <ul id="tabsJustified" class="nav nav-tabs">
                             <li class="nav-item">
-                                <a href="" onclick="$('#tab_researches').trigger('click')" class="badge badge-info text-uppercase">
-                                    <?=lang("CLICK_TO_RESEARCH");?>
+                                <a href="" data-target="#researches" data-toggle="tab" onclick="changeTabtoResearch()"
+                                   class="badge badge-info text-uppercase"><?=lang("CLICK_TO_RESEARCH");?>
                                 </a>
                             </li>
                         </ul>
@@ -144,8 +145,8 @@ if ($user->isLoggedIn()) {
                     <div class="col">
                         <ul id="tabsJustified1" class="nav nav-tabs">
                             <li class="nav-item">
-                                <a href="" data-target="#manuals" data-toggle="tab" class="badge badge-info text-uppercase">
-                                    <?=lang("CLICK_TO_TUTORIALS");?>
+                                <a href="" data-target="#manuals" data-toggle="tab" onclick="changeTabtoTutorial()"
+                                   class="badge badge-info text-uppercase"><?=lang("CLICK_TO_TUTORIALS");?>
                                 </a>
                             </li>
                         </ul>
@@ -215,11 +216,17 @@ if ($user->isLoggedIn()) {
 
 </body>
 <script>
-    function changeTab(tab) {
-        alert("show");
-        //e.preventDefault();
-        $('[href="#researches"').tab('show');
-        //$('#researches').tab('show');
+    function changeTabtoResearch() {
+        let tab_elem = document.getElementById("tab_researches");
+        tab_elem.className = "nav-link small text-uppercase active show";
+        let tab_elem1 = document.getElementById("tab_home");
+        tab_elem1.className = "nav-link small text-uppercase";
+    }
+    function changeTabtoTutorial() {
+        let tab_elem = document.getElementById("tab_tutorials");
+        tab_elem.className = "nav-link small text-uppercase active show";
+        let tab_elem1 = document.getElementById("tab_home");
+        tab_elem1.className = "nav-link small text-uppercase";
     }
     // Fun Facts
     function count($this) {
@@ -241,6 +248,7 @@ if ($user->isLoggedIn()) {
         $(this).html('0');
         count($(this));
     });
+
 </script>
 
 

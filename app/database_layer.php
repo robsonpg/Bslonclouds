@@ -313,23 +313,25 @@ function getNumberofPublicImages() {
 //##############################################################################
 // Insere dados do visitante do site para estatísticas da landpage
 function insertDatabaseVisitorInfo($visitorinfo) {
-    $db = DB::getInstance();
 
-    // Verifica se é de um pais e cidade existente no banco de dados
-    $sql = "SELECT * FROM bsl_visitors_data where bsl_visitors_data_city = " . $visitorinfo->geoplugin_city . " and 
+    if (!is_null($visitorinfo->geoplugin_city)) {
+        $db = DB::getInstance();
+
+        // Verifica se é de um pais e cidade existente no banco de dados
+        $sql = "SELECT * FROM bsl_visitors_data where bsl_visitors_data_city = " . $visitorinfo->geoplugin_city . " and 
         bsl_visitors_data_country = " . $visitorinfo->geoplugin_countryName;
-    $res = $db->query($sql);
+        $res = $db->query($sql);
 
-    // Se sim, incrementa contador
-    if ($res->count() > 0) {
-        // Existe uma visita da cidade
-        $sql = "UPDATE bsl_visitors_data SET bsl_visitors_data_country_count = bsl_visitors_data_country_count + 1;";
-        $res = $db->query($sql);
-        $sql = "UPDATE bsl_visitors_data SET bsl_visitors_data_city_count = bsl_visitors_data_city_count + 1;";
-        $res = $db->query($sql);
-    } else {
-        // Não existe visita, acrescenta no banco de dados
-        $sql = "INSERT INTO bslonc02_bslonc.bsl_visitors_data
+        // Se sim, incrementa contador
+        if ($res->count() > 0) {
+            // Existe uma visita da cidade
+            $sql = "UPDATE bsl_visitors_data SET bsl_visitors_data_country_count = bsl_visitors_data_country_count + 1;";
+            $res = $db->query($sql);
+            $sql = "UPDATE bsl_visitors_data SET bsl_visitors_data_city_count = bsl_visitors_data_city_count + 1;";
+            $res = $db->query($sql);
+        } else {
+            // Não existe visita, acrescenta no banco de dados
+            $sql = "INSERT INTO bslonc02_bslonc.bsl_visitors_data
                     (bsl_visitors_data_country,
                     bsl_visitors_data_country_count,
                     bsl_visitors_data_city,
@@ -338,12 +340,15 @@ function insertDatabaseVisitorInfo($visitorinfo) {
                     bsl_visitors_data_continent_count)
                     VALUES
                     ('" . $visitorinfo->geoplugin_countryName . "',1," .
-                    "'" . $visitorinfo->geoplugin_city . "',1," .
-                    "'" . $visitorinfo->geoplugin_continentName . "',1" .
-                    ")";
-        $res = $db->query($sql);
+                "'" . $visitorinfo->geoplugin_city . "',1," .
+                "'" . $visitorinfo->geoplugin_continentName . "',1" .
+                ")";
+            $res = $db->query($sql);
+        }
+        return true;
+    } else {
+        return false;
     }
-    return true;
 }
 
 //#############################################################################################
