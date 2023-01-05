@@ -114,8 +114,12 @@
     "TAB_HOME" => "Home",
     "TAB_RESEARCHES" => "Researches",
     "TAB_TUTORIALS" => "Tutorials",
+    "TAB_SERVICES" => "Services",
     "CLICK_TO_RESEARCH" => "Click here to see our public researches",
-    "CLICK_TO_TUTORIALS" => "Click here to see our tutorials"
+    "CLICK_TO_TUTORIALS" => "Click here to see our tutorials",
+    "TUTORIALS_TEXT" => "Tutorials",
+    "SERVICES_TEXT" => "Services",
+    "RESEARCHES_TEXT" => "Researches",
  ));
 
 

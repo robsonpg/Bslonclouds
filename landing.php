@@ -48,10 +48,22 @@ if ($user->isLoggedIn()) {
     <div class="col-md-12">
         <ul id="tabsJustified" class="nav nav-tabs">
             <li class="nav-item">
-                <a href="" id="tab_home" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show"><?=lang("TAB_HOME");?></a>
+                <a href="" id="tab_home" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show">
+                    <?=lang("TAB_HOME");?>
+                </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase"><?=lang("TAB_RESEARCHES");?></a></li>
-            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#manuals" data-toggle="tab" class="nav-link small text-uppercase"><?=lang("TAB_TUTORIALS");?></a></li>
+            <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase">
+                    <?=lang("TAB_RESEARCHES");?>
+                </a>
+            </li>
+            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#tutorials" data-toggle="tab" class="nav-link small text-uppercase">
+                    <?=lang("TAB_TUTORIALS");?>
+                </a>
+            </li>
+            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#services" data-toggle="tab" class="nav-link small text-uppercase">
+                    <?=lang("TAB_SERVICES");?>
+                </a>
+            </li>
         </ul>
         <br>
         <div id="tabsJustifiedContent" class="tab-content">
@@ -154,6 +166,15 @@ if ($user->isLoggedIn()) {
                 </div><!-- end row -->
             </div>
             <div id="researches" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div role="alert" class="alert alert-success">
+                            <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
+                                    B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
+                            <h4><?=lang("RESEARCHES_TEXT"); ?></h4>
+                        </div>
+                    </div>
+                </div>
                 <?php
                 if ($public_researches->count() > 0) {
                     foreach ($public_researches->results() as $research) {
@@ -207,7 +228,27 @@ if ($user->isLoggedIn()) {
                 }
                 ?>
             </div> <!-- tab pane -->
-            <div id="manuals" class="tab-pane fade">
+            <div id="tutorials" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div role="alert" class="alert alert-success">
+                            <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
+                                    B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
+                            <h4><?=lang("TUTORIALS_TEXT"); ?></h4>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- tab pane -->
+            <div id="services" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div role="alert" class="alert alert-success">
+                            <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
+                                    B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
+                            <h4><?=lang("SERVICES_TEXT"); ?></h4>
+                        </div>
+                    </div>
+                </div>
             </div> <!-- tab pane -->
         </div> <!-- tab content -->
     </div> <!-- col class -->
