@@ -270,7 +270,7 @@ if ($user->isLoggedIn()) {
         let tab_elem = document.getElementById("tab_researches");
         tab_elem.className = "nav-link text-uppercase active show";
         let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link small text-uppercase";
+        tab_elem1.className = "nav-link text-uppercase";
         let tab_elem2 = document.getElementById("home_bsl");
         tab_elem2.className = "tab-pane fade";
         let tab_elem3 = document.getElementById("researches");
@@ -280,7 +280,7 @@ if ($user->isLoggedIn()) {
         let tab_elem = document.getElementById("tab_tutorials");
         tab_elem.className = "nav-link text-uppercase active show";
         let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link small text-uppercase";
+        tab_elem1.className = "nav-link text-uppercase";
         let tab_elem2 = document.getElementById("home_bsl");
         tab_elem2.className = "tab-pane fade";
         let tab_elem3 = document.getElementById("tutorials");
@@ -290,7 +290,7 @@ if ($user->isLoggedIn()) {
         let tab_elem = document.getElementById("tab_services");
         tab_elem.className = "nav-link text-uppercase active show";
         let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link small text-uppercase";
+        tab_elem1.className = "nav-link text-uppercase";
         let tab_elem2 = document.getElementById("home_bsl");
         tab_elem2.className = "tab-pane fade";
         let tab_elem3 = document.getElementById("services");
