@@ -48,19 +48,19 @@ if ($user->isLoggedIn()) {
     <div class="col-md-12">
         <ul id="tabsJustified" class="nav nav-tabs">
             <li class="nav-item">
-                <a href="" id="tab_home" data-target="#home_bsl" data-toggle="tab" class="nav-link text-uppercase active show">
+                <a href="" id="tab_home" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show">
                     <?=lang("TAB_HOME");?>
                 </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link text-uppercase">
+            <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase">
                     <?=lang("TAB_RESEARCHES");?>
                 </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#tutorials" data-toggle="tab" class="nav-link text-uppercase">
+            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#tutorials" data-toggle="tab" class="nav-link small text-uppercase">
                     <?=lang("TAB_TUTORIALS");?>
                 </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_services" data-target="#services" data-toggle="tab" class="nav-link text-uppercase">
+            <li class="nav-item"><a href="" id="tab_services" data-target="#services" data-toggle="tab" class="nav-link small text-uppercase">
                     <?=lang("TAB_SERVICES");?>
                 </a>
             </li>
@@ -268,9 +268,9 @@ if ($user->isLoggedIn()) {
 <script>
     function changeTabtoResearch() {
         let tab_elem = document.getElementById("tab_researches");
-        tab_elem.className = "nav-link text-uppercase active show";
+        tab_elem.className = "nav-link small text-uppercase active show";
         let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link text-uppercase";
+        tab_elem1.className = "nav-link small text-uppercase";
         let tab_elem2 = document.getElementById("home_bsl");
         tab_elem2.className = "tab-pane fade";
         let tab_elem3 = document.getElementById("researches");
@@ -278,9 +278,9 @@ if ($user->isLoggedIn()) {
     }
     function changeTabtoTutorial() {
         let tab_elem = document.getElementById("tab_tutorials");
-        tab_elem.className = "nav-link text-uppercase active show";
+        tab_elem.className = "nav-link small text-uppercase active show";
         let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link text-uppercase";
+        tab_elem1.className = "nav-link small text-uppercase";
         let tab_elem2 = document.getElementById("home_bsl");
         tab_elem2.className = "tab-pane fade";
         let tab_elem3 = document.getElementById("tutorials");
@@ -288,9 +288,9 @@ if ($user->isLoggedIn()) {
     }
     function changeTabtoServices() {
         let tab_elem = document.getElementById("tab_services");
-        tab_elem.className = "nav-link text-uppercase active show";
+        tab_elem.className = "nav-link small text-uppercase active show";
         let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link text-uppercase";
+        tab_elem1.className = "nav-link small text-uppercase";
         let tab_elem2 = document.getElementById("home_bsl");
         tab_elem2.className = "tab-pane fade";
         let tab_elem3 = document.getElementById("services");
