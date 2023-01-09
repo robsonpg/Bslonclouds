@@ -148,33 +148,34 @@ if ($user->isLoggedIn()) {
                 </div><!-- end row -->
                 <div class="row">
                     <div class="col">
-                        <ul id="tabsJustified" class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a href="" data-target="#researches" data-toggle="tab" onclick="changeTabtoResearch()"
-                                   class="badge badge-info text-uppercase"><?=lang("CLICK_TO_RESEARCH");?>
-                                </a>
-                            </li>
-                        </ul>
+                        <div role="alert" class="alert alert-success">
+
+                <div class="row">
+                    <div class="col-4">
+                        <button class="btn btn-success mr-1">
+                            <a href="" data-target="#researches" data-toggle="tab" onclick="changeTabtoResearch()"
+                               class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_RESEARCH");?>
+                            </a>
+                        </button>
                     </div>
                     <div class="col">
-                        <ul id="tabsJustified1" class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a href="" data-target="#tutorials" data-toggle="tab" onclick="changeTabtoTutorial()"
-                                   class="badge badge-info text-uppercase"><?=lang("CLICK_TO_TUTORIALS");?>
-                                </a>
-                            </li>
-                        </ul>
+                        <button class="btn btn-success mr-1">
+                            <a href="" data-target="#tutorials" data-toggle="tab" onclick="changeTabtoTutorial()"
+                               class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_TUTORIALS");?>
+                            </a>
+                        </button>
                     </div><!-- end col -->
                     <div class="col">
-                        <ul id="tabsJustified2" class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a href="" data-target="#services" data-toggle="tab" onclick="changeTabtoServices()"
-                                   class="badge badge-info text-uppercase"><?=lang("CLICK_TO_SERVICES");?>
-                                </a>
-                            </li>
-                        </ul>
+                        <button class="btn btn-success mr-1">
+                            <a href="" data-target="#services" data-toggle="tab" onclick="changeTabtoServices()"
+                               class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_SERVICES");?>
+                            </a>
+                        </button>
                     </div><!-- end col -->
                 </div><!-- end row -->
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="researches" class="tab-pane fade">
                 <div class="row">
