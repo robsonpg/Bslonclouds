@@ -88,6 +88,8 @@ if ($user->isLoggedIn()) {
                         </div>
                         </h4>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col">
                         <h4 class="mt-2">
                         <div role="alert" class="mt-1 alert alert-primary fade show">

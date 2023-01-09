@@ -325,9 +325,9 @@ function insertDatabaseVisitorInfo($visitorinfo) {
         // Se sim, incrementa contador
         if ($res->count() > 0) {
             // Existe uma visita da cidade
-            $sql = "UPDATE bsl_visitors_data SET bsl_visitors_data_country_count = bsl_visitors_data_country_count + 1;";
-            $res = $db->query($sql);
-            $sql = "UPDATE bsl_visitors_data SET bsl_visitors_data_city_count = bsl_visitors_data_city_count + 1;";
+            $sql = "UPDATE bsl_visitors_data SET bsl_visitors_data_city_count = bsl_visitors_data_city_count + 1, 
+                             bsl_visitors_data_country_count = bsl_visitors_data_country_count + 1,
+                             bsl_visitors_data_timestamp = now();";
             $res = $db->query($sql);
         } else {
             // Não existe visita, acrescenta no banco de dados
@@ -337,11 +337,12 @@ function insertDatabaseVisitorInfo($visitorinfo) {
                     bsl_visitors_data_city,
                     bsl_visitors_data_city_count,
                     bsl_visitors_data_continent,
-                    bsl_visitors_data_continent_count)
+                    bsl_visitors_data_continent_count,
+                     bsl_visitors_data_timestamp)
                     VALUES
                     ('" . $visitorinfo->geoplugin_countryName . "',1," .
                 "'" . $visitorinfo->geoplugin_city . "',1," .
-                "'" . $visitorinfo->geoplugin_continentName . "',1" .
+                "'" . $visitorinfo->geoplugin_continentName . "',1 , now()" .
                 ")";
             $res = $db->query($sql);
         }
@@ -356,7 +357,7 @@ function insertDatabaseVisitorInfo($visitorinfo) {
 function getAllDatabaseVisitorInfo(): ?DB
 {
     $db = DB::getInstance();
-    $sql = "SELECT * FROM bsl_visitors_data order by bsl_visitors_data_country asc";
+    $sql = "SELECT * FROM bsl_visitors_data order by bsl_visitors_data_timestamp desc, bsl_visitors_data_country_count asc limit 5";
     $res = $db->query($sql);
     return $res;
 }
