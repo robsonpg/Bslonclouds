@@ -2,6 +2,7 @@
 
 require_once 'users/init.php';
 require_once 'app/database_layer.php';
+require_once 'app/constants.php';
 
 if ($user->isLoggedIn()) {
     die;
@@ -41,7 +42,15 @@ if ($user->isLoggedIn()) {
     font-family: 'Aeros';
     src: url('app/css/Aeros.ttf') format('truetype');
     }
+    .vector-map {
+        width: 100%;
+        height: 300px; }
 </style>
+
+    <link rel="stylesheet" href="app/css/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="app/js/jvectormap/jquery-jvectormap-2.0.5.css" type="text/css" media="screen"/>
+    <script src="app/js/jvectormap/jquery-jvectormap-2.0.5.min.js"></script>
+    <script src="app/js/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 
 <body>
 <div class="row">
@@ -77,41 +86,74 @@ if ($user->isLoggedIn()) {
                         </div>
                     </div>
                 </div>
+
+
                 <div class="row">
-                    <div class="col">
-                        <h4 class="mt-2">
-                        <div role="alert" class="mt-1 alert alert-primary fade show">
-                            <div class="stat-count">
-                                <span class="text-success font-weight-bold"><?=lang("LAND_PUBLISHED");?></span>
-                                <span class="font-weight-bold stat-timer badge badge-success float-right" ><?=$projects;?></span>
-                            </div><!-- stat-count -->
-                        </div>
-                        </h4>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <h4 class="mt-2">
-                        <div role="alert" class="mt-1 alert alert-primary fade show">
-                            <div class="stat-count">
-                                <span class="text-success font-weight-bold"><?=lang("LAND_RESEARCHES");?></span>
-                                <span class="font-weight-bold stat-timer badge badge-success float-right" ><?=$researches;?></span>
-                            </div><!-- stat-count -->
-                        </div>
-                        </h4>
-                    </div><!-- end col -->
-                </div><!-- end row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div role="alert" class="alert alert-success">
-                            <span class="text-success font-weight-bold"><?=lang("NUMBER_OF_PUBLIC_IMAGES");?></span>
-                            <span class="font-weight-bold stat-timer badge badge-success float-right" ><?=$public_images;?></span>
+                    <div class="col-sm-4 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="d-flex align-items-center align-self-start">
+                                            <h3 class="mb-0 stat-timer"><?=$projects;?></h3>
+                                            <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="icon icon-box-success ">
+                                            <h3><i class="fa fa-book float-right"></i></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6 class="text-muted font-weight-bold"><?=lang("LAND_PUBLISHED");?></h6>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-sm-4 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="d-flex align-items-center align-self-start">
+                                            <h3 class="mb-0 stat-timer"><?=$researches;?></h3>
+                                            <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="icon icon-box-success">
+                                            <h3><i class="fa fa-users float-right"></i></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6 class="text-muted font-weight-normal"><?=lang("LAND_RESEARCHES");?></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="d-flex align-items-center align-self-start">
+                                            <h3 class="mb-0 stat-timer"><?=$public_images;?></h3>
+                                            <p class="text-sucess ml-2 mb-0 font-weight-medium">12.4%</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="icon icon-box-danger">
+                                            <h3><i class="fa fa-file-image-o float-right"></i></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6 class="text-muted font-weight-normal"><?=lang("NUMBER_OF_PUBLIC_IMAGES");?></h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <hr>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-5">
                         <div role="alert" class="alert alert-success">
                             <div  class="text-success font-weight-bold">
                                 <a style="color: #02a7e9; font-family: 'Aeros',serif">B</a>
@@ -131,9 +173,12 @@ if ($user->isLoggedIn()) {
                             <?php
                             if ($visitors_statistics->count() > 0) {
                                 foreach ($visitors_statistics->results() as $visitor) {
+                                    // Busca o nome da bandeira
+                                    $key = array_search($visitor->bsl_visitors_data_country, CI_COUNTRIES_ARRAY);
+                                    $icon_name = strtolower($key);
                             ?>
                                 <tr>
-                                    <td><?=$visitor->bsl_visitors_data_country;?></td>
+                                    <td><i class="flag-icon flag-icon-<?=$icon_name?>"></i>&nbsp;&nbsp;<?=$visitor->bsl_visitors_data_country;?></td>
                                     <td><?=$visitor->bsl_visitors_data_city;?></td>
                                     <td><?=$visitor->bsl_visitors_data_continent;?></td>
                                     <td class="text-right font-weight-bold"><?=$visitor->bsl_visitors_data_city_count;?></td>
@@ -145,34 +190,37 @@ if ($user->isLoggedIn()) {
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-md-7"><!-- mapa -->
+                        <div id="audience-map" class="vector-map"></div>
+                    </div>
                 </div><!-- end row -->
+                <br>
                 <div class="row">
                     <div class="col">
                         <div role="alert" class="alert alert-success">
-
-                <div class="row">
-                    <div class="col-4">
-                        <button class="btn btn-success mr-1">
-                            <a href="" data-target="#researches" data-toggle="tab" onclick="changeTabtoResearch()"
-                               class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_RESEARCH");?>
-                            </a>
-                        </button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-success mr-1">
-                            <a href="" data-target="#tutorials" data-toggle="tab" onclick="changeTabtoTutorial()"
-                               class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_TUTORIALS");?>
-                            </a>
-                        </button>
-                    </div><!-- end col -->
-                    <div class="col">
-                        <button class="btn btn-success mr-1">
-                            <a href="" data-target="#services" data-toggle="tab" onclick="changeTabtoServices()"
-                               class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_SERVICES");?>
-                            </a>
-                        </button>
-                    </div><!-- end col -->
-                </div><!-- end row -->
+                            <div class="row">
+                                <div class="col-4">
+                                    <button class="btn btn-success mr-1">
+                                        <a href="" data-target="#researches" data-toggle="tab" onclick="changeTabtoResearch()"
+                                           class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_RESEARCH");?>
+                                        </a>
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-success mr-1">
+                                        <a href="" data-target="#tutorials" data-toggle="tab" onclick="changeTabtoTutorial()"
+                                           class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_TUTORIALS");?>
+                                        </a>
+                                    </button>
+                                </div><!-- end col -->
+                                <div class="col">
+                                    <button class="btn btn-success mr-1">
+                                        <a href="" data-target="#services" data-toggle="tab" onclick="changeTabtoServices()"
+                                           class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_SERVICES");?>
+                                        </a>
+                                    </button>
+                                </div><!-- end col -->
+                            </div><!-- end row -->
                         </div>
                     </div>
                 </div>
@@ -313,6 +361,37 @@ if ($user->isLoggedIn()) {
             }, 50);
         }
     }
+
+    if($('#audience-map').length) {
+        $('#audience-map').vectorMap({
+            map: 'world_mill_en',
+
+            panOnDrag: true,
+            focusOn: {
+                x: 0.5,
+                y: 0.5,
+                scale: 1,
+                animate: true
+            },
+            series: {
+                regions: [{
+                    scale: ['#3d3c3c', '#f2f2f2'],
+                    normalizeFunction: 'polynomial',
+                    values: {
+
+                        "BZ": 75.00,
+                        "US": 56.25,
+                        "AU": 15.45,
+                        "GB": 25.00,
+                        "RO": 10.25,
+                        "GE": 33.25,
+                        "BR": 0
+                    }
+                }]
+            }
+        });
+    }
+
 
     $(".stat-timer").each(function() {
         $(this).data('count', parseInt($(this).html(), 10));

@@ -104,10 +104,10 @@
     "RECEIVE_NAME" => "Reseracher",
     "WELCOME_MSG" => "The Bio-Speckle Laser (BSL) phenomenon can be studied by means of many techniques. 
         This web portal was built so that the community of researchers on the subject can share their experiences.",
-    "LAND_PUBLISHED" => "Published Researches on database",
+    "LAND_PUBLISHED" => "Published Researches",
     "LAND_RESEARCHES" => "Registered researchers",
-    "NUMBER_OF_PUBLIC_IMAGES" => "Number of public images in database: ",
-    "AROUND_WORLD" => "around the world",
+    "NUMBER_OF_PUBLIC_IMAGES" => "Public images stored",
+    "AROUND_WORLD" => "visitors",
     "GEN_CITY" => "City",
     "GEN_CONTINENT" => "Continent Name",
     "GEN_VISITORS" => "Visitors",
