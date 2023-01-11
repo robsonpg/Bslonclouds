@@ -19,6 +19,7 @@ if ($user->isLoggedIn()) {
     // Use JSON encoded string and converts
     // it into a PHP variable
     $ip = $_SERVER['REMOTE_ADDR'];
+    $ip = '177.66.49.230';
     $visitor_data = @json_decode(file_get_contents(
         "http://www.geoplugin.net/json.gp?ip=" . $ip));
 
@@ -136,7 +137,7 @@ if ($user->isLoggedIn()) {
                                     <div class="col-9">
                                         <div class="d-flex align-items-center align-self-start">
                                             <h3 class="mb-0 stat-timer"><?=$public_images;?></h3>
-                                            <p class="text-sucess ml-2 mb-0 font-weight-medium">12.4%</p>
+                                            <p class="text-sucess ml-2 mb-0 font-weight-medium">+12.4%</p>
                                         </div>
                                     </div>
                                     <div class="col-3">
@@ -164,7 +165,6 @@ if ($user->isLoggedIn()) {
                             <thead>
                             <tr>
                                 <th><?=lang("GEN_COUNTRY");?></th>
-                                <th><?=lang("GEN_CITY");?></th>
                                 <th><?=lang("GEN_CONTINENT");?></th>
                                 <th class="text-right"><?=lang("GEN_VISITORS");?></th>
                             </tr>
@@ -176,12 +176,17 @@ if ($user->isLoggedIn()) {
                                     // Busca o nome da bandeira
                                     $key = array_search($visitor->bsl_visitors_data_country, CI_COUNTRIES_ARRAY);
                                     $icon_name = strtolower($key);
+                                    $latlon = $visitor->bsl_visitors_data_latitude . ":" . $visitor->bsl_visitors_data_longintude;
+
                             ?>
                                 <tr>
-                                    <td><i class="flag-icon flag-icon-<?=$icon_name?>"></i>&nbsp;&nbsp;<?=$visitor->bsl_visitors_data_country;?></td>
-                                    <td><?=$visitor->bsl_visitors_data_city;?></td>
+                                    <td id="country_name" datatype="<?=$latlon?>">
+                                        <i class="flag-icon flag-icon-<?=$icon_name?>"></i>&nbsp&nbsp<?=$visitor->bsl_visitors_data_country;?>
+                                    </td>
                                     <td><?=$visitor->bsl_visitors_data_continent;?></td>
-                                    <td class="text-right font-weight-bold"><?=$visitor->bsl_visitors_data_city_count;?></td>
+                                    <td id="country_visitors" datatype="<?=$visitor->bsl_visitors_data_city;?>" class="text-right font-weight-bold">
+                                        <?=$visitor->bsl_visitors_data_city_count;?>
+                                    </td>
                                 </tr>
                             <?php
                                 }
@@ -363,9 +368,27 @@ if ($user->isLoggedIn()) {
     }
 
     if($('#audience-map').length) {
+        let countries = document.querySelectorAll("[id='country_name']");
+        let city = document.querySelectorAll("[id='country_visitors']");
+        let markers = [];
+        // let obj1 = {};
+        // obj1["latLng"] = [-20.92, -44.96];
+        // obj1["name"] = "Vatican City";
+        // markers.push(obj1);
+
+        for(var i = 0; i < countries.length; i++) {
+            let obj = {};
+            let latlon = countries[i].getAttribute("datatype");
+            let ctname = city[i].getAttribute("datatype");
+            let latlonvalues = latlon.split(":");
+            obj["latLng"] = [latlonvalues[0], latlonvalues[1]];
+            obj["name"] = ctname;
+            markers.push(obj);
+        }
+        //markers = markers + "]";
+        //alert(gdpData);
         $('#audience-map').vectorMap({
             map: 'world_mill_en',
-
             panOnDrag: true,
             focusOn: {
                 x: 0.5,
@@ -373,22 +396,13 @@ if ($user->isLoggedIn()) {
                 scale: 1,
                 animate: true
             },
-            series: {
-                regions: [{
-                    scale: ['#3d3c3c', '#f2f2f2'],
-                    normalizeFunction: 'polynomial',
-                    values: {
-
-                        "BZ": 75.00,
-                        "US": 56.25,
-                        "AU": 15.45,
-                        "GB": 25.00,
-                        "RO": 10.25,
-                        "GE": 33.25,
-                        "BR": 0
-                    }
-                }]
-            }
+            markerStyle: {
+                initial: {
+                    fill: '#F8E23B',
+                    stroke: '#383f47'
+                }
+            },
+            markers: markers,
         });
     }
 

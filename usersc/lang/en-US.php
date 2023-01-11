@@ -106,7 +106,7 @@
         This web portal was built so that the community of researchers on the subject can share their experiences.",
     "LAND_PUBLISHED" => "Published Researches",
     "LAND_RESEARCHES" => "Registered researchers",
-    "NUMBER_OF_PUBLIC_IMAGES" => "Public images stored",
+    "NUMBER_OF_PUBLIC_IMAGES" => "Public images",
     "AROUND_WORLD" => "visitors",
     "GEN_CITY" => "City",
     "GEN_CONTINENT" => "Continent Name",

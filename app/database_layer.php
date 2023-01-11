@@ -338,11 +338,15 @@ function insertDatabaseVisitorInfo($visitorinfo) {
                     bsl_visitors_data_city_count,
                     bsl_visitors_data_continent,
                     bsl_visitors_data_continent_count,
-                     bsl_visitors_data_timestamp)
+                    bsl_visitors_data_timestamp,
+                    bsl_visitors_data_latitude,
+                    bsl_visitors_data_longintude)
                     VALUES
                     ('" . $visitorinfo->geoplugin_countryName . "',1," .
                 "'" . $visitorinfo->geoplugin_city . "',1," .
-                "'" . $visitorinfo->geoplugin_continentName . "',1 , now()" .
+                "'" . $visitorinfo->geoplugin_continentName . "',1 , now()," .
+                $visitorinfo->geoplugin_latitude . "," .
+                $visitorinfo->geoplugin_longitude .
                 ")";
             $res = $db->query($sql);
         }
