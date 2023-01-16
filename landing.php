@@ -19,7 +19,7 @@ if ($user->isLoggedIn()) {
     // Use JSON encoded string and converts
     // it into a PHP variable
     $ip = $_SERVER['REMOTE_ADDR'];
-    $ip = '177.66.49.230';
+
     $visitor_data = @json_decode(file_get_contents(
         "http://www.geoplugin.net/json.gp?ip=" . $ip));
 
