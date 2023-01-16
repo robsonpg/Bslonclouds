@@ -16,7 +16,7 @@ if ($user->isLoggedIn()) {
     // <script src="https://kit.fontawesome.com/b41bdf02f7.js" crossorigin="anonymous"></script>
 
     $ip = $_SERVER['REMOTE_ADDR'];
-    $ip = '177.66.50.134';
+
     $visitor_data = @json_decode(file_get_contents(
         "http://www.geoplugin.net/json.gp?ip=" . $ip));
 
