@@ -361,7 +361,17 @@ function insertDatabaseVisitorInfo($visitorinfo) {
 function getAllDatabaseVisitorInfo(): ?DB
 {
     $db = DB::getInstance();
-    $sql = "SELECT * FROM bsl_visitors_data order by bsl_visitors_data_timestamp desc, bsl_visitors_data_country_count asc limit 5";
+    $sql = "SELECT * FROM bsl_visitors_data";
+    $res = $db->query($sql);
+    return $res;
+}
+
+function getCountryTotals(): ?DB
+{
+    $db = DB::getInstance();
+    $sql = "SELECT *, sum(bsl_visitors_data_country_count) as count FROM bsl_visitors_data 
+        group by bsl_visitors_data_country 
+        order by bsl_visitors_data_timestamp desc, bsl_visitors_data_country_count asc limit 5";
     $res = $db->query($sql);
     return $res;
 }

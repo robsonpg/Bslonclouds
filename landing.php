@@ -26,6 +26,7 @@ if ($user->isLoggedIn()) {
     insertDatabaseVisitorInfo($visitor_data);
 
     $visitors_statistics = clone(getAllDatabaseVisitorInfo());
+    $countries_statistics = clone(getCountryTotals());
 
 //    echo 'Country Name: ' . $ipdat->geoplugin_countryName . "\n";
 //    echo 'City Name: ' . $ipdat->geoplugin_city . "\n";
@@ -35,8 +36,6 @@ if ($user->isLoggedIn()) {
 //    echo 'Currency Symbol: ' . $ipdat->geoplugin_currencySymbol . "\n";
 //    echo 'Currency Code: ' . $ipdat->geoplugin_currencyCode . "\n";
 //    echo 'Timezone: ' . $ipdat->geoplugin_timezone;
-
-
 ?>
 <style>
     @font-face {
@@ -52,6 +51,9 @@ if ($user->isLoggedIn()) {
     <link rel="stylesheet" href="app/js/jvectormap/jquery-jvectormap-2.0.5.css" type="text/css" media="screen"/>
     <script src="app/js/jvectormap/jquery-jvectormap-2.0.5.min.js"></script>
     <script src="app/js/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script>
+        let cities = <?php echo json_encode($visitors_statistics->results()); ?>;
+    </script>
 
 <body>
 <div class="row">
@@ -171,21 +173,20 @@ if ($user->isLoggedIn()) {
                             </thead>
                             <tbody>
                             <?php
-                            if ($visitors_statistics->count() > 0) {
-                                foreach ($visitors_statistics->results() as $visitor) {
+                            if ($countries_statistics->count() > 0) {
+                                // Para totalizar as visitas por país
+                                foreach ($countries_statistics->results() as $visitor) {
                                     // Busca o nome da bandeira
                                     $key = array_search($visitor->bsl_visitors_data_country, CI_COUNTRIES_ARRAY);
                                     $icon_name = strtolower($key);
-                                    $latlon = $visitor->bsl_visitors_data_latitude . ":" . $visitor->bsl_visitors_data_longintude;
-
                             ?>
                                 <tr>
-                                    <td id="country_name" datatype="<?=$latlon?>">
+                                    <td id="country_name">
                                         <i class="flag-icon flag-icon-<?=$icon_name?>"></i>&nbsp&nbsp<?=$visitor->bsl_visitors_data_country;?>
                                     </td>
                                     <td><?=$visitor->bsl_visitors_data_continent;?></td>
                                     <td id="country_visitors" datatype="<?=$visitor->bsl_visitors_data_city;?>" class="text-right font-weight-bold">
-                                        <?=$visitor->bsl_visitors_data_city_count;?>
+                                        <?=$visitor->count;?>
                                     </td>
                                 </tr>
                             <?php
@@ -368,25 +369,17 @@ if ($user->isLoggedIn()) {
     }
 
     if($('#audience-map').length) {
-        let countries = document.querySelectorAll("[id='country_name']");
-        let city = document.querySelectorAll("[id='country_visitors']");
         let markers = [];
-        // let obj1 = {};
-        // obj1["latLng"] = [-20.92, -44.96];
-        // obj1["name"] = "Vatican City";
-        // markers.push(obj1);
-
-        for(var i = 0; i < countries.length; i++) {
+        for(var i = 0; i < cities.length; i++) {
             let obj = {};
-            let latlon = countries[i].getAttribute("datatype");
-            let ctname = city[i].getAttribute("datatype");
-            let latlonvalues = latlon.split(":");
-            obj["latLng"] = [latlonvalues[0], latlonvalues[1]];
+            let lat = cities[i].bsl_visitors_data_latitude;
+            let lon = cities[i].bsl_visitors_data_longitude;
+            let ctname = cities[i].bsl_visitors_data_city;
+            obj["latLng"] = [lat, lon];
             obj["name"] = ctname;
             markers.push(obj);
         }
-        //markers = markers + "]";
-        //alert(gdpData);
+
         $('#audience-map').vectorMap({
             map: 'world_mill_en',
             panOnDrag: true,
