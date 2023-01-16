@@ -340,7 +340,7 @@ function insertDatabaseVisitorInfo($visitorinfo) {
                     bsl_visitors_data_continent_count,
                     bsl_visitors_data_timestamp,
                     bsl_visitors_data_latitude,
-                    bsl_visitors_data_longintude)
+                    bsl_visitors_data_longitude)
                     VALUES
                     ('" . $visitorinfo->geoplugin_countryName . "',1," .
                 "'" . $visitorinfo->geoplugin_city . "',1," .
