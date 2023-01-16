@@ -301,6 +301,13 @@ if ($user->isLoggedIn()) {
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div role="alert" class="alert alert-warning">
+                            <h6><?=lang("TUTORIALS_MSG"); ?></h6>
+                        </div>
+                    </div>
+                </div>
             </div> <!-- tab pane -->
             <div id="services" class="tab-pane fade">
                 <div class="row">
@@ -309,6 +316,13 @@ if ($user->isLoggedIn()) {
                             <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
                                     B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
                             <h4><?=lang("SERVICES_TEXT"); ?></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div role="alert" class="alert alert-warning">
+                            <h6><?=lang("SERVICES_MSG"); ?></h6>
                         </div>
                     </div>
                 </div>
@@ -362,6 +376,20 @@ if ($user->isLoggedIn()) {
             setTimeout(function() {
                 count($this)
             }, 50);
+        }
+    }
+
+    window.onpopstate = function() {
+        switch(location.hash) {
+            case '#home':
+                //alert("home");
+                break
+            case '#login':
+                //alert("login");
+                break
+            default:
+                //alert("def");
+                location.replace("http://bslonclouds.com/");
         }
     }
 

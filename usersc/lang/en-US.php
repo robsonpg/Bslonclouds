@@ -120,6 +120,11 @@ $lang = array_merge($lang,array(
     "TUTORIALS_TEXT" => "Tutorial",
     "SERVICES_TEXT" => "Services",
     "RESEARCHES_TEXT" => "Researches’ data",
+    "FOOTER_VISITORS" => "Visitors",
+    "FOOTER_PROJECT_MSG" => "Project supported by (beta version)",
+    "TUTORIALS_MSG" => "This area is under construction, and the Tools and the Tutorial expected to here will be bring 
+        from BSLTL project <a href='https://www.nongnu.org/bsltl/'>https://www.nongnu.org/bsltl/</a>",
+    "SERVICES_MSG" => "This area is under construction.",
 ));
 
 

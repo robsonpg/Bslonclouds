@@ -24,10 +24,29 @@ $(document).ready(function(){
 // e=o.createElement(i);r=o.getElementsByTagName(i)[0];
 // e.src='//www.google-analytics.com/analytics.js';
 // r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-// ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+// ga('create','G-6X7KGD0GZZ','auto');ga('send','pageview');
 </script>
 
 <div class="container">
+        <div class="row">
+            <div class="col-2 text-center">
+            </div>
+            <div class="col-2 text-center">
+            </div>
+            <div class="col-4 text-center">
+                <h6><?=lang("FOOTER_PROJECT_MSG"); ?></h6>
+                <img src="/usersc/templates/bs4/assets/images/CNPq_v2017_rgb.png" height="30mm" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
+            </div>
+            <div class="col-2 text-center">
+            </div>
+            <div class="col-2 text-center">
+                <span class="badge badge-pill badge-primary">
+                <?=lang("FOOTER_VISITORS");?> <?=getTotalVisitors(); ?>
+                </span>
+            </div>
+        </div>
         <div class="row">
                 <div class="col-12 text-center">
                         <footer><br>&copy;

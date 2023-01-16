@@ -375,6 +375,13 @@ function getCountryTotals(): ?DB
     $res = $db->query($sql);
     return $res;
 }
+
+function getTotalVisitors() {
+    $db = DB::getInstance();
+    $sql = "SELECT sum(bsl_visitors_data_country_count) as count FROM bsl_visitors_data limit 1;";
+    $res = $db->query($sql);
+    return $res->results()[0]->count;
+}
 //##############################################################################
 // Tabelas no banco de dados
 //##############################################################################
