@@ -34,6 +34,7 @@ if ($user->isLoggedIn()) {
 //    echo 'Currency Code: ' . $ipdat->geoplugin_currencyCode . "\n";
 //    echo 'Timezone: ' . $ipdat->geoplugin_timezone;
 ?>
+
 <style>
     @font-face {
     font-family: 'Aeros';
@@ -41,7 +42,44 @@ if ($user->isLoggedIn()) {
     }
     .vector-map {
         width: 100%;
-        height: 300px; }
+        height: 300px;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+
+        cursor: pointer;
+        border: none;
+
+        color: rgb(45, 73, 56);
+        font-size: 20px;
+        border-radius: 4px;
+        box-shadow: inset 0px 3px 5px rgba(60, 112, 182, 0.5), 0px 0px 10px rgba(0,0,0,0.15);
+        background: rgb(2,0,36);
+        background: linear-gradient(45deg, rgba(2,0,36,0) 5%, rgba(255,255,255,.5) 6%, rgba(255,255,255,0) 9%, rgba(255,255,255,.5) 10%, rgba(255,255,255,0) 17%, rgba(255,255,255,.5) 19%, rgba(255,255,255,0) 21%);
+        background-size: 150%;
+        background-position: right;
+        transition: 1s;
+    }
+
+    button:hover {
+        background-position: left;
+        color: #96af9e;
+        box-shadow: inset 0px 3px 5px rgba(255,255,255,1), 0px 0px 10px rgba(0,0,0,0.25);
+    }
+
+    button:focus {
+        outline: none;
+    }
 </style>
 
     <link rel="stylesheet" href="app/css/flag-icon-css/css/flag-icon.min.css">
@@ -199,29 +237,17 @@ if ($user->isLoggedIn()) {
                 </div><!-- end row -->
                 <br>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12">
                         <div role="alert" class="alert alert-success">
                             <div class="row">
-                                <div class="col-4">
-                                    <button class="btn btn-success mr-1">
-                                        <a href="" data-target="#researches" data-toggle="tab" onclick="changeTabtoResearch()"
-                                           class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_RESEARCH");?>
-                                        </a>
-                                    </button>
+                                <div class="col-4 text-center">
+                                    <button class="noselect" onclick="changeTabtoResearch()"><?=lang("CLICK_TO_RESEARCH");?></button>
                                 </div>
-                                <div class="col">
-                                    <button class="btn btn-success mr-1">
-                                        <a href="" data-target="#tutorials" data-toggle="tab" onclick="changeTabtoTutorial()"
-                                           class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_TUTORIALS");?>
-                                        </a>
-                                    </button>
+                                <div class="col-4 text-center">
+                                    <button class="noselect" onclick="changeTabtoTutorial()"><?=lang("CLICK_TO_TUTORIALS");?></button>
                                 </div><!-- end col -->
-                                <div class="col">
-                                    <button class="btn btn-success mr-1">
-                                        <a href="" data-target="#services" data-toggle="tab" onclick="changeTabtoServices()"
-                                           class="text-uppercase" style="color: whitesmoke"><?=lang("CLICK_TO_SERVICES");?>
-                                        </a>
-                                    </button>
+                                <div class="col-4 text-center">
+                                    <button class="noselect" onclick="changeTabtoServices()"><?=lang("CLICK_TO_SERVICES");?></button>
                                 </div><!-- end col -->
                             </div><!-- end row -->
                         </div>
