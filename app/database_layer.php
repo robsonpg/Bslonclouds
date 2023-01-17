@@ -371,7 +371,7 @@ function getCountryTotals(): ?DB
     $db = DB::getInstance();
     $sql = "SELECT *, sum(bsl_visitors_data_country_count) as count FROM bsl_visitors_data 
         group by bsl_visitors_data_country 
-        order by bsl_visitors_data_timestamp desc, bsl_visitors_data_country_count asc limit 5";
+        order by bsl_visitors_data_country_count asc, bsl_visitors_data_timestamp desc limit 5";
     $res = $db->query($sql);
     return $res;
 }
