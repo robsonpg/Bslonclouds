@@ -80,6 +80,20 @@ if ($user->isLoggedIn()) {
     button:focus {
         outline: none;
     }
+
+    .float{
+        position:fixed;
+        width:15mm;
+        height: 15mm;
+        bottom:40px;
+        right:40px;
+        background-color:#0C9;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        box-shadow: 2px 2px 3px #999;
+    }
+
 </style>
 
     <link rel="stylesheet" href="app/css/flag-icon-css/css/flag-icon.min.css">
@@ -357,7 +371,9 @@ if ($user->isLoggedIn()) {
     </div> <!-- col class -->
 </div> <!-- row -->
 
-
+<a href="#home_bsl" class="float" style="padding-top: 3mm">
+    <i class="fa fa-home my-float fa-2x"></i>
+</a>
 </body>
 <script>
     function changeTabtoResearch() {

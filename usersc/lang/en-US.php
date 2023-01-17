@@ -11,7 +11,7 @@ $lang = array_merge($lang,array(
     "GEN_COUNTRY" => "Country",
     "GEN_SKILLS" => "Skills",
     "GEN_NEWSLETTER" => "Do you want to receive our newletter?",
-    "GEN_AGREEMENT" => "By check this box, you agree with our <a href='' data-toggle='modal' data-target='#myModal'>terms and conditions of use.</a>",
+    "GEN_AGREEMENT" => "By check this box, you agree with our <a href='' data-toggle='modal' data-target='#termsModal'>terms and conditions of use.</a>",
     "GEN_MUST_AGREE" => "You must agree with our terms and conditions.",
     "PROCESS_IMAGES" => "Image Process",
     "SELECT_IMAGES" => "Select images to be up-loaded to BSL ON CLOUDS' server",
@@ -125,6 +125,12 @@ $lang = array_merge($lang,array(
     "TUTORIALS_MSG" => "This area is under construction, and the Tools and the Tutorial expected to here will be bring 
         from BSLTL project <a href='https://www.nongnu.org/bsltl/'>https://www.nongnu.org/bsltl/</a>",
     "SERVICES_MSG" => "This area is under construction.",
+    "TERMS_MODAL_HEADER" => "Terms and conditions of use",
+    "TERMS_AND_CONTIDIONS_TEXT" => "1 - The data I am setting as public can be used by anyone to do research.<br>
+            2 - The data I am setting as private will be used only by the owners of the BSL on Clouds.<br>
+            3 - The data I am up-loading are from my own, or by the authorship of a group that I am acting on behalf.<br>
+            4 - The data I will download will be referred as indicated by the author(s) in the description at BSL on Clouds.",
+
 ));
 
 
