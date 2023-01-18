@@ -19,11 +19,16 @@ function shakeDOM(element) {
     return true;
 }
 
+function alphaOnly(event) {
+    var key = event.keyCode;
+    return (((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key >= 48 && key <= 57)) || (key === 8) || (key === 189));
+}
+
 //########################################################################
 // Validação da chave unica
 // Comparar a chave digitada com as exsitentes e fazer o box ficar
 // vermelho em caso de igualdade
-function uniqueIDValidation() {
+function uniqueIDValidation(event) {
     let sample_id = document.getElementById("sample_id");
     let id_text = sample_id.value.trim();
     let unique_id_help = document.getElementById("unique_id_help");

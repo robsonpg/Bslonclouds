@@ -54,7 +54,7 @@ $all_researches = getAllResearchesID();
     let msg_upload_images = "<?=lang("SEND_IMAGES");?>";
     let msg_cover = "<?=lang("COVER_IMAGE_MSG");?>";
     let msg_sending_done = "<?=lang("SEND_IMAGES_DONE_MSG");?>";
-
+    let msg_select_images = "<?=lang("SELECT_IMAGES_BTN");?>";
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {

@@ -28,7 +28,9 @@ function readURL(input, id) {
     image_info_list = [];
 
     let btn_send = document.getElementById("btn_send_modal");
-    btn_send.value = msg_loading;
+    let btn_select = document.getElementById("btn_get_files");
+    btn_select.value = msg_loading;
+    btn_select.disabled = true;
 
     //#################################################################
     // Analisar nomes das imagens, devem ser somente números
@@ -84,6 +86,8 @@ function readURL(input, id) {
                     if (i === (input.files.length - 1)) {
                         btn_send.disabled = false;
                         btn_send.value = msg_upload_images;
+                        btn_select.disabled = false;
+                        btn_select.value = msg_select_images;
                     }
                 // }
             };
@@ -270,6 +274,9 @@ function showPropertiesModal() {
 // Envia imagens para o servidor na nuvem
 function sendImagesToServer() {
     //alert("click");
+    let btn_upload = document.getElementById("btn_send_modal");
+    btn_upload.disabled = true;
+    $('#send-images-modal').modal('show');
     let message_place = document.getElementById("message_place");
     message_place.innerText = msg_send_images;
     let progress_bar = document.getElementById("progress_bar");
@@ -384,6 +391,8 @@ function sendImage(sample_database_id ,idx) {
                             $('#send-images-modal').modal('hide');
                             // Limpa o formulário de envio
                             clearAllData();
+                            // let btn_send = document.getElementById("btn_send_modal");
+                            // btn_send.disabled = false;
                         }, 5000);
                         return;
                     }
