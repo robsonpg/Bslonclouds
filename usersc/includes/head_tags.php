@@ -9,10 +9,10 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta property="og:url"             content="https://bslonclouds.com" /> <?php // URL for website (link address)?>
-<meta property="og:type"            content="website" /> <?php // type of site?>
+<meta property="og:type"            content="Portal" /> <?php // type of site?>
 <meta property="og:title"           content="Biospeckle On Clouds" /> <?php // title of site (title of share)?>
 <meta property="og:description"     content="Research sharing" /> <?php // description of site (text which appears when sharing)?>
-<meta property="og:image"           content="/icons/favicon-96x96.png" /> <?php // URL for preview image?>
+<meta property="og:image"           content="https://bslonclouds.com/icons/favicon-96x96.png" /> <?php // URL for preview image?>
 
 <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
