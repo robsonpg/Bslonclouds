@@ -78,7 +78,8 @@ $lang = array_merge($lang,array(
     "MODAL_PROCESSING_IMAGES_TITLE" => "Research’s data Request",
     "MODAL_PROCESSING_IMAGES_MSG" => "Processing research’s data request...",
     "MODAL_ABOUT_TITLE" => "About the project",
-    "MODAL_ABOUT_MSG" => "Author: Roberto Alves Braga Jr; Developer: RPG Software and Research; Partial support CNPq",
+    "MODAL_ABOUT_MSG" => "<b>Author:</b> Roberto Alves Braga Jr<br><b>Developer:</b> RPG Software and Research<br>Partial support <b>CNPq</b>
+        <br><b>Contact us:</b> <a href='mailto:contact@bslonclouds.com'>contact@bslonclouds.com</a>",
     "RESEARCH_PUBLIC_ID" => "Published in DOI/URL (optional)",
     "CANNOT_CHANGE_ID" => "Unique ID <b>CANNOT</b> be changed",
     "MODEL_START_SEND_IMAGES" => "Starting processing the images. It can take some minutes.",
@@ -113,12 +114,12 @@ $lang = array_merge($lang,array(
     "TAB_HOME" => "Home",
     "TAB_RESEARCHES" => "Researches’ data",
     "TAB_TUTORIALS" => "Tutorials",
-    "TAB_SERVICES" => "Services",
+    "TAB_SERVICES" => "Data Analysis",
     "CLICK_TO_RESEARCH" => "Upload or download data",
     "CLICK_TO_TUTORIALS" => "Tutorials",
-    "CLICK_TO_SERVICES" => "Services",
+    "CLICK_TO_SERVICES" => "Data Analysis",
     "TUTORIALS_TEXT" => "Tutorial",
-    "SERVICES_TEXT" => "Services",
+    "SERVICES_TEXT" => "Data Analysis",
     "RESEARCHES_TEXT" => "Researches’ data",
     "FOOTER_VISITORS" => "Visitors",
     "FOOTER_PROJECT_MSG" => "Project supported by (beta version)",
@@ -130,7 +131,8 @@ $lang = array_merge($lang,array(
             2 - The data I am setting as private will be used only by the owners of the BSL on Clouds.<br>
             3 - The data I am up-loading are from my own, or by the authorship of a group that I am acting on behalf.<br>
             4 - The data I will download will be referred as indicated by the author(s) in the description at BSL on Clouds.",
-
+    "TEXT_MUST_LOGIN" => "You must be registered and logged in to access researches data by Research's Data Catalog menu item",
+    "MENU_HOME" => "Home",
 ));
 
 

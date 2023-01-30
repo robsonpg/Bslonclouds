@@ -286,7 +286,7 @@ function getPublicResearches(): ?DB
                                     sd.bsl_sample_data_permission = " . PERMISSION_PUBLIC . " and
                                     sd.bsl_sample_data_status = " . RESEARCH_STATUS_ACCEPTED ." and
                                     u.id = sd.bsl_sample_data_owner_id 
-                                    order by u.fname asc";
+                                    order by RAND() asc limit 5";
     $res = $db->query($sql);
     return $res;
 }

@@ -3,6 +3,8 @@ require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->temp
 
 require_once $abs_us_root . $us_url_root . 'users/includes/page_footer.php';
 
+require_once $abs_us_root . $us_url_root . 'app/database_layer.php';
+
 ?>
 
 <script type="text/javascript">
@@ -29,9 +31,10 @@ $(document).ready(function(){
 
 <div class="container">
         <div class="row">
-            <div class="col-2 text-center">
-            </div>
-            <div class="col-2 text-center">
+            <div class="col-4">
+                <div role="alert" class="mt-1 alert alert-secondary fade show">
+                    <h6 class="font-weight-bold"><?=lang("MODAL_ABOUT_TITLE")?></h6><br><?=lang("MODAL_ABOUT_MSG")?>
+                </div>
             </div>
             <div class="col-4 text-center">
                 <h6><?=lang("FOOTER_PROJECT_MSG"); ?></h6>
@@ -39,7 +42,7 @@ $(document).ready(function(){
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
             </div>
-            <div class="col-2 text-center">
+            <div class="col-1 text-center">
             </div>
             <div class="col-2 text-center">
                 <span class="badge badge-pill badge-primary">

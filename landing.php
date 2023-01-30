@@ -5,8 +5,11 @@ require_once 'app/database_layer.php';
 require_once 'app/constants.php';
 
 if ($user->isLoggedIn()) {
-    die;
-} else {
+    //die;
+    require_once 'users/init.php';
+    require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
+
+}
     $projects = getNumberPublicResearch();
     $researches = getNumberOfResearches();
     $public_researches = clone(getPublicResearches());
@@ -113,10 +116,12 @@ if ($user->isLoggedIn()) {
                     <?=lang("TAB_HOME");?>
                 </a>
             </li>
-            <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase">
-                    <?=lang("TAB_RESEARCHES");?>
-                </a>
-            </li>
+            <?php if (!$user->isLoggedIn()) { ?>
+                <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase">
+                        <?=lang("TAB_RESEARCHES");?>
+                    </a>
+                </li>
+            <?php } ?>
             <li class="nav-item"><a href="" id="tab_tutorials" data-target="#tutorials" data-toggle="tab" class="nav-link small text-uppercase">
                     <?=lang("TAB_TUTORIALS");?>
                 </a>
@@ -138,8 +143,6 @@ if ($user->isLoggedIn()) {
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row">
                     <div class="col-sm-4 grid-margin stretch-card">
                         <div class="card">
@@ -268,69 +271,85 @@ if ($user->isLoggedIn()) {
                     </div>
                 </div>
             </div>
-            <div id="researches" class="tab-pane fade">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div role="alert" class="alert alert-success">
-                            <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
-                                    B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                            <h4><?=lang("RESEARCHES_TEXT"); ?></h4>
+            <?php if (!$user->isLoggedIn()) { ?>
+                <div id="researches" class="tab-pane fade">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div role="alert" class="alert alert-success">
+                                <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
+                                        B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
+                                <h4><?=lang("RESEARCHES_TEXT"); ?></h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php
-                if ($public_researches->count() > 0) {
-                    foreach ($public_researches->results() as $research) {
-                ?>
-                        <div class="row">
-                            <div class="col-12 my-2">
-                                <div class="card card-body p-3 text-black bg-dark">
-                                    <div class="list-group-item d-block">
-                                        <div class="row">
-                                            <div class="col-3">
-                                                <?php if ($research->bsl_sample_data_cover_image == null) { ?>
-                                                    <img src="app/images/default.bmp" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
-                                                <?php
-                                                } else { ?>
-                                                    <img src="<?='data:image/bmp;base64,' . $research->bsl_sample_data_cover_image;?>" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
-                                                <?php
-                                                } ?>
-                                            </div>
-                                            <div class="col text-center text-sm-left">
-                                                <h5><span class="text-muted">Research: <?=$research->bsl_sample_data_unique_id;?></span></h5>
-                                                <span class="text-muted">Researcher Name: <?=$research->lname . ', ' . $research->fname; ?></span>
-                                                <br>
-                                                <span class="badge badge-success">Country: <?=$research->locale; ?></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span class="text-primary">
-                                            <a class="badge badge-primary float-right" href="<?=$research->bsl_sample_data_published_DOI_URL; ?>">
-                                                Published: <?=$research->bsl_sample_data_published_DOI_URL; ?></a>
-                                        </span>
+                    <?php
+                        if (!$user->isLoggedIn()) {
+                    ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div role="alert" class="alert alert-warning">
+                                        <h6><?=lang("TEXT_MUST_LOGIN"); ?></h6>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                <?php
+                    <?php
+                        }
+                    ?>
+
+                    <?php
+                    if ($public_researches->count() > 0) {
+                        foreach ($public_researches->results() as $research) {
+                    ?>
+                            <div class="row">
+                                <div class="col-12 my-2">
+                                    <div class="card card-body p-3 text-black bg-dark">
+                                        <div class="list-group-item d-block">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <?php if ($research->bsl_sample_data_cover_image == null) { ?>
+                                                        <img src="app/images/default.bmp" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+                                                    <?php
+                                                    } else { ?>
+                                                        <img src="<?='data:image/bmp;base64,' . $research->bsl_sample_data_cover_image;?>" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+                                                    <?php
+                                                    } ?>
+                                                </div>
+                                                <div class="col text-center text-sm-left">
+                                                    <h5><span class="text-muted">Research: <?=$research->bsl_sample_data_unique_id;?></span></h5>
+                                                    <span class="text-muted">Researcher Name: <?=$research->lname . ', ' . $research->fname; ?></span>
+                                                    <br>
+                                                    <span class="badge badge-success">Country: <?=$research->locale; ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="text-primary">
+                                                <a class="badge badge-primary float-right" href="<?=$research->bsl_sample_data_published_DOI_URL; ?>">
+                                                    Published: <?=$research->bsl_sample_data_published_DOI_URL; ?></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    <?php
+                        }
+                    } else { ?>
+                            <div class="row">
+                                <div class="col-12 my-2">
+                                    <div class="card card-body p-3 text-black bg-dark">
+                                        <div class="list-group-item d-block">
+                                            <div class="row">
+                                                --------------
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    <?php
                     }
-                } else { ?>
-                        <div class="row">
-                            <div class="col-12 my-2">
-                                <div class="card card-body p-3 text-black bg-dark">
-                                    <div class="list-group-item d-block">
-                                        <div class="row">
-                                            --------------
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                <?php
-                }
-                ?>
-            </div> <!-- tab pane -->
+                    ?>
+                </div> <!-- tab pane -->
+            <?php } ?>
             <div id="tutorials" class="tab-pane fade">
                 <div class="row">
                     <div class="col-md-12">
@@ -371,9 +390,9 @@ if ($user->isLoggedIn()) {
     </div> <!-- col class -->
 </div> <!-- row -->
 
-<a href="#home_bsl" class="float" style="padding-top: 3mm">
+<!--a href="#home_bsl" class="float" style="padding-top: 3mm">
     <i class="fa fa-home my-float fa-2x"></i>
-</a>
+</a-->
 </body>
 <script>
     function changeTabtoResearch() {
@@ -476,4 +495,3 @@ if ($user->isLoggedIn()) {
 </script>
 
 
-<?php } ?>
