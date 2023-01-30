@@ -17,9 +17,8 @@ if(isset($user) && $user->isLoggedIn()){
         // ######################################################
         // Salva o país de origem da visita no log do sistema
         saveVisitorInfo();
-        if($user->isLoggedIn()){?>
-            <a class="btn btn-primary" href="users/account.php" role="button"><?=lang("ACCT_HOME");?> &raquo;</a>
-        <?php
+        if($user->isLoggedIn()){
+            require_once 'landing.php';
         } else {
             require_once 'landing.php';
         }?>

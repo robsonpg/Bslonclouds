@@ -390,6 +390,12 @@ if ($user->isLoggedIn()) {
     </div> <!-- col class -->
 </div> <!-- row -->
 
+<?php
+
+if ($user->isLoggedIn()) {
+    require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
+}
+?>
 <!--a href="#home_bsl" class="float" style="padding-top: 3mm">
     <i class="fa fa-home my-float fa-2x"></i>
 </a-->
