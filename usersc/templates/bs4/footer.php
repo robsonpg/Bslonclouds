@@ -38,7 +38,9 @@ $(document).ready(function(){
             </div>
             <div class="col-4 text-center">
                 <h6><?=lang("FOOTER_PROJECT_MSG"); ?></h6>
-                <img src="/usersc/templates/bs4/assets/images/CNPq_v2017_rgb.png" height="30mm" />
+                <a href="https://www.gov.br/cnpq/pt-br">
+                    <img src="/usersc/templates/bs4/assets/images/CNPq_v2017_rgb.png" height="30mm"/>
+                </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
             </div>
