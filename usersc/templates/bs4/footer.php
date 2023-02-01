@@ -44,9 +44,7 @@ $(document).ready(function(){
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
             </div>
-            <div class="col-1 text-center">
-            </div>
-            <div class="col-2 text-center">
+            <div class="col-3 text-center">
                 <span class="badge badge-pill badge-primary">
                 <?=lang("FOOTER_VISITORS");?> <?=getTotalVisitors(); ?>
                 </span>
