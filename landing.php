@@ -287,8 +287,8 @@ if ($user->isLoggedIn()) {
                     ?>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div role="alert" class="alert alert-warning">
-                                        <h6><?=lang("TEXT_MUST_LOGIN"); ?></h6>
+                                    <div role="alert" class="alert alert-info">
+                                        <a><?=lang("TEXT_MUST_LOGIN"); ?></a>
                                     </div>
                                 </div>
                             </div>
