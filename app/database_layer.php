@@ -361,7 +361,7 @@ function insertDatabaseVisitorInfo($visitorinfo) {
 function getAllDatabaseVisitorInfo(): ?DB
 {
     $db = DB::getInstance();
-    $sql = "SELECT * FROM bsl_visitors_data";
+    $sql = "SELECT count(*) FROM logs WHERE logtype = 'VisitorInfo'";
     $res = $db->query($sql);
     return $res;
 }
