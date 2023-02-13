@@ -161,10 +161,10 @@ function editResearch(uid_text) {
     sample_wavelength.value = selected_research["bsl_sample_data_laser_wavelength"];
 
     checked = selected_research["bsl_sample_data_permission"];
-    if (checked === PERMISSION_PUBLIC) {
+    if (checked.toString() === PERMISSION_PUBLIC) {
         document.getElementById("sample_permission1").checked = true;
     } else {
-        if (checked === PERMISSION_PRIVATE) {
+        if (checked.toString() === PERMISSION_PRIVATE) {
             document.getElementById("sample_permission2").checked = true;
         }
     }
