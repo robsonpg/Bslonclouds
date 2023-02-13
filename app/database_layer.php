@@ -10,7 +10,7 @@ require_once "constants.php";
 // Função para inserir as propriedades da amostra e sua imagem
 function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type,
                           $sample_other_lt, $sample_wavelength, $sample_permission, $sample_amount_of_images,
-                          $sample_owner, $sample_pub, $sample_cover_image_data) {
+                          $sample_owner, $sample_pub, $sample_cover_image_data, $sample_obs) {
 
     $db = DB::getInstance();
 
@@ -28,7 +28,8 @@ function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $
                     bsl_sample_data_owner_id,
                     bsl_sample_data_published_DOI_URL,
                     bsl_sample_data_cover_image,
-                    bsl_sample_data_status)
+                    bsl_sample_data_status,
+                    bsl_sample_data_obs)
             VALUES (
                     '$sample_name',
                     $sample_frame_rate,
@@ -43,7 +44,8 @@ function insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $
                     $sample_owner,
                     '$sample_pub',
                     '$sample_cover_image_data',
-                    " . RESEARCH_STATUS_WAINTING_REVISION . ");";
+                    " . RESEARCH_STATUS_WAINTING_REVISION . ",
+                    '$sample_obs');";
 
     $res = $db->query($sql);
 
@@ -180,7 +182,7 @@ function getResearchData($research_uID) {
 // Faz update nas propriedades da pesquisa
 function updateSampleData($sample_uid, $sample_name, $sample_frame_rate, $sample_config,
                           $sample_laser_type, $sample_other_lt, $sample_wavelength, $sample_permission,
-                          $sample_pub, $sample_cover_image_data) {
+                          $sample_pub, $sample_cover_image_data, $sample_obs) {
     $db = DB::getInstance();
     $sql = "UPDATE bsl_sample_data
                 SET
@@ -193,7 +195,8 @@ function updateSampleData($sample_uid, $sample_name, $sample_frame_rate, $sample
                     bsl_sample_data_permission = $sample_permission,
                     bsl_sample_data_insert_timestamp = now(),
                     bsl_sample_data_published_DOI_URL = '$sample_pub',
-                    bsl_sample_data_cover_image = '$sample_cover_image_data'
+                    bsl_sample_data_cover_image = '$sample_cover_image_data',
+                    bsl_sample_data_obs = '$sample_obs'
             WHERE bsl_sample_data_unique_id = '$sample_uid'";
     $res = $db->query($sql);
     return $res;

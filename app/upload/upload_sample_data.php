@@ -37,6 +37,7 @@ $sample_amount_of_images = $all_data[8];
 $sample_owner = $all_data[9];
 $sample_pub = $all_data[10];
 $sample_cover_image = $all_data[11];
+$sample_obs = $all_data[12];
 // Recuperando imagem em base64
 // Exemplo: data:image/png;base64,AAAFBfj42Pj4
 //#######################################################
@@ -58,7 +59,7 @@ if (strpos($type, "bmp") == true) {
         // insere no banco de dados
         $res = insertSampleData($sample_unique_id, $sample_name, $sample_frame_rate, $sample_config, $sample_laser_type,
             $sample_other_lt, $sample_wavelength, $sample_permission, $sample_amount_of_images, $sample_owner,
-            $sample_pub, $sample_cover_image_data);
+            $sample_pub, $sample_cover_image_data, $sample_obs);
 
         $res = "id=" . $res;
 

@@ -315,11 +315,15 @@ if ($user->isLoggedIn()) {
                                                     <?php
                                                     } ?>
                                                 </div>
-                                                <div class="col text-center text-sm-left">
+                                                <div class="col-3 text-center text-sm-left">
                                                     <h5><span class="text-muted">Research: <?=$research->bsl_sample_data_unique_id;?></span></h5>
                                                     <span class="text-muted">Researcher Name: <?=$research->lname . ', ' . $research->fname; ?></span>
                                                     <br>
                                                     <span class="badge badge-success">Country: <?=$research->locale; ?></span>
+                                                </div>
+                                                <div class="col-6 text-center text-sm-left">
+                                                    <label for="observation_text_area"><?=lang("OBSERVATIONS_MSG"); ?></label>
+                                                    <textarea style="width: 100%" readonly><?=$research->bsl_sample_data_obs; ?></textarea>
                                                 </div>
                                             </div>
                                         </div>

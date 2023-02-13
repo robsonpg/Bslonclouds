@@ -127,6 +127,12 @@
                     </div>
                 </div>
                 <div class="row justify-content-between align-items-center border">
+                    <div class="col-12" style="padding: 5px">
+                        <textarea type="text" id="research_observation" style="width: 100%"
+                                  placeholder="<?=lang("OBSERVATION_TEXTAREA"); ?>"></textarea>
+                    </div>
+                </div>
+                <div class="row justify-content-between align-items-center border">
                     <div class="col-4">
                         <div class="row">
                             <div class="col"><?=lang("SELECT_RESEARCH_IMAGE"); ?></div>

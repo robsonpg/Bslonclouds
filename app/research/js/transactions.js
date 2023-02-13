@@ -177,6 +177,9 @@ function editResearch(uid_text) {
     let img_cover = document.getElementById("cover_image");
     img_cover.src = "data:image/bmp;base64," + selected_research["bsl_sample_data_cover_image"];
 
+    let sample_obs = document.getElementById("research_observation");
+    sample_obs.value = selected_research["bsl_sample_data_obs"];
+
     // Exibe o modal
     $('#properties-modal').modal('show');
 }

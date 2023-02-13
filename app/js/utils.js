@@ -109,6 +109,7 @@ $(document).ready(function() {
         let sample_pub_doi = document.getElementById("research_public_id");
         let messages_place = document.getElementById("messages_place");
         let cover_image = document.getElementById("cover_image");
+        let observations = document.getElementById("research_observation");
 
         // Se o id da amostra tem menos que 6 caracteres, não aceita
         let id_text = sample_unique_id.value;
@@ -174,7 +175,7 @@ $(document).ready(function() {
             let header = id_text + "&" + sample_name.value + "&" + sample_frames.value + "&" +
                 sample_config.value + "&" + sample_laser_type.value + "&" + other_laser_type.value + "&" +
                 sample_wavelength.value + "&" + sample_permission.value + "&" + sample_pub_doi.value + "&" +
-                cover_image.src;
+                cover_image.src + "&" + observations.value;
 
             let ajaxRequest = $.ajax({
                 type: 'POST',
@@ -216,6 +217,7 @@ $(document).ready(function() {
             //####################################################################
             // Coloca a imagem de capa na list
             images_properties.push(cover_image.getAttribute("src"));
+            images_properties.push(observations.value);
 
             //####################################################################
             // Preenche a interface
@@ -233,6 +235,7 @@ $(document).ready(function() {
             let permission_id = sample_permission.getAttribute("id").toString();
             let permission_text = $("label[for='" + permission_id + "']").text();
             let pub_text = sample_pub_doi.value;
+            let obs_text = observations.value;
 
             col_prop.innerHTML = msg_user_name + ": <b>" + login_user_name + "</b><br>" +
                 msg_uid + ": <b>" + sample_unique_id.value + "</b><br><br>" + msg_cover + ": " +
@@ -243,7 +246,8 @@ $(document).ready(function() {
                 msg_lt + ": <b>" + laser_type_text + "</b> " +
                 msg_lw + ": <b>" + sample_wavelength.value + " nm</b> " +
                 msg_per + ": <b>" + permission_text + "</b> " +
-                msg_pub + ": <b>" + pub_text + "</b>";
+                msg_pub + ": <b>" + pub_text + "</b><br>" +
+                msg_observations + ": <b>" + obs_text + "</b>";
 
             //#############################################################
             // Botão de editar as propriedades

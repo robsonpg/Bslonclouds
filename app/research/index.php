@@ -104,6 +104,7 @@ if ($user_moderator) {
                     $sp_text = lang("PERMISSION_PRIVATE_OWNER");
                 }
                 $spub = $research_item->bsl_sample_data_published_DOI_URL;
+                $obs = $research_item->bsl_sample_data_obs;
                 // Status da pesquisa - aceita ou rejeitada ou aguardando verificação
                 $sstatus = $research_item->bsl_sample_data_status;
                 // Busca o dono da pesquisa
@@ -141,6 +142,7 @@ if ($user_moderator) {
                             <div><?=lang("IMAGES_PERMISSION");?>: <b><?=$sp_text;?></b></div>
                             <div><?=lang("NUMBER_OF_IMAGES");?>: <b><?=$sai; ?></b></div>
                             <div><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
+                            <div><?=lang("OBSERVATIONS_MSG");?>: <b><?=$obs; ?></b></div>
                             <?php
                                 // Tratamento para aceite de pesquisa
                                 if (($sstatus == RESEARCH_STATUS_WAINTING_REVISION) && ($user_moderator)) {

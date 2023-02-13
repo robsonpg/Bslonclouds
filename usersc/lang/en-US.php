@@ -133,6 +133,8 @@ $lang = array_merge($lang,array(
             4 - The data I will download will be referred as indicated by the author(s) in the description at BSL on Clouds.",
     "TEXT_MUST_LOGIN" => "You must be registered and logged in to access researches data by Research's Data Catalog menu item",
     "MENU_HOME" => "Home",
+    "OBSERVATION_TEXTAREA" => "Enter research observations here...",
+    "OBSERVATIONS_MSG" => "Observations",
 ));
 
 

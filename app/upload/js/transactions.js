@@ -293,6 +293,7 @@ function sendImagesToServer() {
     //#########################################################
     // Imagem de capa
     let sample_cover_image = images_properties[9];
+    let sample_obs = images_properties[10];
     let amount_of_images = image_info_list.length;
     let sample_owner = user_id;
     let sample_database_id = -1;
@@ -303,7 +304,7 @@ function sendImagesToServer() {
     // Monta o cabeçalho para todas imagens do stream
     let header = sample_unique_id + "&" + sample_name + "&" + sample_frame_rate + "&" + sample_config + "&" +
         sample_laser_type + "&" + other_laser_type + "&" + sample_wavelength + "&" + sample_permission + "&" +
-        amount_of_images + "&" + sample_owner + "&" + sample_pub + "&" + sample_cover_image;
+        amount_of_images + "&" + sample_owner + "&" + sample_pub + "&" + sample_cover_image + "&" + sample_obs;
 
     let ajaxRequest = $.ajax({
         type: 'POST',
