@@ -208,9 +208,9 @@ function downloadResearch(uid_text) {
                 // Faz split
                 //alert(response.toString());
                 $('#processing-images-modal').modal('hide');
-                if (response.toString() === '0') {
+                if (parseInt(response) === 0) {
                     const link = document.createElement("a");
-                    link.href = "https://bslonclouds.com/app/research/" + uid_text + ".zip";
+                    link.href = "./" + uid_text + ".zip";
                     //link.download =  uid_text + ".zip";
                     link.click();
                 }
