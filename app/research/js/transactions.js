@@ -210,7 +210,7 @@ function downloadResearch(uid_text) {
                 $('#processing-images-modal').modal('hide');
                 if (response.toString() === '0') {
                     const link = document.createElement("a");
-                    link.href = "./" + uid_text + ".zip";
+                    link.href = "https://bslonclouds.com/app/research/" + uid_text + ".zip";
                     //link.download =  uid_text + ".zip";
                     link.click();
                 }

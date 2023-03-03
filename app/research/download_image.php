@@ -135,7 +135,9 @@ try {
         $zip->close();
         // Apaga os arquivos das imagens
         foreach ($IDs as $ID) {
-            unlink("images/" . $ID->bsl_sample_images_name);
+            if (file_exists("images/" . $ID->bsl_sample_images_name)) {
+                unlink("images/" . $ID->bsl_sample_images_name);
+            }
         }
     }
 } catch (Exception $e) {
