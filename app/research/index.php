@@ -229,59 +229,61 @@ if ($user_moderator) {
             </div>
             <?php
         }
-        if ($user_public_researches->count() > 0) {
-            foreach ($user_public_researches->results() as $research) {
-                ?>
+        if (!$user->isLoggedIn()) {
+            if ($user_public_researches->count() > 0) {
+                foreach ($user_public_researches->results() as $research) {
+                    ?>
+                    <div class="row">
+                        <div class="col-12 my-2">
+                            <div class="card card-body p-3 text-black bg-dark">
+                                <div class="list-group-item d-block">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <?php if ($research->bsl_sample_data_cover_image == null) { ?>
+                                                <img src="app/images/default.bmp" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+                                                <?php
+                                            } else { ?>
+                                                <img src="<?='data:image/bmp;base64,' . $research->bsl_sample_data_cover_image;?>" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
+                                                <?php
+                                            } ?>
+                                        </div>
+                                        <div class="col-3 text-center text-sm-left">
+                                            <h5><span class="text-muted">Research: <?=$research->bsl_sample_data_unique_id;?></span></h5>
+                                            <span class="text-muted">Researcher Name: <?=$research->lname . ', ' . $research->fname; ?></span>
+                                            <br>
+                                            <span class="badge badge-success">Country: <?=$research->locale; ?></span>
+                                        </div>
+                                        <div class="col-6 text-center text-sm-left">
+                                            <label for="observation_text_area"><?=lang("OBSERVATIONS_MSG"); ?></label>
+                                            <textarea style="width: 100%" readonly><?=$research->bsl_sample_data_obs; ?></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                                    <span class="text-primary">
+                                                        <a class="badge badge-primary float-right" href="<?=$research->bsl_sample_data_published_DOI_URL; ?>">
+                                                            Published: <?=$research->bsl_sample_data_published_DOI_URL; ?></a>
+                                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else { ?>
                 <div class="row">
                     <div class="col-12 my-2">
                         <div class="card card-body p-3 text-black bg-dark">
                             <div class="list-group-item d-block">
                                 <div class="row">
-                                    <div class="col-3">
-                                        <?php if ($research->bsl_sample_data_cover_image == null) { ?>
-                                            <img src="app/images/default.bmp" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
-                                            <?php
-                                        } else { ?>
-                                            <img src="<?='data:image/bmp;base64,' . $research->bsl_sample_data_cover_image;?>" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
-                                            <?php
-                                        } ?>
-                                    </div>
-                                    <div class="col-3 text-center text-sm-left">
-                                        <h5><span class="text-muted">Research: <?=$research->bsl_sample_data_unique_id;?></span></h5>
-                                        <span class="text-muted">Researcher Name: <?=$research->lname . ', ' . $research->fname; ?></span>
-                                        <br>
-                                        <span class="badge badge-success">Country: <?=$research->locale; ?></span>
-                                    </div>
-                                    <div class="col-6 text-center text-sm-left">
-                                        <label for="observation_text_area"><?=lang("OBSERVATIONS_MSG"); ?></label>
-                                        <textarea style="width: 100%" readonly><?=$research->bsl_sample_data_obs; ?></textarea>
-                                    </div>
+                                    --------------
                                 </div>
-                            </div>
-                            <div>
-                                                <span class="text-primary">
-                                                    <a class="badge badge-primary float-right" href="<?=$research->bsl_sample_data_published_DOI_URL; ?>">
-                                                        Published: <?=$research->bsl_sample_data_published_DOI_URL; ?></a>
-                                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <?php
             }
-        } else { ?>
-            <div class="row">
-                <div class="col-12 my-2">
-                    <div class="card card-body p-3 text-black bg-dark">
-                        <div class="list-group-item d-block">
-                            <div class="row">
-                                --------------
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php
         }
         ?>
 
