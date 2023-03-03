@@ -8,8 +8,6 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 if ($user->isLoggedIn()) {
     //die;
     require_once 'users/init.php';
-
-
 }
     $projects = getNumberPublicResearch();
     $researches = getNumberOfResearches();
@@ -112,30 +110,9 @@ if ($user->isLoggedIn()) {
 <body>
 <div class="row">
     <div class="col-md-12">
-        <ul id="tabsJustified" class="nav nav-tabs">
-            <li class="nav-item">
-                <a href="" id="tab_home" data-target="#home_bsl" data-toggle="tab" class="nav-link small text-uppercase active show">
-                    <?=lang("TAB_HOME");?>
-                </a>
-            </li>
-            <?php if (!$user->isLoggedIn()) { ?>
-                <li class="nav-item"><a href="" id="tab_researches" data-target="#researches" data-toggle="tab" class="nav-link small text-uppercase">
-                        <?=lang("TAB_RESEARCHES");?>
-                    </a>
-                </li>
-            <?php } ?>
-            <li class="nav-item"><a href="" id="tab_tutorials" data-target="#tutorials" data-toggle="tab" class="nav-link small text-uppercase">
-                    <?=lang("TAB_TUTORIALS");?>
-                </a>
-            </li>
-            <li class="nav-item"><a href="" id="tab_services" data-target="#services" data-toggle="tab" class="nav-link small text-uppercase">
-                    <?=lang("TAB_SERVICES");?>
-                </a>
-            </li>
-        </ul>
         <br>
         <div id="tabsJustifiedContent" class="tab-content">
-            <div id="home_bsl" class="tab-pane fade active show">
+            <div id="home_bsl">
                 <div class="row">
                     <div class="col-md-12">
                         <div role="alert" class="alert alert-success">
@@ -256,125 +233,6 @@ if ($user->isLoggedIn()) {
                 </div><!-- end row -->
                 <br>
             </div>
-            <?php if (!$user->isLoggedIn()) { ?>
-                <div id="researches" class="tab-pane fade">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div role="alert" class="alert alert-success">
-                                <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
-                                        B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                                <h4><?=lang("RESEARCHES_TEXT"); ?></h4>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                        if (!$user->isLoggedIn()) {
-                    ?>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div role="alert" class="alert alert-info">
-                                        <a><?=lang("TEXT_MUST_LOGIN"); ?></a>
-                                    </div>
-                                </div>
-                            </div>
-                    <?php
-                        }
-                    ?>
-
-                    <?php
-                    if ($public_researches->count() > 0) {
-                        foreach ($public_researches->results() as $research) {
-                    ?>
-                            <div class="row">
-                                <div class="col-12 my-2">
-                                    <div class="card card-body p-3 text-black bg-dark">
-                                        <div class="list-group-item d-block">
-                                            <div class="row">
-                                                <div class="col-3">
-                                                    <?php if ($research->bsl_sample_data_cover_image == null) { ?>
-                                                        <img src="app/images/default.bmp" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
-                                                    <?php
-                                                    } else { ?>
-                                                        <img src="<?='data:image/bmp;base64,' . $research->bsl_sample_data_cover_image;?>" class="img-fluid rounded-circle mx-auto d-block" style="height: 20mm">
-                                                    <?php
-                                                    } ?>
-                                                </div>
-                                                <div class="col-3 text-center text-sm-left">
-                                                    <h5><span class="text-muted">Research: <?=$research->bsl_sample_data_unique_id;?></span></h5>
-                                                    <span class="text-muted">Researcher Name: <?=$research->lname . ', ' . $research->fname; ?></span>
-                                                    <br>
-                                                    <span class="badge badge-success">Country: <?=$research->locale; ?></span>
-                                                </div>
-                                                <div class="col-6 text-center text-sm-left">
-                                                    <label for="observation_text_area"><?=lang("OBSERVATIONS_MSG"); ?></label>
-                                                    <textarea style="width: 100%" readonly><?=$research->bsl_sample_data_obs; ?></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="text-primary">
-                                                <a class="badge badge-primary float-right" href="<?=$research->bsl_sample_data_published_DOI_URL; ?>">
-                                                    Published: <?=$research->bsl_sample_data_published_DOI_URL; ?></a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    <?php
-                        }
-                    } else { ?>
-                            <div class="row">
-                                <div class="col-12 my-2">
-                                    <div class="card card-body p-3 text-black bg-dark">
-                                        <div class="list-group-item d-block">
-                                            <div class="row">
-                                                --------------
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    <?php
-                    }
-                    ?>
-                </div> <!-- tab pane -->
-            <?php } ?>
-            <div id="tutorials" class="tab-pane fade">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div role="alert" class="alert alert-success">
-                            <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
-                                    B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                            <h4><?=lang("TUTORIALS_TEXT"); ?></h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div role="alert" class="alert alert-warning">
-                            <h6><?=lang("TUTORIALS_MSG"); ?></h6>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- tab pane -->
-            <div id="services" class="tab-pane fade">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div role="alert" class="alert alert-success">
-                            <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
-                                    B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                            <h4><?=lang("SERVICES_TEXT"); ?></h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div role="alert" class="alert alert-warning">
-                            <h6><?=lang("SERVICES_MSG"); ?></h6>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- tab pane -->
         </div> <!-- tab content -->
     </div> <!-- col class -->
 </div> <!-- row -->
@@ -390,36 +248,6 @@ if ($user->isLoggedIn()) {
 </a-->
 </body>
 <script>
-    function changeTabtoResearch() {
-        let tab_elem = document.getElementById("tab_researches");
-        tab_elem.className = "nav-link small text-uppercase active show";
-        let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link small text-uppercase";
-        let tab_elem2 = document.getElementById("home_bsl");
-        tab_elem2.className = "tab-pane fade";
-        let tab_elem3 = document.getElementById("researches");
-        tab_elem3.className = "tab-pane fade active show";
-    }
-    function changeTabtoTutorial() {
-        let tab_elem = document.getElementById("tab_tutorials");
-        tab_elem.className = "nav-link small text-uppercase active show";
-        let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link small text-uppercase";
-        let tab_elem2 = document.getElementById("home_bsl");
-        tab_elem2.className = "tab-pane fade";
-        let tab_elem3 = document.getElementById("tutorials");
-        tab_elem3.className = "tab-pane fade active show";
-    }
-    function changeTabtoServices() {
-        let tab_elem = document.getElementById("tab_services");
-        tab_elem.className = "nav-link small text-uppercase active show";
-        let tab_elem1 = document.getElementById("tab_home");
-        tab_elem1.className = "nav-link small text-uppercase";
-        let tab_elem2 = document.getElementById("home_bsl");
-        tab_elem2.className = "tab-pane fade";
-        let tab_elem3 = document.getElementById("services");
-        tab_elem3.className = "tab-pane fade active show";
-    }
     // Fun Facts
     function count($this) {
         var current = parseInt($this.html(), 10);

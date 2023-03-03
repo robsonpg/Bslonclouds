@@ -18,9 +18,9 @@ if(isset($user) && $user->isLoggedIn()){
         // Salva o país de origem da visita no log do sistema
         saveVisitorInfo();
         if($user->isLoggedIn()){
-            require_once 'landing.php';
+            require_once 'landing_home.php';
         } else {
-            require_once 'landing.php';
+            require_once 'landing_home.php';
         }?>
     </p>
 
