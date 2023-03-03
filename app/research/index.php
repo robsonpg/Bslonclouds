@@ -45,6 +45,7 @@ if ($user_moderator) {
 ?>
 
 <link rel="stylesheet" type="text/css" href="../css/styles.css">
+
 <script type="text/javascript">
     let public_researchers = <?php
     if ($user_public_researches->count() > 0) {
@@ -61,9 +62,17 @@ if ($user_moderator) {
     let msg_accepting = "<?=lang("ACCEPTING_MSG"); ?>";
 </script>
 
-<br><br>
-<div class="container">
-    <h2><?=lang("MENU_RESEARCH_CATALOG");?></h2>
+<br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div role="alert" class="alert alert-success">
+                <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
+                        B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
+                <h4><?=lang("MENU_RESEARCH_CATALOG");?></h4>
+            </div>
+        </div>
+    </div>
     <?php if ($user->isLoggedIn()) { ?>
         <div class="row">
             <div class="col align-self-center">
@@ -275,7 +284,7 @@ if ($user_moderator) {
             <?php
         }
         ?>
-</div>
+
 
 <script type="text/javascript" src="js/transactions.js"></script>
 <script type="text/javascript" src="../js/utils.js"></script>

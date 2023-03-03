@@ -67,10 +67,18 @@ $all_researches = getAllResearchesID();
     let login_user_name = "<?php echo $user_name; ?>";
 </script>
 
-<br><br>
-<div class="container">
+<br>
     <div id="error_messages_place"></div>
-    <h2><?=lang("MENU_IMAGE_MANAGER");?></h2>
+    <div class="row">
+        <div class="col-md-12">
+            <div role="alert" class="alert alert-success">
+                <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
+                        B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
+                <h4><?=lang("MENU_IMAGE_MANAGER");?></h4>
+            </div>
+        </div>
+    </div>
+
         <div class="row">
             <div class="col-3 align-self-center">
                 <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
@@ -140,7 +148,6 @@ $all_researches = getAllResearchesID();
             <div class="container bg-light" id="tumbnails">
             </div>
         </div>
-</div>
 
 <script type="text/javascript" src="../js/utils.js"></script>
 <script type="text/javascript" src="js/transactions.js"></script>

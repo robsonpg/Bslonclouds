@@ -10,19 +10,15 @@ require_once 'app/business_layer.php';
 require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 if(isset($user) && $user->isLoggedIn()){
 }
-?>
 
-    <p align="center">
-        <?php
-        // ######################################################
-        // Salva o país de origem da visita no log do sistema
-        saveVisitorInfo();
-        if($user->isLoggedIn()){
-            require_once 'landing_home.php';
-        } else {
-            require_once 'landing_home.php';
-        }?>
-    </p>
+// ######################################################
+// Salva o país de origem da visita no log do sistema
+saveVisitorInfo();
+if($user->isLoggedIn()){
+    require_once 'landing_home.php';
+} else {
+    require_once 'landing_home.php';
+}?>
 
 <footer>
 <div>

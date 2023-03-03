@@ -810,3 +810,8 @@ table.dataTable thead .sorting_desc_disabled:after {
 .form-container .btn:hover, .open-button:hover {
     opacity: 1;
 }
+
+@font-face {
+    font-family: 'Aeros';
+    src: url('../css/Aeros.ttf') format('truetype');
+}

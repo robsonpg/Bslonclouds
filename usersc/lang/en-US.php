@@ -102,7 +102,7 @@ $lang = array_merge($lang,array(
     "RECEIVED_RESEARCH" => "Research received by server",
     "RESEARCH_ID" => "Research identification",
     "BSL_SIGNATURE" => "Bsl on Cloud System (Beta version)",
-    "RECEIVE_NAME" => "Reseracher",
+    "RECEIVE_NAME" => "Researcher",
     "WELCOME_MSG" => "The Bio-Speckle Laser (BSL) phenomenon can be useful in many applications from medicine to agriculture. Here we are gathering information, tools and data linked to BSL. You can help the development of the science if you share what you have done. Feel free to cooperate.",
     "LAND_PUBLISHED" => "Researches’ data",
     "LAND_RESEARCHES" => "Registered Researchers",
@@ -135,6 +135,7 @@ $lang = array_merge($lang,array(
     "MENU_HOME" => "Home",
     "OBSERVATION_TEXTAREA" => "Enter research observations here...",
     "OBSERVATIONS_MSG" => "Observations",
+    "CATALOG_MENU_ITEM" => "Catalog",
 ));
 
 
