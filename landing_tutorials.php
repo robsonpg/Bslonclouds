@@ -5,37 +5,8 @@ require_once 'app/database_layer.php';
 require_once 'app/constants.php';
 require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 
-if ($user->isLoggedIn()) {
-    //die;
-    require_once 'users/init.php';
-}
-    $projects = getNumberPublicResearch();
-    $researches = getNumberOfResearches();
-    $public_researches = clone(getPublicResearches());
-
-    $public_images = getNumberofPublicImages();
-    // Caso queiramos usar o font awesome do site
-    // <script src="https://kit.fontawesome.com/b41bdf02f7.js" crossorigin="anonymous"></script>
-
-    $ip = $_SERVER['REMOTE_ADDR'];
-    logger("","Visitor","Visit from $ip.");
-
-    $visitor_data = @json_decode(file_get_contents(
-        "http://www.geoplugin.net/json.gp?ip=" . $ip));
-
-    insertDatabaseVisitorInfo($visitor_data);
-
     $visitors_statistics = clone(getAllDatabaseVisitorInfo());
-    $countries_statistics = clone(getCountryTotals());
 
-//    echo 'Country Name: ' . $ipdat->geoplugin_countryName . "\n";
-//    echo 'City Name: ' . $ipdat->geoplugin_city . "\n";
-//    echo 'Continent Name: ' . $ipdat->geoplugin_continentName . "\n";
-//    echo 'Latitude: ' . $ipdat->geoplugin_latitude . "\n";
-//    echo 'Longitude: ' . $ipdat->geoplugin_longitude . "\n";
-//    echo 'Currency Symbol: ' . $ipdat->geoplugin_currencySymbol . "\n";
-//    echo 'Currency Code: ' . $ipdat->geoplugin_currencyCode . "\n";
-//    echo 'Timezone: ' . $ipdat->geoplugin_timezone;
 ?>
 
 <style>
