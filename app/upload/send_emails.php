@@ -33,11 +33,15 @@ function sendModeratorsEmail($research_uid, $owner_id)
 
                 $str_msg = lang("RECEIVE_NAME") . ": " . $str_name . "<br>" .
                     lang("GEN_EMAIL") . ": " . $str_email . "<br>";
-                $str_msg = $str_msg . lang("RECEIVE_RESERACH_TO_APPROVE") . "<br>" .
+                $str_msg = $str_msg . lang("RECEIVE_RESEARCH_TO_APPROVE") . "<br>" .
                     lang("RESEARCH_ID") . ": " . $research_uid . "<br><br>" . lang("BSL_SIGNATURE");
 
                 echo "Send mail";
                 email($moderator->email, lang("RECEIVED_RESEARCH"), $str_msg);
+                // Email to user
+                $str_msg = lang("TKS_MSG_1") . $str_name . lang("TKS_MSG_2") . " \"" . $research_uid . "\"" .
+                    lang("TKS_MSG_3");
+                email($str_email, lang("SUBJECT_RECEIVE_RESEARCH"), $str_msg);
             }
             //$str_to_save = "Nome: " . $str_name . "#Mail: " . $str_email . "\r\n";
         } else {

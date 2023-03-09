@@ -387,9 +387,9 @@ function sendImage(sample_database_id ,idx) {
                     if (idx === (image_info_list.length - 1)) {
                         // Avisa que todas imagens já foram enviadas
                         progress_bar.style.width = "100%";
-                        messages_proc_place.innerText = "All images uploaded to server. You can access by Research Catalog.";
+                        messages_proc_place.innerText = msg_upload_done;
                         setTimeout(function () {
-                            $('#send-images-modal').modal('hide');
+                            //$('#send-images-modal').modal('hide');
                             // Limpa o formulário de envio
                             clearAllData();
                             // let btn_send = document.getElementById("btn_send_modal");

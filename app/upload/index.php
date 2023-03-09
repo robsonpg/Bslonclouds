@@ -56,6 +56,7 @@ $all_researches = getAllResearchesID();
     let msg_sending_done = "<?=lang("SEND_IMAGES_DONE_MSG");?>";
     let msg_select_images = "<?=lang("SELECT_IMAGES_BTN");?>";
     let msg_observations = "<?=lang("OBSERVATIONS_MSG");?>"
+    let msg_upload_done = "<?=lang("MSG_UPLOAD_DONE");?>";
 
     let researchers = <?php
     if (sizeof($all_researches) == 0) {
@@ -74,7 +75,7 @@ $all_researches = getAllResearchesID();
             <div role="alert" class="alert alert-success">
                 <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
                         B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                <h4><?=lang("MENU_IMAGE_MANAGER");?></h4>
+                <h4><?=lang("MENU_IMAGE_MANAGER");?> - <?=lang("MSG_IMAGE_MANAGER");?></h4>
             </div>
         </div>
     </div>

@@ -98,7 +98,7 @@ $lang = array_merge($lang,array(
     "APPROVAL_RESEARCH_BTN" => "Accept Research’s data",
     "ACCEPT_MODAL_TITLE" => "Accept Research’s data to Catalog",
     "ACCEPTING_MSG" => "Accepting research’s data ",
-    "RECEIVE_RESERACH_TO_APPROVE" => "A research from user above was received to your approval.",
+    "RECEIVE_RESEARCH_TO_APPROVE" => "A research from user above was received to your approval.",
     "RECEIVED_RESEARCH" => "Research received by server",
     "RESEARCH_ID" => "Research identification",
     "BSL_SIGNATURE" => "Bsl on Cloud System (Beta version)",
@@ -136,6 +136,13 @@ $lang = array_merge($lang,array(
     "OBSERVATION_TEXTAREA" => "Enter research observations here...",
     "OBSERVATIONS_MSG" => "Observations",
     "CATALOG_MENU_ITEM" => "Catalog",
+    "MSG_IMAGE_MANAGER" => "Upload your data and share your research.",
+    "MSG_UPLOAD_DONE" => "<b>Upload done with success. Wait the approval.</b>",
+    "TKS_MSG_1" => "Dear ",
+    "TKS_MSG_2" => ", your data ",
+    "TKS_MSG_3" => " was uploaded successfully. Please, wait for a while to see the data in the Catalog. We thank you 
+        for your collaboration.",
+    "SUBJECT_RECEIVE_RESEARCH" => "Research uploaded successfully",
 ));
 
 
