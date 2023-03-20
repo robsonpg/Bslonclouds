@@ -111,10 +111,10 @@ $lang = array_merge($lang,array(
     "GEN_CITY" => "City",
     "GEN_CONTINENT" => "Continent Name",
     "GEN_VISITORS" => "Visitors",
-    "TAB_HOME" => "Home",
-    "TAB_RESEARCHES" => "Researches’ data",
-    "TAB_TUTORIALS" => "Tutorials",
-    "TAB_SERVICES" => "Data Analysis",
+    "MENU_HOME" => "Home",
+    "MENU_RESEARCHES" => "Researches’ data",
+    "MENU_TUTORIALS" => "Tutorials",
+    "MENU_ANALYSIS" => "Data Analysis",
     "CLICK_TO_RESEARCH" => "Upload or download data",
     "CLICK_TO_TUTORIALS" => "Tutorials",
     "CLICK_TO_SERVICES" => "Data Analysis",
@@ -145,6 +145,13 @@ $lang = array_merge($lang,array(
     "SUBJECT_RECEIVE_RESEARCH" => "Research uploaded successfully",
     "MSG_DATA_ANALYSIS" => "You must be looged to access online data analysis.",
     "ERROR_LOADING_IMAGES" => "You can analysis a maximum of 64 images!",
+    "USER_MENU" => "User",
+    "MENU_BSLDATA" => "BSL Data",
+    "MENU_BLOG" => "Blog",
+    "MENU_DOCS" => "Doc's",
+    "MENU_SOFTWARE" => "Software",
+    "MENU_ONLINE_ANALYSIS" => "Online",
+    "MENU_OFFLINE_ANALYSIS" => "Offline",
 ));
 
 
