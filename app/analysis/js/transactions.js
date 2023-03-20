@@ -247,7 +247,7 @@ function showPropertiesModal() {
 }
 
 //########################################################################
-// Apaga todos os dados carregados localemte
+// Apaga todos os dados carregados localemte ff
 function clearAllData() {
     images_properties = [];
     image_info_list = [];
