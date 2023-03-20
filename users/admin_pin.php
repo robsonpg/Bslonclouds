@@ -90,7 +90,11 @@ if (!empty($_POST)) {
 }
 
 ?>
+<div id="page-wrapper" class="content">
 
+  <div class="container">
+
+    <!-- Page Heading -->
     <div class="row">
       <?=resultBlock($errors,$successes);?>
       <?php if ($actual_link !='') { ?>
@@ -116,5 +120,12 @@ if (!empty($_POST)) {
             <?php } ?>
           </div>
         </div>
-      </form>
+      </form><br />
+    </div>
+  </div>
+
+
+</div>
+</div>
+<!-- End of main content section -->
 <?php require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php'; ?>

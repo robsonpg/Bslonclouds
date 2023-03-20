@@ -15,7 +15,6 @@
       var styles = {};
       var id = $(this).data('id');
       var field = $(this).data('field');
-      var token = $(this).data('token');
       var getStyles = ['padding','margin','font','background-color','color','display','width','height','resize'];
       var className = $(this).attr('class');
       var idName = $(this).attr('id');
@@ -121,7 +120,7 @@
               callback();
             }else{
               // ajax call with success function
-              var data = {id:id,field:field,value:newVal,token:token};
+              var data = {id:id,field:field,value:newVal};
               // check to see if custom data attributes are being posted
               if(typeof options.data !== 'undefined'){
                 Object.assign(data,options.data);

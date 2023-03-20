@@ -28,7 +28,9 @@ $usmsgs = array(
 foreach($usmsgs as $u){ ?>
 <div style="" id="<?=$u?>UserSpiceMessages" class="show d-none">
   <span id="<?=$u?>UserSpiceMessage"></span>
-  <button type="button" class="close btn-close" data-dismiss="alert" data-bs-dismiss="alert" aria-label="Close"></button>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 <?php } ?>
 </div>

@@ -1,6 +1,5 @@
 <?php
 /*
-This is a user-facing page
 UserSpice 5
 An Open Source PHP User Management System
 by the UserSpice Team at http://UserSpice.com
@@ -18,11 +17,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-?>
-<div class="row">
-  <div class="col-12 text-center">
-    <h1><?=lang("JOIN_SUC");?><?=$settings->site_name?></h1>
-    <?=lang("VER_RES_SUC");?><?=$settings->join_vericode_expiry?> <?=lang("T_HOURS");?>.</p>
-    <br />
-  </div>
-</div>
+class Token {
+	public static function generate($force=false){
+		$tokenName = Config::get('session/token_name');
+		if($force) {
+			return Session::put($tokenName, md5(uniqid()));
+		} else {
+			if(Session::exists($tokenName)) {
+				return Session::get($tokenName);
+			} else {
+				return Session::put($tokenName, md5(uniqid()));
+			}
+		}
+	}
+
+	public static function check($token){
+		$tokenName = Config::get('session/token_name');
+
+		if (Session::exists($tokenName) && $token === Session::get($tokenName)) {
+			//Session::delete($tokenName);
+			return true;
+		}
+		return false;
+	}
+}
