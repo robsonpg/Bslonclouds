@@ -1,6 +1,4 @@
 <?php
-$db = DB::getInstance();
-$settings = $db->query("SELECT * FROM settings")->first();
 if($settings->template == "wp"){$ignoreTemplateFix = true;}else{$ignoreTemplateFix = false;}
 if(isset($template_override)){
   $settings->template = $template_override;
@@ -14,10 +12,10 @@ require_once  $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->tem
 }else{
   //assume template has been deleted
   if(!$ignoreTemplateFix){
-  if(file_exists($abs_us_root . $us_url_root . 'usersc/templates/standard/header.php')){
-    $db->update('settings',1,['template'=>'standard']);
-    $settings->template = "standard";
-    require_once $abs_us_root . $us_url_root . 'usersc/templates/standard/header.php';
+  if(file_exists($abs_us_root . $us_url_root . 'usersc/templates/bs5/header.php')){
+    $db->update('settings',1,['template'=>'bs5']);
+    $settings->template = "bsf";
+    require_once $abs_us_root . $us_url_root . 'usersc/templates/bs5/header.php';
     err("Template missing. Falling back to Standard Template");
   }else{
     // die("Looking for alt");
@@ -42,7 +40,10 @@ require_once  $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->tem
   }
 }//end $ignoreTemplateFix for wordpress compatibility
 }
-require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/navigation.php'; //custom template nav
+if(!isset($hide_top_navigation) || $hide_top_navigation != true){
+  require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/navigation.php'; //custom template nav
+}
+
 require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/container_open.php'; //custom template container
 
 if(file_exists( $abs_us_root . $us_url_root . 'usersc/includes/system_messages_header.php' ) ){

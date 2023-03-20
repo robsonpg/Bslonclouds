@@ -1,7 +1,15 @@
 <?php
 
 require_once '../init.php';
+
 $db = DB::getInstance();
+if(!Token::check(Input::get('token'))){
+  $msg = [];
+  $msg['success'] = "false";
+  $msg['msg'] = "Invalid token";
+  echo json_encode($msg);
+  die;
+}
 
 if(isset($user) && $user->isLoggedIn()) {
   if(hasPerm([2],$user->data()->id) && in_array($user->data()->id,$master_account)){
