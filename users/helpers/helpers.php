@@ -35,12 +35,16 @@ foreach ($usplugins as $k => $v) {
 }
 
 require_once $abs_us_root.$us_url_root.'users/helpers/us_helpers.php';
-require_once $abs_us_root.$us_url_root.'users/helpers/backup_util.php';
 require_once $abs_us_root.$us_url_root.'users/helpers/class.treeManager.php';
 require_once $abs_us_root.$us_url_root.'users/helpers/menus.php';
 require_once $abs_us_root.$us_url_root.'users/helpers/permissions.php';
 require_once $abs_us_root.$us_url_root.'users/helpers/users.php';
 require_once $abs_us_root.$us_url_root.'users/helpers/dbmenu.php';
+
+//deprecated functions and classes can go here and will autoload until you delete them.
+foreach (glob($abs_us_root.$us_url_root.'usersc/includes/deprecated/*.php') as $filename) {
+    require_once $filename;
+}
 
 define('ABS_US_ROOT', $abs_us_root);
 define('US_URL_ROOT', $us_url_root);
@@ -107,27 +111,6 @@ if (!function_exists('currentFolder')) {
     $currentFolder = $path[count($path) - 2];
 
     return $currentFolder;
-  }
-}
-
-if (!function_exists('format_date')) {
-  function format_date($date, $tz)
-  {
-    //return date("m/d/Y ~ h:iA", strtotime($date));
-    $format = 'Y-m-d H:i:s';
-    $dt = DateTime::createFromFormat($format, $date);
-    // $dt->setTimezone(new DateTimeZone($tz));
-    return $dt->format('m/d/y ~ h:iA');
-  }
-}
-
-if (!function_exists('abbrev_date')) {
-  function abrev_date($date, $tz)
-  {
-    $format = 'Y-m-d H:i:s';
-    $dt = DateTime::createFromFormat($format, $date);
-    // $dt->setTimezone(new DateTimeZone($tz));
-    return $dt->format('M d,Y');
   }
 }
 

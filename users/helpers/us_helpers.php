@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // UserSpice Specific Functions
 
 $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'MISSING';
-
 if (!function_exists('ipCheck')) {
   function ipCheck()
   {
@@ -89,52 +88,6 @@ if (!function_exists('get_gravatar')) {
   }
 }
 
-//Retrieve list of groups that can access a menu
-if (!function_exists('fetchGroupsByMenu')) {
-  function fetchGroupsByMenu($menu_id)
-  {
-    $db = DB::getInstance();
-    $query = $db->query('SELECT id, group_id FROM groups_menus WHERE menu_id = ? ', [$menu_id]);
-    $results = $query->results();
-
-    return $results;
-  }
-}
-
-//Delete all authorized groups for the given menu(s) and then add from args
-if (!function_exists('updateGroupsMenus')) {
-  function updateGroupsMenus($group_ids, $menu_ids)
-  {
-    $db = DB::getInstance();
-    $sql = 'DELETE FROM groups_menus WHERE menu_id = ?';
-    foreach ((array) $menu_ids as $menu_id) {
-      //echo "<pre>DEBUG: UGM: group_id=$group_id, menu_id=$menu_id</pre><br />\n";
-      $db->query($sql, [$menu_id]);
-    }
-
-    return addGroupsMenus($group_ids, $menu_ids);
-  }
-}
-
-//Add all groups/menus to the groups_menus mapping table
-if (!function_exists('addGroupsMenus')) {
-  function addGroupsMenus($group_ids, $menu_ids)
-  {
-    $db = DB::getInstance();
-    $i = 0;
-    $sql = 'INSERT INTO groups_menus (group_id,menu_id) VALUES (?,?)';
-    foreach ((array) $group_ids as $group_id) {
-      foreach ((array) $menu_ids as $menu_id) {
-        //echo "<pre>DEBUG: AGM: group_id=$group_id, menu_id=$menu_id</pre><br />\n";
-        if ($db->query($sql, [$group_id, $menu_id])) {
-          ++$i;
-        }
-      }
-    }
-
-    return $i;
-  }
-}
 
 //Checks if a username exists in the DB
 if (!function_exists('usernameExists')) {
@@ -546,13 +499,11 @@ if (!function_exists('echodatetime')) {
 if (!function_exists('time2str')) {
   function time2str($ts)
   {
-    if ($ts === null) {
+    if ($ts === null || $ts == "") {
       return null;
     }
 
-    if (!ctype_digit($ts)) {
-      $ts = strtotime($ts);
-    }
+    $ts = strtotime($ts);
 
     $diff = time() - $ts;
     if ($diff == 0) {
@@ -676,21 +627,6 @@ if (!function_exists('returnError')) {
     $responseAr['error'] = true;
     $responseAr['errorMsg'] = $errorMsg;
     exit(json_encode($responseAr));
-  }
-}
-
-if (!function_exists('userHasPermission')) {
-  function userHasPermission($userID, $permissionID)
-  {
-    $permissionsAr = fetchUserPermissions($userID);
-    //if($permissions[0])
-    foreach ($permissionsAr as $perm) {
-      if ($perm->permission_id == $permissionID) {
-        return true;
-      }
-    }
-
-    return false;
   }
 }
 
@@ -1278,7 +1214,7 @@ if (!function_exists('verifyadmin')) {
 if (!function_exists('validateJson')) {
   function validateJson($string)
   {
-    json_decode($string);
+    json_decode($string ?? '');
 
     return json_last_error() == JSON_ERROR_NONE;
   }
@@ -1403,7 +1339,7 @@ if(!function_exists('checkAPIkey')){
   function checkAPIkey($key){
     $msg = "";
     if($key == ""){
-      $msg = "<h4><span style='color:blue'>Entering your free API key will enable cool features like Updates, Bug Reports, and Spice Shaker.</span> </h4>";
+      $msg = "<h6><span style='color:blue'>Entering your free API key will enable cool features like Updates, Bug Reports, and Spice Shaker.</span> </h6>";
     }elseif(!preg_match("/^[\w]{5}-[\w]{5}-[\w]{5}-[\w]{5}-[\w]{5}$/",trim($key))
     && !preg_match("/^[\w]{5}-[\w]{5}-[\w]{5}-[\w]{5}-[\w]{4}$/",trim($key)) )
     {
@@ -1496,4 +1432,66 @@ if(!function_exists("fetchProfilePicture")){
     }
     return $grav;
   }
+}
+
+if(!function_exists("fetchFolderFiles")){
+  function fetchFolderFiles($folder,$extension = "php"){
+    global $abs_us_root,$us_url_root;
+    if(!is_array($extension)){
+      $extension = (array)$extension;
+    }
+
+    $files = [];
+    $links = [];
+    $direct = [];
+    if(substr($folder,-1) != "/"){
+      $folder = $folder . "/";
+    }
+    $linkpath = $us_url_root .  $folder;
+    $basepath = $abs_us_root . $linkpath;
+
+    if(is_dir($basepath)) {
+    $scan_arr = scandir($basepath);
+    $files_arr = array_diff($scan_arr, array('.','..') );
+
+    foreach ($files_arr as $file) {
+      $file_path = $basepath.$file;
+      $file_ext = pathinfo($file_path, PATHINFO_EXTENSION);
+      if (in_array($file_ext,$extension)) {
+        $files[] = $file;
+        $links[] = $linkpath  . $file;
+        $direct[] = $basepath . $file;
+      }
+    }
+    }
+    $response = ["files"=>$files,"direct"=>$direct,"links"=>$links];
+    return $response;
+  }
+}
+
+
+//examples
+//30 days from today
+//echo dateOffset(30);
+
+//7 days ago
+//echo dateOffset(-7);
+
+//can be hours, months, days, years, etc
+// Or what the day will be in 17 hours with
+// echo dateOffset(17,"","hours");
+// Or you can do it from another date so 20 days from Jan 1, 2023
+// echo dateOffset(20,"2023-01-01");
+
+function offsetDate($number, $datestring = "", $unit = "days"){
+     if($datestring == ""){
+       $datestring = date("Y-m-d");
+     }
+     $first = substr($number, 0, 1);
+     if($first != "+" && $first != "-"){
+       $symbol = "+ ";
+     }else{
+       $symbol = "";
+     }
+     return date("Y-m-d",strtotime($symbol . $number . $unit,strtotime($datestring)));
 }

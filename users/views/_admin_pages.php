@@ -1,17 +1,3 @@
-<div class="col-sm-8">
-  <div class="page-header float-right">
-    <div class="page-title">
-      <ol class="breadcrumb text-right">
-        <li><a href="<?=$us_url_root; ?>users/admin.php">Dashboard</a></li>
-        <li>Manage</li>
-        <li class="active">Pages</li>
-      </ol>
-    </div>
-  </div>
-</div>
-</div>
-</header>
-
 <?php
 $hide = Input::get('hide');
 if ($hide == 'core') {
@@ -24,7 +10,7 @@ $errors = [];
 $successes = [];
 
 //Get line from z_us_root.php that starts with $path
-$file = fopen($abs_us_root.$us_url_root.'z_us_root.php', 'r');
+$file = fopen($abs_us_root . $us_url_root . 'z_us_root.php', 'r');
 while (!feof($file)) {
   $currentLine = str_replace(' ', '', fgets($file));
   if (substr($currentLine, 0, 5) == '$path') {
@@ -77,7 +63,9 @@ foreach ($pages as $page) {
 //  * This function turns the remaining objects in the $dbpages
 //  * array into the $deletions array using the 'id' key.
 //  */
-$deletions = array_column(array_map(function ($o) {return (array) $o; }, $dbpages), 'id');
+$deletions = array_column(array_map(function ($o) {
+  return (array) $o;
+}, $dbpages), 'id');
 
 $deletes = [];
 for ($i = 0; $i < count($deletions); ++$i) {
@@ -90,22 +78,22 @@ if (count($creations) > 0) {
 }
 // //Delete pages from DB if not found
 if (count($deletions) > 0) {
-  foreach ($deletions as $key=>$d) {
+  foreach ($deletions as $key => $d) {
     //if a plugin added this, there's no need for the entire folder to be managed.
     $delName = $db->query('SELECT page FROM pages WHERE id = ?', [$d])->first();
-    if(substr($delName->page,0,14) == 'usersc/plugins' && file_exists($abs_us_root.$us_url_root.$delName->page)){
+    if (substr($delName->page, 0, 14) == 'usersc/plugins' && file_exists($abs_us_root . $us_url_root . $delName->page)) {
       unset($deletions[$key]);
-      foreach($deletes as $delkey=>$delvalue){
-        if($delvalue === $d){
+      foreach ($deletes as $delkey => $delvalue) {
+        if ($delvalue === $d) {
           unset($deletes[$delkey]);
         }
       }
       continue;
-    }else{
+    } else {
     }
-    $delMsgs .= $delName->page.'\\n';
+    $delMsgs .= $delName->page . '\\n';
   }
-  deletePages(implode(',',$deletes));
+  deletePages(implode(',', $deletes));
 }
 
 //Update $dbpages
@@ -116,7 +104,7 @@ $file = '../z_us_root.php';
 if (!empty($_POST)) {
   $token = $_POST['csrf'];
   if (!Token::check($token)) {
-    include $abs_us_root.$us_url_root.'usersc/scripts/token_error.php';
+    include $abs_us_root . $us_url_root . 'usersc/scripts/token_error.php';
   }
   if (!empty($_POST['removeFolder'])) {
     if (!in_array($user->data()->id, $master_account)) {
@@ -133,7 +121,7 @@ if (!empty($_POST)) {
       $line = '$path=[';
       $count = 1;
       foreach ($paths as $p) {
-        $line .= "'".$p."'";
+        $line .= "'" . $p . "'";
         if ($count != count($paths)) {
           $line .= ',';
         }
@@ -141,8 +129,8 @@ if (!empty($_POST)) {
       }
       $line .= '];';
       $lines = file($file);
-      $lines[0] = '<?php'.PHP_EOL;
-      $lines[1] = $line.PHP_EOL;
+      $lines[0] = '<?php' . PHP_EOL;
+      $lines[1] = $line . PHP_EOL;
       $new_content = implode('', $lines);
       $h = fopen($file, 'w');
       fwrite($h, $new_content);
@@ -153,7 +141,7 @@ if (!empty($_POST)) {
       usError("Error deleting folder");
       Redirect::to('admin.php?view=pages');
     }
-  }//end of delete folder to monitor.
+  } //end of delete folder to monitor.
 
   if (!empty($_POST['addFolder'])) {
     if (!in_array($user->data()->id, $master_account)) {
@@ -161,13 +149,13 @@ if (!empty($_POST)) {
       Redirect::to('admin.php?view=pages');
     }
     $folder = Input::get('newFolder');
-    $check = file_exists($abs_us_root.$us_url_root.$folder);
+    $check = file_exists($abs_us_root . $us_url_root . $folder);
     if ($check === true && !in_array($folder, $paths) && (substr($folder, -1) == '/')) {
       $paths[] = $folder;
       $line = '$path=[';
       $count = 1;
       foreach ($paths as $p) {
-        $line .= "'".$p."'";
+        $line .= "'" . $p . "'";
         if ($count != count($paths)) {
           $line .= ',';
         }
@@ -175,8 +163,8 @@ if (!empty($_POST)) {
       }
       $line .= '];';
       $lines = file($file);
-      $lines[0] = '<?php'.PHP_EOL;
-      $lines[1] = $line.PHP_EOL;
+      $lines[0] = '<?php' . PHP_EOL;
+      $lines[1] = $line . PHP_EOL;
       $new_content = implode('', $lines);
       $h = fopen($file, 'w');
       fwrite($h, $new_content);
@@ -187,21 +175,19 @@ if (!empty($_POST)) {
       usError("Error adding folder");
       Redirect::to('admin.php?view=pages');
     }
-  }//end of add folder to monitor
-}//end of post
+  } //end of add folder to monitor
+} //end of post
 $csrf = Token::generate();
 ?>
 
-<div class="content mt-3">
-
-  <h2>Manage Page Access
-    <?php if ($c) {?>
-      <button type="button" onclick="window.location.href = 'admin.php?view=pages';" name="button" class="btn btn-primary">Show All Pages</button>
-    <?php } else { ?>
-      <button type="button" onclick="window.location.href = 'admin.php?view=pages&hide=core';" name="button" class="btn btn-primary">Hide Default Pages</button>
-    <?php } ?>
-  </h2>
-  <p class="text-dark pt-2">UserSpice is currently monitoring the following folders: <strong>
+<h2>Manage Page Access
+  <?php if ($c) { ?>
+    <button type="button" onclick="window.location.href = 'admin.php?view=pages';" name="button" class="btn btn-primary">Show All Pages</button>
+  <?php } else { ?>
+    <button type="button" onclick="window.location.href = 'admin.php?view=pages&hide=core';" name="button" class="btn btn-primary">Hide Default Pages</button>
+  <?php } ?>
+</h2>
+<p class="text-dark pt-2">UserSpice is currently monitoring the following folders: <strong>
 
 
     <?php
@@ -216,16 +202,19 @@ $csrf = Token::generate();
     echo oxfordList($filter, ['final' => 'and']);
     ?>
   </strong>
-  <?php if (in_array($user->data()->id, $master_account)) {?>
-    <a href="#folder_modal" data-toggle="modal" class="btn btn-outline-dark">Change</a>
+  <?php if (in_array($user->data()->id, $master_account)) { ?>
+    <a href="#folder_modal" data-toggle="modal" data-bs-toggle="modal" class="btn btn-outline-primary btn-sm mb-2">Change</a>
   <?php } ?>
 </p>
 <div class="card">
   <div class="card-body">
-    <table id="pagestable" class='table table-hover table-list-search'>
+    <table id="pagestable" class='table table-hover paginate'>
       <thead>
         <tr>
-          <th>Id</th><th>Page</th><th>Page Name</th><th>Access</th>
+          <th>ID</th>
+          <th>Page</th>
+          <th>Page Name</th>
+          <th>Access</th>
         </tr>
       </thead>
       <tbody>
@@ -236,11 +225,13 @@ $csrf = Token::generate();
           if ($c && $page->core == 1) {
             continue;
           } ?>
-          <tr><td><?=$dbpages[$count]->id; ?></td>
-            <td><a class="nounderline text-dark" href ='admin.php?view=page&id=<?=$dbpages[$count]->id; ?>'><?=$dbpages[$count]->page; ?></a></td>
-            <td><a class="nounderline text-dark" href ='admin.php?view=page&id=<?=$dbpages[$count]->id; ?>'><?=$dbpages[$count]->title; ?></a></td>
+          <tr>
+            <td><span class="hideMe"><?= sprintf('%08d', $dbpages[$count]->id) ?></span>
+              <?= $dbpages[$count]->id; ?></td>
+            <td><a class="nounderline text-dark" href='admin.php?view=page&id=<?= $dbpages[$count]->id; ?>'><?= $dbpages[$count]->page; ?></a></td>
+            <td><a class="nounderline text-dark" href='admin.php?view=page&id=<?= $dbpages[$count]->id; ?>'><?= $dbpages[$count]->title; ?></a></td>
             <td>
-              <a class="nounderline" href ='admin.php?view=page&id=<?=$dbpages[$count]->id; ?>'>
+              <a class="nounderline" href='admin.php?view=page&id=<?= $dbpages[$count]->id; ?>'>
                 <?php
                 //Show public/private setting of page
                 if ($dbpages[$count]->private == 0) {
@@ -249,32 +240,24 @@ $csrf = Token::generate();
                   echo "<span style='color:red'>Private</span>";
                 } ?>
               </a>
-            </td></tr>
-            <?php
-            ++$count;
-          }?>
-        </tbody>
-      </table>
-    </div>
+            </td>
+          </tr>
+        <?php
+          ++$count;
+        } ?>
+      </tbody>
+    </table>
   </div>
+</div>
 
-  <?php
-  if ($delMsgs != '') {
-    ?>
-    <script type="text/javascript">
-    alert("The following pages have been deleted from your database because they are either no longer present or because you used securePage on a file that was not monitored by UserSpice. You can add additional folders at the top of this page.\n \n<?=$delMsgs; ?>");
+<?php
+if ($delMsgs != '') {
+?>
+  <script type="text/javascript">
+    alert("The following pages have been deleted from your database because they are either no longer present or because you used securePage on a file that was not monitored by UserSpice. You can add additional folders at the top of this page.\n \n<?= $delMsgs; ?>");
   </script>
 
-  <?php
-} ?>
-
-
-<script type="text/javascript" src="js/pagination/datatables.min.js"></script>
-<script>
-$(document).ready(function() {
-  $('#pagestable').DataTable({"pageLength": 25,"stateSave": true,"aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]], "aaSorting": []});
-} );
-</script>
 <?php
-include $abs_us_root.$us_url_root.'users/views/_folder_modal.php';
+}
+include $abs_us_root . $us_url_root . 'users/views/_folder_modal.php';
 ?>

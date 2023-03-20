@@ -143,6 +143,8 @@ $lang = array_merge($lang,array(
     "TKS_MSG_3" => " was uploaded successfully. Please, wait for a while to see the data in the Catalog. We thank you 
         for your collaboration.",
     "SUBJECT_RECEIVE_RESEARCH" => "Research uploaded successfully",
+    "MSG_DATA_ANALYSIS" => "You must be looged to access online data analysis.",
+    "ERROR_LOADING_IMAGES" => "You can analysis a maximum of 64 images!"
 ));
 
 
