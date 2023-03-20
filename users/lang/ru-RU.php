@@ -1,6 +1,5 @@
 <?php
 /*
-  Do not put any content above the opening PHP tag
 	ДЛЯ СОЗДАНИЯ ПЕРЕВОДА, используйте шаблон en-US.php
 	Названия файлов указываются в формате ISO: xx-XX (ru-RU, uk-UK)
 
@@ -441,4 +440,3 @@ $lang = array_merge($lang,array(
 if(file_exists($abs_us_root.$us_url_root."usersc/lang/".$lang["THIS_CODE"].".php")){
 	include($abs_us_root.$us_url_root."usersc/lang/".$lang["THIS_CODE"].".php");
 }
- //do not put a closing php tag here

@@ -20,8 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 ?>
 <div class="row">
-  <div class="col-12 text-center py-5">
+  <div class="col-12 text-center">
     <h1><?=lang("JOIN_SUC");?><?=$settings->site_name?></h1>
-    <p><?=lang("VER_RES_SUC");?><?=$settings->join_vericode_expiry?> <?=lang("T_HOURS");?>.</p>
+    <?=lang("VER_RES_SUC");?><?=$settings->join_vericode_expiry?> <?=lang("T_HOURS");?>.</p>
+    <br />
   </div>
 </div>
