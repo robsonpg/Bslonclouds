@@ -5,13 +5,13 @@ require_once '../database_layer.php';
 require_once '../constants.php';
 require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 
-    $visitors_statistics = clone(getAllDatabaseVisitorInfo());
+$visitors_statistics = clone(getAllDatabaseVisitorInfo());
 ?>
 
 <style>
     @font-face {
-    font-family: 'Aeros';
-    src: url('../css/Aeros.ttf') format('truetype');
+        font-family: 'Aeros';
+        src: url('../css/Aeros.ttf') format('truetype');
     }
 </style>
 
@@ -65,7 +65,7 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 <script type="text/javascript" src="js/transactions.js"></script>
 
 <?php
-    require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
+require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
 ?>
 <!--a href="#home_bsl" class="float" style="padding-top: 3mm">
     <i class="fa fa-home my-float fa-2x"></i>
@@ -140,5 +140,4 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
     });
 
 </script>
-
 

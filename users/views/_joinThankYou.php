@@ -21,9 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ?>
 
 <div class="row">
-  <div class="col-12 text-center py-5">
+  <div class="col-12 text-center">
     <h1><?=lang("JOIN_SUC")?><?=$settings->site_name?></h1>
     <p><?=lang("JOIN_THANKS");?></p>
-    <p><a href="<?=$us_url_root?>users/login.php" class="btn btn-primary"><?=lang("SIGNIN_TEXT")?></a></p>
+    <a href="<?=$us_url_root?>users/login.php" class="btn btn-primary"><?=lang("SIGNIN_TEXT")?></a>
+    <br /><br />
   </div>
 </div>

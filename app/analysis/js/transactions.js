@@ -132,7 +132,7 @@ $(document).ready(function() {
     });
 
     $('#btn_prop_modal').click( function () {
-       let i;
+        let i;
         // Limpa o modal
         let sample_id = document.getElementById("sample_id");
         sample_id.value = "";

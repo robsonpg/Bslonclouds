@@ -98,6 +98,11 @@ if (Input::get('forgotten_password')) {
         $errors = $validation->errors();
     }
 }
+?>
+
+<div id="page-wrapper">
+<div class="container">
+<?php
 
 if($email_sent){
     require $abs_us_root.$us_url_root.'users/views/_forgot_password_sent.php';
@@ -106,4 +111,13 @@ if($email_sent){
 }
 
 includeHook($hooks,'bottom');
-require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; ?>
+
+?>
+</div><!-- /.container-fluid -->
+</div><!-- /#page-wrapper -->
+
+<?php require_once $abs_us_root.$us_url_root.'users/includes/page_footer.php'; // the final html footer copyright row + the external js calls ?>
+
+<!-- Place any per-page javascript here -->
+
+<?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
