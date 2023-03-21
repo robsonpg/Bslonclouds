@@ -88,7 +88,7 @@ $visitors_statistics = clone(getAllDatabaseVisitorInfo());
                         <div role="alert" class="alert alert-success">
                             <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
                                     B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                            <h4><?=lang("UPLOAD_TEXT"); ?></h4>
+                            <h6><?=lang("UPLOAD_TEXT"); ?></h6>
                         </div>
                     </div>
                 </div>

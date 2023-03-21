@@ -159,6 +159,7 @@ $lang = array_merge($lang,array(
     "UPLOAD_TEXT" => "Upload your data",
     "MENU_UPLOAD_DATA" => "Upload",
     "MSG_DATA_UPLOAD" => "You must be registered and logged in to upload your data",
+    "OFFLINE_TEXT" => "Offline Analisys",
 ));
 
 
