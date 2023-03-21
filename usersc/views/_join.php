@@ -459,13 +459,13 @@ Special thanks to John Bovey for the password strenth feature.
 
             <div class="modal-header">
                 <h4 class="modal-title"><?=lang("TERMS_MODAL_HEADER");?></h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-bs-dismiss="modal">X</button>
             </div>
             <div class="modal-body">
                 <p><?=lang("TERMS_AND_CONTIDIONS_TEXT"); ?></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
 

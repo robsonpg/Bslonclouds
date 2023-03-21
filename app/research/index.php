@@ -69,7 +69,7 @@ if ($user_moderator) {
             <div role="alert" class="alert alert-success">
                 <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
                         B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                <h4><?=lang("MENU_RESEARCH_CATALOG");?></h4>
+                <h6><?=lang("MENU_RESEARCH_CATALOG");?></h6>
             </div>
         </div>
     </div>

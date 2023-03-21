@@ -11,7 +11,7 @@ $lang = array_merge($lang,array(
     "GEN_COUNTRY" => "Country",
     "GEN_SKILLS" => "Skills",
     "GEN_NEWSLETTER" => "Do you want to receive our newletter?",
-    "GEN_AGREEMENT" => "By check this box, you agree with our <a href='' data-toggle='modal' data-target='#termsModal'>terms and conditions of use.</a>",
+    "GEN_AGREEMENT" => "By check this box, you agree with our <a href='' data-bs-toggle='modal' data-bs-target='#termsModal'>terms and conditions of use.</a>",
     "GEN_MUST_AGREE" => "You must agree with our terms and conditions.",
     "PROCESS_IMAGES" => "Image Process",
     "SELECT_IMAGES" => "Select images to be up-loaded to BSL ON CLOUDS' server",
@@ -152,6 +152,13 @@ $lang = array_merge($lang,array(
     "MENU_SOFTWARE" => "Software",
     "MENU_ONLINE_ANALYSIS" => "Online",
     "MENU_OFFLINE_ANALYSIS" => "Offline",
+    "BLOGS_TEXT" => "Blog",
+    "DOCS_TEXT" => "Documents",
+    "SOFTWARE_TEXT" => "Software",
+    "MENU_DOWNLOAD_DATA" => "Download",
+    "UPLOAD_TEXT" => "Upload your data",
+    "MENU_UPLOAD_DATA" => "Upload",
+    "MSG_DATA_UPLOAD" => "You must be registered and logged in to upload your data",
 ));
 
 

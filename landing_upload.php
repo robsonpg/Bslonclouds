@@ -5,14 +5,13 @@ require_once 'app/database_layer.php';
 require_once 'app/constants.php';
 require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 
-    $visitors_statistics = clone(getAllDatabaseVisitorInfo());
-
+$visitors_statistics = clone(getAllDatabaseVisitorInfo());
 ?>
 
 <style>
     @font-face {
-    font-family: 'Aeros';
-    src: url('app/css/Aeros.ttf') format('truetype');
+        font-family: 'Aeros';
+        src: url('app/css/Aeros.ttf') format('truetype');
     }
     .vector-map {
         width: 100%;
@@ -70,33 +69,33 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 
 </style>
 
-    <link rel="stylesheet" href="app/css/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="app/js/jvectormap/jquery-jvectormap-2.0.5.css" type="text/css" media="screen"/>
-    <script src="app/js/jvectormap/jquery-jvectormap-2.0.5.min.js"></script>
-    <script src="app/js/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script>
-        let cities = <?php echo json_encode($visitors_statistics->results()); ?>;
-    </script>
+<link rel="stylesheet" href="app/css/flag-icon-css/css/flag-icon.min.css">
+<link rel="stylesheet" href="app/js/jvectormap/jquery-jvectormap-2.0.5.css" type="text/css" media="screen"/>
+<script src="app/js/jvectormap/jquery-jvectormap-2.0.5.min.js"></script>
+<script src="app/js/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script>
+    let cities = <?php echo json_encode($visitors_statistics->results()); ?>;
+</script>
 
 <body>
 <div class="row">
     <div class="col-md-12">
         <br>
         <div id="tabsJustifiedContent" class="tab-content">
-            <div id="tutorials">
+            <div id="services">
                 <div class="row">
                     <div class="col-md-12">
                         <div role="alert" class="alert alert-success">
                             <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
                                     B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                            <h4><?=lang("TUTORIALS_TEXT"); ?></h4>
+                            <h4><?=lang("UPLOAD_TEXT"); ?></h4>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div role="alert" class="alert alert-warning">
-                            <h6><?=lang("TUTORIALS_MSG"); ?></h6>
+                            <h6><?=lang("MSG_DATA_UPLOAD"); ?></h6>
                         </div>
                     </div>
                 </div>
@@ -106,7 +105,6 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 </div> <!-- row -->
 
 <?php
-
 require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
 ?>
 <!--a href="#home_bsl" class="float" style="padding-top: 3mm">

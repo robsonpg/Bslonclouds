@@ -1,6 +1,7 @@
 <?php
 require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/container_close.php';
 require_once $abs_us_root . $us_url_root . 'users/includes/page_footer.php';
+require_once $abs_us_root . $us_url_root . 'app/database_layer.php';
 ?>
 
 <footer  id="footer" class="footer mt-auto border-top bg-light pt-3">
@@ -18,10 +19,12 @@ require_once $abs_us_root . $us_url_root . 'users/includes/page_footer.php';
                       <img src="/usersc/templates/bs4/assets/images/CNPq_v2017_rgb.png" height="30mm"/>
                   </a>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
+                  <a href="https://www.rpgsoftware.com.br">
+                    <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
+                  </a>
               </div>
               <div class="col-3 text-center">
-                <span class="badge badge-pill badge-primary">
+                <span class="badge bg-primary">
                 <?=lang("FOOTER_VISITORS");?> <?=getTotalVisitors(); ?>
                 </span>
               </div>
