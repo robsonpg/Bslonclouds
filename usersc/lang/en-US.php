@@ -130,7 +130,9 @@ $lang = array_merge($lang,array(
     "TERMS_AND_CONTIDIONS_TEXT" => "1 - The data I am setting as public can be used by anyone to do research.<br>
             2 - The data I am setting as private will be used only by the owners of the BSL on Clouds.<br>
             3 - The data I am up-loading are from my own, or by the authorship of a group that I am acting on behalf.<br>
-            4 - The data I will download will be referred as indicated by the author(s) in the description at BSL on Clouds.",
+            4 - The data I will download will be referred as indicated by the author(s) in the description at BSL on Clouds.<br><br>
+            The owner of the uploaded data keeps the copyright of the data and the use of the data can be done without any permission if it was classified as <b>PUBLIC</b>.<br>
+            The user must cite the owner properly.",
     "TEXT_MUST_LOGIN" => "You must be registered and logged in to access researches data by Research's Data Catalog menu item",
     "MENU_HOME" => "Home",
     "OBSERVATION_TEXTAREA" => "Enter research observations here...",
@@ -160,6 +162,9 @@ $lang = array_merge($lang,array(
     "MENU_UPLOAD_DATA" => "Upload",
     "MSG_DATA_UPLOAD" => "You must be registered and logged in to upload your data",
     "OFFLINE_TEXT" => "Offline Analisys",
+    "SIZE_ERROR_MODAL_TITLE" => "Image size error",
+    "SIZE_ERROR_MSG" => "Image with wrong size: ",
+    "BTN_OK" => "Ok",
 ));
 
 

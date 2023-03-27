@@ -69,6 +69,8 @@ function readURL(input, id) {
                     if (i === (input.files.length - 1)) {
                         btn_select.disabled = false;
                         btn_select.value = msg_select_images;
+                        // Acabou de carregar as imagens, fazer análise
+                        startImageAnalyse();
                     }
                 };
             }
@@ -91,6 +93,54 @@ function readURL(input, id) {
     }
 }
 
+//####################################################################################
+// Faz análise das imagens quanto ao tamanho de cada uma e seu profundidade de cores
+function startImageAnalyse(){
+    /// image_info_list contém os detalhes de cada imagem carregada
+    // Vamos basear na resolução da primeira imagem para comparar as outras
+    let img_width = image_info_list[0][IMAGE_WIDTH];
+    let img_heigth = image_info_list[0][IMAGE_HEIGTH];
+    // Analisando as dimensões
+    for (let idx = 0; idx < image_info_list.length; idx++) {
+        //alert("Fix: " + img_width + " Img: " + image_info_list[idx][IMAGE_WIDTH]);
+        if ((image_info_list[idx][IMAGE_WIDTH] !== img_width) ||
+            (image_info_list[idx][IMAGE_HEIGTH] !== img_heigth)) {
+            // Avisar que o conjunto de imagens tem tamanhos diferentes
+            document.getElementById("image_name").innerText = image_info_list[idx][FILE_NAME];
+            $('#sizeerror-modal').modal('show');
+        }
+    }
+    // Analisando as cores
+    for (let idx = 0; idx < image_info_list.length; idx++) {
+        let flag_color = false;
+        let img = document.getElementById("tumb" + idx);
+        let canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        alert("w: " + canvas.width + "h: " + canvas.height)
+        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+        let imageData = canvas.getContext('2d').getImageData(0,0, img.width, img.height);
+        for (let color_idx = 0; color_idx < imageData.data.length; color_idx += 4) {
+            // cor 1
+            let color1 = imageData.data[color_idx];
+            let color2 = imageData.data[color_idx + 1];
+            let color3 = imageData.data[color_idx + 2];
+            //alert("c1: " + color1 + " c2: " + color2 + " c3: " + color3)
+            // Se for diferente
+            if ((color1 !== color2) || (color1 !== color3) || (color2 !== color3)) {
+                // Não é grayscale
+                flag_color = true;
+                //alert("Não");
+            }
+        }
+        if (flag_color) {
+            alert("Ok")
+        } else {
+            alert("No")
+        }
+    }
+
+}
 function grayScale () {
     var image = document.getElementById("image");
 
@@ -131,39 +181,8 @@ $(document).ready(function() {
         }
     });
 
-    $('#btn_prop_modal').click( function () {
-        let i;
-        // Limpa o modal
-        let sample_id = document.getElementById("sample_id");
-        sample_id.value = "";
-        let sample_name = document.getElementById("sample_name");
-        sample_name.value = "";
-        let sample_frames = document.getElementById("sample_frames");
-        sample_frames.value = "";
-        let radio_config = document.getElementsByName("sample_config");
-        for(i = 0; i<radio_config.length; i++)
-            radio_config[i].checked = false;
-        let laser_type = document.getElementsByName("sample_laser_type");
-        for(i = 0; i<laser_type.length; i++)
-            laser_type[i].checked = false;
-        let sample_wavelength = document.getElementById("sample_wavelength");
-        sample_wavelength.value = "";
-        let sample_other = document.getElementById("other_laser_type");
-        sample_other.value = "";
-        sample_other.disabled = true;
-
-        let permission = document.getElementsByName("sample_permission");
-        for(i = 0; i<permission.length; i++)
-            permission[i].checked = false;
-        let sample_pub = document.getElementById("research_public_id");
-        sample_pub.value = "";
-
-        let cover_img = document.getElementById("cover_image");
-        // Para que a imagem seja carregada no formato correto
-        toDataURL('img/default.bmp', function(dataUrl) {
-            cover_img.src = dataUrl;
-        })
-        //cover_img.src = "img/default.bmp";
+    $('#ok_error').click( function () {
+        clearAllData();
     });
 })
 

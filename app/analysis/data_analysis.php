@@ -5,7 +5,14 @@ require_once '../database_layer.php';
 require_once '../constants.php';
 require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 
+if (!$user->isLoggedIn()) {
+    header('Location: /index.php');
+    exit;
+}
+
 $visitors_statistics = clone(getAllDatabaseVisitorInfo());
+
+require_once "sizeerror_modal.php";
 ?>
 
 <style>

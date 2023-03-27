@@ -21,6 +21,11 @@ require_once "../upload/properties_modal.php";
 require_once "../database_layer.php";
 require_once "../constants.php";
 
+if (!$user->isLoggedIn()) {
+    header('Location: /index.php');
+    exit;
+}
+
 if ($user->isLoggedIn()) {
     $user_id = $user->data()->id;
     $user_moderator = hasPerm([ATTR_MODERATOR], $user->data()->id);

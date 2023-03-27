@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalTitle"><?=lang("DELETE_MODAL_TITLE")?></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="container bg-light">
                 <div class="row justify-content-between align-items-center border">
@@ -24,7 +24,7 @@
             <div class="modal-footer">
                 <a id="btn_research_delete_confirm" class="btn btn-primary" style="color: whitesmoke">
                     <?=lang("BTN_CONFIRM")?></a>
-                <a id="cancel_delete" class="btn btn-default" data-dismiss="modal"><?=lang("BTN_CANCEL")?></a>
+                <a id="cancel_delete" class="btn btn-default" data-bs-dismiss="modal"><?=lang("BTN_CANCEL")?></a>
             </div>
         </div>
     </div>
