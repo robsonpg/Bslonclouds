@@ -165,6 +165,9 @@ $lang = array_merge($lang,array(
     "SIZE_ERROR_MODAL_TITLE" => "Image size error",
     "SIZE_ERROR_MSG" => "Image with wrong size: ",
     "BTN_OK" => "Ok",
+    "COLOR_ERROR_MODAL_TITLE" => "Color image not allowed",
+    "COLOR_ERROR_MSG" => "Only grayscales images allowed to analysis.<br>Try your tool to turn image to gray scale.",
+
 ));
 
 

@@ -117,7 +117,7 @@ function startImageAnalyse(){
         let canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
-        alert("w: " + canvas.width + "h: " + canvas.height)
+        //alert("w: " + canvas.width + "h: " + canvas.height)
         canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
         let imageData = canvas.getContext('2d').getImageData(0,0, img.width, img.height);
         for (let color_idx = 0; color_idx < imageData.data.length; color_idx += 4) {
@@ -134,9 +134,8 @@ function startImageAnalyse(){
             }
         }
         if (flag_color) {
-            alert("Ok")
-        } else {
-            alert("No")
+            document.getElementById("image_name_color").innerText = image_info_list[idx][FILE_NAME];
+            $('#colorerror-modal').modal('show');
         }
     }
 
@@ -182,6 +181,9 @@ $(document).ready(function() {
     });
 
     $('#ok_error').click( function () {
+        clearAllData();
+    });
+    $('#ok_error_color').click( function () {
         clearAllData();
     });
 })
