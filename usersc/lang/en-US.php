@@ -166,8 +166,9 @@ $lang = array_merge($lang,array(
     "SIZE_ERROR_MSG" => "Image with wrong size: ",
     "BTN_OK" => "Ok",
     "COLOR_ERROR_MODAL_TITLE" => "Color image not allowed",
-    "COLOR_ERROR_MSG" => "Only grayscales images allowed to analysis.<br>Try your tool to turn image to gray scale.",
-
+    "COLOR_ERROR_MSG" => "Only grayscales images allowed to analysis.<br>Try our tool to turn image to gray scale.",
+    "GRAPHAVD_MODAL_TITLE" => "Absolute Value of the Differences Method in Graphic Mode",
+    "MSG_IMAGE_TITLE" => "Processing Graph AVD...",
 ));
 
 

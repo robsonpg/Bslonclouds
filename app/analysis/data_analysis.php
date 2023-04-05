@@ -14,6 +14,7 @@ $visitors_statistics = clone(getAllDatabaseVisitorInfo());
 
 require_once "sizeerror_modal.php";
 require_once "colorerror_modal.php";
+require_once "graphavd_modal.php";
 ?>
 
 <style>
