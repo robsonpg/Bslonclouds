@@ -169,6 +169,8 @@ $lang = array_merge($lang,array(
     "COLOR_ERROR_MSG" => "Only grayscales images allowed to analysis.<br>Try our tool to turn image to gray scale.",
     "GRAPHAVD_MODAL_TITLE" => "Absolute Value of the Differences Method in Graphic Mode",
     "MSG_IMAGE_TITLE" => "Processing Graph AVD...",
+    "NUMBER_POINTS_INPUT" => "Enter number of points to random Gaussian:",
+    "STD_DEVIATION_INPUT" => "Enter the standard deviation to Gaussian:",
 ));
 
 

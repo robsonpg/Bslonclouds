@@ -256,7 +256,7 @@ if ($user->isLoggedIn()) {
         } else {
             setTimeout(function() {
                 count($this)
-            }, 50);
+            }, 10);
         }
     }
 

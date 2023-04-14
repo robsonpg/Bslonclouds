@@ -27,6 +27,8 @@ function readURL(input, id) {
     let main_width = 0;
     let main_height = 0;
     image_info_list = [];
+    images_properties = [];
+
 
     if (input.files.length > 64) {
         let error_place = document.getElementById("error_messages_place");
@@ -213,6 +215,7 @@ function getImagePixel(x, y, cvs) {
 }
 
 let avd_matrix = null;
+let coom_matrix = null;
 let backup_canvas = null;
 //#######################################################################################
 // Calcula a imagem AVD
@@ -266,28 +269,28 @@ function CalcShowGraphAVD() {
         for (let width_idx = 0; width_idx < image_info_list[0][IMAGE_WIDTH]; width_idx++) {
             //avd_matrix[width_idx][heigth_idx] = avd_matrix[width_idx][heigth_idx]/(image_info_list.length - 2);
             // Calcula a "cor"
-            if(avd_matrix[width_idx][heigth_idx] < 64){
+            if (avd_matrix[width_idx][heigth_idx] < 64) {
                 red = 0;
                 green = (avd_matrix[width_idx][heigth_idx] * multi_factor);
                 blue = 255;
             } else {
-                if(avd_matrix[width_idx][heigth_idx] < 128){
+                if (avd_matrix[width_idx][heigth_idx] < 128) {
                     red = 0;
                     green = 255;
-                    blue = (255 - (avd_matrix[width_idx][heigth_idx]-64) * multi_factor);
+                    blue = (255 - (avd_matrix[width_idx][heigth_idx] - 64) * multi_factor);
                 } else {
-                    if(avd_matrix[width_idx][heigth_idx] < 192){
-                        red = ((avd_matrix[width_idx][heigth_idx]-128) * multi_factor);
+                    if (avd_matrix[width_idx][heigth_idx] < 192) {
+                        red = ((avd_matrix[width_idx][heigth_idx] - 128) * multi_factor);
                         green = 255;
                         blue = 0;
                     } else {
                         red = 255;
-                        green = (255 - (avd_matrix[width_idx][heigth_idx]-192) * multi_factor);
+                        green = (255 - (avd_matrix[width_idx][heigth_idx] - 192) * multi_factor);
                         blue = 0;
                     }
                 }
             }
-            context_cvs.fillStyle = "rgba("+ red + "," + green + ", " + blue + ", 1)";
+            context_cvs.fillStyle = "rgba(" + red + "," + green + ", " + blue + ", 1)";
             context_cvs.fillRect(width_idx, heigth_idx, 1, 1);
         }
     }
@@ -297,13 +300,32 @@ function CalcShowGraphAVD() {
     //alert("Exibir");
     //;; exibir image!!!!
     colorPicker();
-    const title_msg  = document.getElementById("title_msg");
-    title_msg.innerHTML = "Images Processed";
-    // loop para 200 pontos com variância de 20
-    for (let idx = 0; idx < 200; idx++) {
+    const title_msg = document.getElementById("title_msg");
+    title_msg.innerHTML = "Images Processed<br>";
+
+    calculateGaussian();
+}
+
+//##########################################################################
+// Calcula a curva gaussiana para aplicar no AVD
+function calculateGaussian() {
+    gaussian_points_x = [];
+    gaussian_points_y = [];
+    const gau_points = document.getElementById("gau_num_points");
+    const std_deviation = document.getElementById("std_deviation");
+    let gpoints = 200;
+    let stddev = 20;
+    if (gau_points.value) {
+        gpoints = gau_points.value;
+    }
+    if (std_deviation.value) {
+        stddev = std_deviation.value;
+    }
+    console.log("Gauss:" + stddev + " : " + gpoints);
+    for (let idx = 0; idx < gpoints; idx++) {
         // gerar pontos no x
-        let xvalue = gaussianRandom(0, 20);
-        let yvalue = gaussianRandom(0, 20);
+        let xvalue = gaussianRandom(0, stddev);
+        let yvalue = gaussianRandom(0, stddev);
         gaussian_points_x.push(xvalue);
         gaussian_points_y.push(yvalue);
     }
@@ -325,43 +347,191 @@ function gaussianRandom(mean=0, stdev=1) {
 // Array da curva gaussiana
 let gaussian_points_x = [];
 let gaussian_points_y = [];
+let THSP_matrix = [];
+let last_x = 0, last_y = 0;
+const canvas_avd = document.getElementById("graphavd_cvs");
+const ctx_avd = canvas_avd.getContext("2d", {willReadFrequently: true});
+
+//#############################################################################
+// Função que desenha a curva gaussiana no movimento do mouse
+function pick(event) {
+    const bounding = canvas_avd.getBoundingClientRect();
+    const x = event.clientX - bounding.left;
+    const y = event.clientY - bounding.top;
+
+    last_x = x;
+    last_y = y;
+    plotGauss(x, y);
+}
+
+//##############################################################################
+// Momento que o usuário clica em determinado ponto
+function clickPick(event) {
+    const bounding = canvas_avd.getBoundingClientRect();
+    const x = event.clientX - bounding.left;
+    const y = event.clientY - bounding.top;
+    last_x = x;
+    last_y = y;
+    // Calcular THSP
+    const gau_points = document.getElementById("gau_num_points");
+    let gpoints = 200;
+    if (gau_points.value) {
+        gpoints = gau_points.value;
+    }
+    // O número de imagens está no primeiro indice e
+    // o número de pontos da gaussiana está no segundo
+    // Octave: Y é a matriz THSP e é pontos gaussianos x imagem
+    // for m = 1:M
+    // for k = 1:NTIMES
+    // Y(m,k) = DATA( POINTS(m,1) , POINTS(m,2) , k);
+    // end
+    // end
+    for (let idx = 0; idx < image_info_list.length; idx++) {
+        let cvs_img = document.getElementById("cvs" + idx);
+        THSP_matrix[idx] = [];
+        for (let gauss_idx = 0; gauss_idx < gpoints; gauss_idx++) {
+            let xvalue = gaussian_points_x[gauss_idx];
+            let yvalue = gaussian_points_y[gauss_idx];
+            let pix_val = getImagePixel(x + Math.round(xvalue), y + Math.round(yvalue), cvs_img);
+            // THSP : imagem x gauss index
+            THSP_matrix[idx][gauss_idx] = pix_val;
+        }
+    }
+    // Calcula o Absolute Value of the Differences (AVD)
+    calculateCOM();
+}
+
+let COM_matrix = [256];
+//##############################################################################
+// Calcula o COM: Matriz de coocorrência ou matrizes de co-ocorrência em
+// nível de cinza.
+// ou GLCH (histogramas de co-ocorrência em nível de cinza)
+// ou matriz de dependência espacial.
+// Octave: C é a matriz COM e é d1 - linha - imagens x d2 - coluna - pontos gaussianos
+// a = size(THSP);
+// C = zeros(256,256);
+//
+// for linea = 1:a(1,1)
+// for col   = 1:a(1,2)-1
+//
+// d1 = THSP(linea,col)+1;
+// d2 = THSP(linea,col+1)+1;
+//
+// C(d1,d2) = C(d1,d2)+1;
+// end
+// end
+function calculateCOM() {
+    // Zera a matriz COM
+    for (let zerosx = 0; zerosx < 256; zerosx++) {
+        COM_matrix[zerosx] = [];
+        for (let zerosy = 0; zerosy < 256; zerosy++) {
+            COM_matrix[zerosx][zerosy] = 0;
+        }
+    }
+    // linhas THSP
+    let canvas_hist = document.getElementById('color_hist');
+    let context_cvs = canvas_hist.getContext('2d', {willReadFrequently: true});
+    context_cvs.fillStyle = "rgba(255, 255, 255, 1)";
+    context_cvs.fillRect(0, 0, canvas_hist.width, canvas_hist.height);
+
+    let thsp_lines = THSP_matrix.length; // imagens - Ex: 0:64
+    let thsp_cols = THSP_matrix[0].length; // gauss - Ex: 0:200
+    for (let thsp_idx_line = 0; thsp_idx_line < thsp_lines; thsp_idx_line++) {
+        for (let thsp_idx_col = 0; thsp_idx_col < thsp_cols; thsp_idx_col++) {
+            let color1 = THSP_matrix[thsp_idx_line][thsp_idx_col];
+            let color2 = THSP_matrix[thsp_idx_line][thsp_idx_col+1];
+            if (color1 > 256) color1 = 256;
+            if (color1 < 1) color1 = 1;
+            if (color2 > 256) color2 = 256;
+            if (color2 < 1) color2 = 1;
+            COM_matrix[color1][color2] = COM_matrix[color1][color2] + 1;
+
+            context_cvs.fillStyle = "rgba(" + color1 + "," + color1 + ", " + color1 + ", 1)";
+            context_cvs.fillRect(color1, color2, 1, 1);
+        }
+    }
+    calculateAVD();
+}
+
+//##############################################################################
+// Função para clacular o Absolute Value of the Differences (AVD)
+function calculateAVD() {
+    // Octave:
+    // function [Y, varargout] = avd(COM,varargin)
+    // Nsize = size(COM); (tamanho em x e y)
+    // Ntot=sum(sum(COM));
+    // Y=0;
+    // for b1 = 1:Nsize(1,1)
+    // for b2 = 1:Nsize(1,2)
+    // Y = Y+ (COM(b1,b2)*abs(b1-b2)) /Ntot;
+    // Calculos:
+    // sum(COM) - soma as colunas
+    // sum(sum(COM)) - soma o somatório das colunas
+    let com_lines = COM_matrix.length;
+    let com_cols = COM_matrix[0].length;
+    let AVD = 0;
+    let COM_total = 0;
+    let total_line_vec = [];
+    // Somar as linhas em um vetor
+    for (let idx_line = 0; idx_line < com_lines; idx_line++) {
+        total_line_vec[idx_line] = 0;
+        for (let idx_col = 0; idx_col < com_cols; idx_col++) {
+            //console.log(COM_matrix[idx_line][idx_col])
+            total_line_vec[idx_line] = total_line_vec[idx_line] + COM_matrix[idx_line][idx_col];
+        }
+    }
+    for (let com_vector = 0; com_vector < total_line_vec.length; com_vector++) {
+        // Calculi do AVD
+        COM_total = COM_total + total_line_vec[com_vector];
+    }
+
+    for (let idx_line = 0; idx_line < com_lines; idx_line++) {
+        for (let idx_col = 0; idx_col < com_cols; idx_col++) {
+            AVD = AVD + (COM_matrix[idx_line][idx_col]*Math.abs(idx_line - idx_col))/ COM_total;
+        }
+    }
+
+    let avd_number = document.getElementById("avd_number");
+    avd_number.innerHTML = "<b>" + String(Number(Math.round(AVD * 100) / 100).toFixed(2)) + "</b>";
+    //console.log("AVD: " + AVD);
+
+}
+
+//##############################################################################
+// Desenha a curva gaussiana
+function plotGauss(x ,y) {
+    //destination.style.background = rgba;
+    //destination.textContent = rgba;
+    // restaura a imagem
+    canvas_avd.getContext('2d', {willReadFrequently: true}).drawImage(backup_canvas, 0, 0);
+    // Gerar array de pontos na forma gaussiana
+    const gau_points = document.getElementById("gau_num_points");
+    let gpoints = 200;
+    if (gau_points.value) {
+        gpoints = gau_points.value;
+    }
+    // loop para plotar a curva gaussiana
+    for (let idx = 0; idx < gpoints; idx++) {
+        // gerar pontos no x
+        let xvalue = gaussian_points_x[idx];
+        let yvalue = gaussian_points_y[idx];
+        // Plotar na imagem
+        ctx_avd.fillStyle = "rgba(28, 28, 28, 1)";
+        ctx_avd.fillRect(xvalue + x, yvalue + y, 2, 2);
+    }
+    return;
+}
 
 //###############################################################################
 // Ativa os eventos de busca de ponto e cor da imagem
 function colorPicker() {
-    const canvas = document.getElementById("graphavd_cvs");
-    const ctx = canvas.getContext("2d", {willReadFrequently: true});
-    const hoveredColor = document.getElementById("hovered-color");
-    const selectedColor = document.getElementById("selected-color");
+    //const canvas = document.getElementById("graphavd_cvs");
+    //const ctx = canvas.getContext("2d", {willReadFrequently: true});
+    //const hoveredColor = document.getElementById("hovered-color");
+    //const selectedColor = document.getElementById("selected-color");
 
-    function pick(event, destination) {
-        const bounding = canvas.getBoundingClientRect();
-        const x = event.clientX - bounding.left;
-        const y = event.clientY - bounding.top;
-        const pixel = ctx.getImageData(x, y, 1, 1);
-        const data = pixel.data;
-
-        const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
-        destination.style.background = rgba;
-        //destination.textContent = rgba;
-        // restaura a imagem
-        canvas.getContext('2d', {willReadFrequently: true}).drawImage(backup_canvas, 0, 0);
-        // Gerar array de pontos na forma gaussiana
-
-        // loop para 200 pontos com variância de 20
-        for (let idx = 0; idx < 200; idx++) {
-            // gerar pontos no x
-            let xvalue = gaussian_points_x[idx];
-            let yvalue = gaussian_points_y[idx];
-            // Plotar na imagem
-            ctx.fillStyle = "rgba(28, 28, 28, 1)";
-            ctx.fillRect(xvalue + x, yvalue + y, 2, 2);
-        }
-        return rgba;
-    }
-
-    canvas.addEventListener("mousemove", (event) => pick(event, hoveredColor));
-    canvas.addEventListener("click", (event) => pick(event, selectedColor));
+    canvas_avd.addEventListener("mousemove", (event) => pick(event));
+    canvas_avd.addEventListener("click", (event) => clickPick(event));
 }
 
 //###############################################################################
@@ -394,20 +564,45 @@ function grayScale () {
 // Scripts para depois que o form for carregado
 //##############################################################################
 $(document).ready(function() {
-
-    //#########################################################################
-    // Não permite espaços na identificação da amostra
-    $('#sample_id').on('keypress', function(e) {
-        if (e.which === 32){
-            //console.log('Space Detected');
-            return false;
+    // Trata as teclas de direção
+    onkeydown = (event) => {
+        let flg_prev = false;
+        if (event.key === 'ArrowUp') {
+            const gau_points = document.getElementById("gau_num_points");
+            let gval = parseInt(gau_points.value) + 1;
+            gau_points.value = gval;
+            flg_prev = true;
         }
-    });
+        if (event.key === 'ArrowDown') {
+            const gau_points = document.getElementById("gau_num_points");
+            let gval = parseInt(gau_points.value) - 1;
+            gau_points.value = gval;
+            flg_prev = true;
+        }
+        if (event.key === 'ArrowLeft') {
+            const gau_points = document.getElementById("std_deviation");
+            let gval = parseInt(gau_points.value) - 1;
+            gau_points.value = gval;
+            flg_prev = true;
+        }
+        if (event.key === 'ArrowRight') {
+            const gau_points = document.getElementById("std_deviation");
+            let gval = parseInt(gau_points.value) + 1;
+            gau_points.value = gval;
+            flg_prev = true;
+        }
+        if (flg_prev) {
+            event.preventDefault();
+            calculateGaussian();
+            plotGauss(last_x, last_y);
+        }
+        //return false;
+    };
 
     $('#ok_error').click( function () {
         clearAllData();
     });
-    $('#ok_error_color').click( function () {
+    $('#ok_avd').click( function () {
         clearAllData();
     });
 })
@@ -427,69 +622,6 @@ function toDataURL(url, callback) {
 }
 
 
-function enableOtherType() {
-    let value = document.querySelector('input[name="sample_laser_type"]:checked').value;
-    if (value === OTHER_LASER_TYPE) {
-        document.getElementById("other_laser_type").disabled = false;
-    } else {
-        document.getElementById("other_laser_type").disabled = true;
-        document.getElementById("other_laser_type").value = "";
-    }
-}
-
-//############################################################################
-// Abre modal das propiedades com os valores preenchidos
-function showPropertiesModal() {
-    //document.getElementById('sample_id').removeAttribute("disabled");
-    let sample_unique_id = document.getElementById("sample_id");
-    sample_unique_id.value = images_properties[0];
-    let sample_name = document.getElementById("sample_name");
-    sample_name.value = images_properties[1];
-    let sample_frames = document.getElementById("sample_frames");
-    sample_frames.value = images_properties[2];
-
-    let checked = images_properties[3];
-    if (checked === CONFIG_BACKSCATTERING) {
-        document.getElementById("sample_config1").checked = true;
-    } else {
-        document.getElementById("sample_config2").checked = true;
-    }
-
-    checked = images_properties[4];
-    if (checked === HENE_LASER_TYPE) {
-        document.getElementById("sample_laser_type1").checked = true;
-    } else {
-        if (checked === DIODE_LASER_TYPE) {
-            document.getElementById("sample_laser_type2").checked = true;
-        } else {
-            document.getElementById("sample_laser_type3").checked = true;
-            document.getElementById("other_laser_type").value = images_properties[5];
-        }
-    }
-    // let radio_config = document.getElementsByName("sample_config");
-    // for(i = 0; i<radio_config.length; i++)
-    //     radio_config[i].checked = false;
-    // let laser_type = document.getElementsByName("sample_laser_type");
-    // for(i = 0; i<laser_type.length; i++)
-    //     laser_type[i].checked = false;
-
-    let sample_wavelength = document.getElementById("sample_wavelength");
-    sample_wavelength.value = images_properties[6];
-
-    checked = images_properties[7];
-    if (checked === PERMISSION_PUBLIC) {
-        document.getElementById("sample_permission1").checked = true;
-    } else {
-        if (checked === PERMISSION_PRIVATE) {
-            document.getElementById("sample_permission2").checked = true;
-        }
-    }
-
-    let sample_pub = document.getElementById("research_public_id");
-    sample_pub.value = images_properties[8];
-    // Exibe o modal
-    $('#properties-modal').modal('show');
-}
 
 //########################################################################
 // Apaga todos os dados carregados localemte ff
