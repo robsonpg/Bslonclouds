@@ -279,6 +279,7 @@ async function CalcShowGraphAVD() {
 
     calculateGaussian();
     progress.value = image_info_list.length.toString();
+    $('#clickpoint-modal').modal('show');
 }
 
 //##########################################################################
