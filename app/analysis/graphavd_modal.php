@@ -19,7 +19,10 @@
                 <div class="row justify-content-between align-items-center">
                     <div class="col">
                         <div id="title_msg">
-                            <?=lang("MSG_IMAGE_TITLE"); ?>&nbsp;<img src="../images/progress.gif"><br>
+                            <?=lang("MSG_IMAGE_TITLE"); ?>
+                            <div>
+                                <progress  id="image_process" style="width: 100%;" value="0" max="100"></progress>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -49,23 +52,36 @@
                 <hr>
                 <div class="row">
                     <div class="col d-flex justify-content-center">
-                        <div>
-                            <canvas id="graphavd_cvs" style="border:1px solid #d3d3d3;"></canvas>
+                        <div class="card mb-3">
+                            <h6 class="card-header"><?=lang("GRAPHIC_SPECKLE_TITLE"); ?></h6>
+                            <div>
+                                <canvas id="graphavd_cvs" style="border:1px solid #d3d3d3;"></canvas>
+                            </div>
                         </div>
                     </div>
                     <div class="col" >
-                        <canvas id="heatmap" width="100" height="256" style="border: 1px  solid #d3d3d3;"></canvas>
+                        <div class="card mb-3">
+                            <h6 class="card-header"><?=lang("HEATMAP_TITLE"); ?></h6>
+                            <img src="../images/heatmap.png" style="width: 40%">
+                        </div>
                     </div>
                     <div class="col" >
                         <div class="row">
                             <div class="col align-items-center">
-                                <canvas id="color_hist" style="border:1px solid #d3d3d3;" width="265px" height="256px"></canvas>
+                                <div class="card mb-3">
+                                    <h6 class="card-header"><?=lang("DISPERSION_TITLE"); ?></h6>
+                                    <canvas id="color_hist" style="border:1px solid #d3d3d3;" width="265px" height="256px"></canvas>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <h6>AVD</h6>
-                                <span id="avd_number"></span>
+                                <div class="card mb-3">
+                                    <h4 class="card-header">AVD</h4>
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="avd_number">0.00</h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

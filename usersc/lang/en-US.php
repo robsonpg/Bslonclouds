@@ -171,6 +171,9 @@ $lang = array_merge($lang,array(
     "MSG_IMAGE_TITLE" => "Processing Graph AVD...",
     "NUMBER_POINTS_INPUT" => "Enter number of points to random Gaussian:",
     "STD_DEVIATION_INPUT" => "Enter the standard deviation to Gaussian:",
+    "GRAPHIC_SPECKLE_TITLE" => "Speckle Mean",
+    "HEATMAP_TITLE" => "Heatmap",
+    "DISPERSION_TITLE" => "Co-occurrence Histogram",
 ));
 
 

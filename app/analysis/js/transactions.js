@@ -79,7 +79,7 @@ function readURL(input, id) {
                         // Acabou de carregar as imagens, fazer anális
                         setTimeout(function() {
                             startImageAnalyse();
-                        }, 2000);
+                        }, 4000);
                     }
                 };
             }
@@ -100,44 +100,7 @@ function readURL(input, id) {
             image_info_list.push([input.files[i], input.files[i].name, input.files[i].lastModified, 0, 0]);
         }
         tumb_div.append(row_tumb);
-        makeHeatBar();
         $('#graphavd-modal').modal('show');
-    }
-}
-
-function makeHeatBar() {
-    let heatbar = document.getElementById("heatmap");
-    let multi_factor = 4;
-    let red, green, blue;
-    for (let idx = 0; idx < 256; idx++) {
-        if(idx < 64){
-            red = 0;
-            green = idx * multi_factor;
-            blue = 255;
-        } else {
-            if(idx < 128){
-                red = 0;
-                green = 255;
-                blue = (255 - (idx - 64) * multi_factor);
-            } else {
-                if(idx < 192){
-                    red = (idx - 128) * multi_factor;
-                    green = 255;
-                    blue = 0;
-                } else {
-                    red = 255;
-                    green = (255 - (idx - 192) * multi_factor);
-                    blue = 0;
-                }
-            }
-        }
-        heatbar.getContext('2d').fillStyle = "rgba("+ red + "," + green + ", " + blue + ", 1)";
-        heatbar.getContext('2d').fillRect(0, 256 - idx, 20, 1);
-        heatbar.getContext('2d').fillStyle = "black";
-        heatbar.getContext('2d').font = "normal 14px Sans-Serif";
-        heatbar.getContext('2d').fillText("0", 30, 255,30);
-        heatbar.getContext('2d').fillText("128", 30, 128);
-        heatbar.getContext('2d').fillText("255", 30, 14);
     }
 }
 
@@ -214,6 +177,10 @@ function getImagePixel(x, y, cvs) {
     return ret;
 }
 
+async function sleep() {
+    return new Promise((resolve) => setTimeout(resolve, 300));
+}
+
 let avd_matrix = null;
 let coom_matrix = null;
 let backup_canvas = null;
@@ -221,11 +188,14 @@ let backup_canvas = null;
 // Calcula a imagem AVD
 // LEMBRAR QUE IMAGEM NA MEMÓRIA ESTÁ EM 4 BYTES
 //#######################################################################################
-function CalcShowGraphAVD() {
+async function CalcShowGraphAVD() {
     // Exibe modal para tratamento do calculo
     $('#graphavd-modal').modal('show');
     // Criando a imagem baseada na matrix AVD
     let canvas = document.getElementById('graphavd_cvs');
+    let progress = document.getElementById("image_process");
+    progress.max = image_info_list.length.toString();
+    progress.value = "0";
     backup_canvas = document.createElement('canvas');
     canvas.setAttribute("width", image_info_list[0][IMAGE_WIDTH] + "px");
     canvas.setAttribute("height", image_info_list[0][IMAGE_HEIGTH] + "px");
@@ -260,6 +230,10 @@ function CalcShowGraphAVD() {
             }
         }
         console.log("Imagem: " + idx);
+        window.requestAnimationFrame(() => {
+            progress.value = (idx + 1).toString();
+        });
+        await sleep();
     }
     let red = 0;
     let green = 0;
@@ -300,10 +274,11 @@ function CalcShowGraphAVD() {
     //alert("Exibir");
     //;; exibir image!!!!
     colorPicker();
-    const title_msg = document.getElementById("title_msg");
-    title_msg.innerHTML = "Images Processed<br>";
+    //const title_msg = document.getElementById("title_msg");
+    //title_msg.innerHTML = "Images Processed<br>";
 
     calculateGaussian();
+    progress.value = image_info_list.length.toString();
 }
 
 //##########################################################################
