@@ -23,13 +23,11 @@ let IMAGE_HEIGTH = 4;
 // Mas o projeto prevê muitas imagens
 // Vamos ler apenas o path e o nome do arquivo e armazenar
 function readURL(input, id) {
-
     let main_width = 0;
     let main_height = 0;
     image_info_list = [];
     images_properties = [];
-
-
+    let count = 0;
     if (input.files.length > 64) {
         let error_place = document.getElementById("error_messages_place");
         error_place.innerHTML = "<div role='alert' class='alert alert-warning'>" + msg_error_loding_images + "</div>";
@@ -37,6 +35,7 @@ function readURL(input, id) {
             error_place.innerHTML = "";
         }, 5000);
     } else {
+        $('#graphavd-modal').modal('show');
         let btn_select = document.getElementById("btn_get_files");
         btn_select.value = msg_loading;
         btn_select.disabled = true;
@@ -73,13 +72,12 @@ function readURL(input, id) {
                     }
                     image_info_list[i][IMAGE_WIDTH] = main_width;
                     image_info_list[i][IMAGE_HEIGTH] = main_height;
-                    if (i === (input.files.length - 1)) {
+                    count++;
+                    if (count === (input.files.length)) {
                         btn_select.disabled = false;
                         btn_select.value = msg_select_images;
                         // Acabou de carregar as imagens, fazer anális
-                        setTimeout(function() {
-                            startImageAnalyse();
-                        }, 4000);
+                        startImageAnalyse();
                     }
                 };
             }
@@ -100,7 +98,7 @@ function readURL(input, id) {
             image_info_list.push([input.files[i], input.files[i].name, input.files[i].lastModified, 0, 0]);
         }
         tumb_div.append(row_tumb);
-        $('#graphavd-modal').modal('show');
+        //$('#graphavd-modal').modal('show');
     }
 }
 
@@ -189,8 +187,6 @@ let backup_canvas = null;
 // LEMBRAR QUE IMAGEM NA MEMÓRIA ESTÁ EM 4 BYTES
 //#######################################################################################
 async function CalcShowGraphAVD() {
-    // Exibe modal para tratamento do calculo
-    $('#graphavd-modal').modal('show');
     // Criando a imagem baseada na matrix AVD
     let canvas = document.getElementById('graphavd_cvs');
     let progress = document.getElementById("image_process");

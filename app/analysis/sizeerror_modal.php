@@ -8,9 +8,9 @@
 
 ?>
 <!-- Properties Modal -->
-<div class="modal fade" id="sizeerror-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+<div class="modal fade" id="sizeerror-modal" style="z-index: 9999" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content modal-dialog-centered">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalTitle"><?=lang("SIZE_ERROR_MODAL_TITLE")?></h4>
             </div>
