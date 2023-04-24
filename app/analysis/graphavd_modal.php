@@ -34,7 +34,9 @@
                      <div class="col">
                         <input type="number" id="gau_num_points" maxlength="20" value="200"
                                onkeyup="calculateGaussian()" onchange="calculateGaussian()">
-                         <span><i class="fa-solid fa-arrow-up"></i>&nbsp;&nbsp;<i class="fa-solid fa-arrow-down"></i></span>
+                         <span><i class="fa-solid fa-arrow-up" onclick="upCalc()"></i>&nbsp;&nbsp;
+                             <i class="fa-solid fa-arrow-down" onclick="downCalc()"></i>
+                         </span>
                      </div>
 
                 </div>
@@ -46,7 +48,9 @@
                     <div class="col">
                         <input type="number" id="std_deviation" maxlength="20" value="20"
                                onkeyup="calculateGaussian()" onchange="calculateGaussian()">
-                        <span><i class="fa-solid fa-arrow-left"></i>&nbsp;&nbsp;<i class="fa-solid fa-arrow-right"></i></span>
+                        <span onclick="calculateGaussian()"><i class="fa-solid fa-arrow-left" onclick="leftCalc()"></i>&nbsp;&nbsp;
+                            <i class="fa-solid fa-arrow-right" onclick="rightCalc()"></i>
+                        </span>
                     </div>
                 </div>
                 <hr>

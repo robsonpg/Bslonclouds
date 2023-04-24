@@ -434,8 +434,8 @@ function calculateCOM() {
         color_hist[i] = 0;
     }
 
-    let thsp_lines = THSP_matrix.length; // imagens - Ex: 0:64
-    let thsp_cols = THSP_matrix[0].length; // gauss - Ex: 0:200
+    let thsp_lines = THSP_matrix.length; // gausss - Ex: 0:200
+    let thsp_cols = THSP_matrix[0].length; // imagens - Ex: 0:64
     for (let thsp_idx_line = 0; thsp_idx_line < thsp_lines; thsp_idx_line++) {
         for (let thsp_idx_col = 0; thsp_idx_col < thsp_cols; thsp_idx_col++) {
             let color1 = THSP_matrix[thsp_idx_line][thsp_idx_col];
@@ -449,8 +449,8 @@ function calculateCOM() {
             color_hist[color1]++;
             color_hist[color2]++;
             context_cvs.fillStyle = "rgba(0, 0, 0, 1)";
-            context_cvs.fillRect(color1, 255, 1, -color_hist[color1]);
-            context_cvs.fillRect(color2, 255, 1, -color_hist[color2]);
+            context_cvs.fillRect(color1, 255, 1, (-color_hist[color1]*(32/thsp_cols)));
+            context_cvs.fillRect(color2, 255, 1, (-color_hist[color2]*(32/thsp_cols)));
         }
     }
     calculateAVD();
@@ -624,7 +624,33 @@ function toDataURL(url, callback) {
     xhr.send();
 }
 
+function upCalc() {
+    let input_val = document.getElementById("gau_num_points");
+    let value = input_val.value;
+    value++;
+    input_val.value = value;
+}
 
+function downCalc() {
+    let input_val = document.getElementById("gau_num_points");
+    let value = input_val.value;
+    value--;
+    input_val.value = value;
+}
+
+function rightCalc() {
+    let input_val = document.getElementById("std_deviation");
+    let value = input_val.value;
+    value++;
+    input_val.value = value;
+}
+
+function leftCalc() {
+    let input_val = document.getElementById("std_deviation");
+    let value = input_val.value;
+    value--;
+    input_val.value = value;
+}
 
 //########################################################################
 // Apaga todos os dados carregados localemte ff
