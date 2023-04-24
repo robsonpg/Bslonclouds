@@ -173,7 +173,7 @@ $lang = array_merge($lang,array(
     "STD_DEVIATION_INPUT" => "Enter the standard deviation to Gaussian:",
     "GRAPHIC_SPECKLE_TITLE" => "Speckle Mean",
     "HEATMAP_TITLE" => "Heatmap",
-    "DISPERSION_TITLE" => "Co-occurrence Histogram",
+    "DISPERSION_TITLE" => "Color Histogram",
     "CLICK_POINT_TITLE" => "Select a Point",
     "CLICK_POINT_MSG" => "Click a point in graphic image to process analysis.",
 ));

@@ -212,9 +212,10 @@ async function CalcShowGraphAVD() {
     }
     //console.log(avd_matrix[0].length);
     //console.log(avd_matrix.length);
-    let n_images = 19;
-    if (image_info_list.length < 19)
+    let n_images = 10;
+    if (image_info_list.length < n_images)
         n_images = image_info_list.length - 1;
+    progress.max = n_images.toString();
     for (let idx = 0; idx < n_images; idx++) {
         let cvs1 = document.getElementById("cvs" + idx);
         let cvs2 = document.getElementById("cvs" + (idx + 1));
@@ -234,7 +235,7 @@ async function CalcShowGraphAVD() {
     let red = 0;
     let green = 0;
     let blue = 0;
-    let multi_factor = 4;
+    let multi_factor = 3;
     for (let heigth_idx = 0; heigth_idx < image_info_list[0][IMAGE_HEIGTH]; heigth_idx++) {
         for (let width_idx = 0; width_idx < image_info_list[0][IMAGE_WIDTH]; width_idx++) {
             //avd_matrix[width_idx][heigth_idx] = avd_matrix[width_idx][heigth_idx]/(image_info_list.length - 2);
@@ -338,10 +339,25 @@ function pick(event) {
 
 //##############################################################################
 // Momento que o usuário clica em determinado ponto
+// Gabarito X:
+//     256.02
+// Y:
+//     140.42
+//     >> C = coom(THSP);
+//
+// >> Y = avd(C);
+//
+// >> Y
+// Y = 33.091
+//     >>
+
 function clickPick(event) {
     const bounding = canvas_avd.getBoundingClientRect();
     const x = event.clientX - bounding.left;
     const y = event.clientY - bounding.top;
+    // const x = 140;
+    // const y = 256;
+
     last_x = x;
     last_y = y;
     // Calcular THSP
@@ -358,15 +374,21 @@ function clickPick(event) {
     // Y(m,k) = DATA( POINTS(m,1) , POINTS(m,2) , k);
     // end
     // end
+    // Cria a matriz THSP
+    for (let i = 0; i < gpoints; i++) {
+        THSP_matrix[i] = [];
+        for (let y = 0; y < image_info_list.length; y++)
+            THSP_matrix[i][y] = 0;
+    }
+
     for (let idx = 0; idx < image_info_list.length; idx++) {
         let cvs_img = document.getElementById("cvs" + idx);
-        THSP_matrix[idx] = [];
         for (let gauss_idx = 0; gauss_idx < gpoints; gauss_idx++) {
             let xvalue = gaussian_points_x[gauss_idx];
             let yvalue = gaussian_points_y[gauss_idx];
             let pix_val = getImagePixel(x + Math.round(xvalue), y + Math.round(yvalue), cvs_img);
             // THSP : imagem x gauss index
-            THSP_matrix[idx][gauss_idx] = pix_val;
+            THSP_matrix[gauss_idx][idx] = pix_val;
         }
     }
     // Calcula o Absolute Value of the Differences (AVD)
@@ -374,6 +396,7 @@ function clickPick(event) {
 }
 
 let COM_matrix = [256];
+let color_hist = [256];
 //##############################################################################
 // Calcula o COM: Matriz de coocorrência ou matrizes de co-ocorrência em
 // nível de cinza.
@@ -406,20 +429,28 @@ function calculateCOM() {
     context_cvs.fillStyle = "rgba(255, 255, 255, 1)";
     context_cvs.fillRect(0, 0, canvas_hist.width, canvas_hist.height);
 
+    //let color_hist = [256];
+    for (let i = 0; i < 256; i++) {
+        color_hist[i] = 0;
+    }
+
     let thsp_lines = THSP_matrix.length; // imagens - Ex: 0:64
     let thsp_cols = THSP_matrix[0].length; // gauss - Ex: 0:200
     for (let thsp_idx_line = 0; thsp_idx_line < thsp_lines; thsp_idx_line++) {
         for (let thsp_idx_col = 0; thsp_idx_col < thsp_cols; thsp_idx_col++) {
             let color1 = THSP_matrix[thsp_idx_line][thsp_idx_col];
             let color2 = THSP_matrix[thsp_idx_line][thsp_idx_col+1];
-            if (color1 > 256) color1 = 256;
+            if (color1 > 255) color1 = 255;
             if (color1 < 1) color1 = 1;
-            if (color2 > 256) color2 = 256;
+            if (color2 > 255) color2 = 255;
             if (color2 < 1) color2 = 1;
             COM_matrix[color1][color2] = COM_matrix[color1][color2] + 1;
 
-            context_cvs.fillStyle = "rgba(" + color1 + "," + color1 + ", " + color1 + ", 1)";
-            context_cvs.fillRect(color1, color2, 1, 1);
+            color_hist[color1]++;
+            color_hist[color2]++;
+            context_cvs.fillStyle = "rgba(0, 0, 0, 1)";
+            context_cvs.fillRect(color1, 255, 1, -color_hist[color1]);
+            context_cvs.fillRect(color2, 255, 1, -color_hist[color2]);
         }
     }
     calculateAVD();

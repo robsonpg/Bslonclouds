@@ -70,7 +70,7 @@
                             <div class="col align-items-center">
                                 <div class="card mb-3">
                                     <h6 class="card-header"><?=lang("DISPERSION_TITLE"); ?></h6>
-                                    <canvas id="color_hist" style="border:1px solid #d3d3d3;" width="265px" height="256px"></canvas>
+                                    <canvas id="color_hist" style="border:1px solid #d3d3d3;" width="256px" height="256px"></canvas>
                                 </div>
                             </div>
                         </div>
