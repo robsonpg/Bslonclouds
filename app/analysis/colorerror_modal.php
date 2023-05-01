@@ -8,7 +8,7 @@
 
 ?>
 <!-- Properties Modal -->
-<div class="modal fade modal-lg" id="colorerror-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+<div class="modal fade modal-lg" id="colorerror-modal" style="z-index: 9999" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-dialog-centered">
             <div class="modal-header">

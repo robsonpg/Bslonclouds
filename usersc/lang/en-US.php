@@ -38,7 +38,7 @@ $lang = array_merge($lang,array(
     "IMAGE_SIZE" => " Image Size: ",
     "BTN_REMOVE_IMAGE" => "Remove from list",
     "BTN_EDIT_PROP" => "Edit Properties",
-    "IMAGES_PERMISSION" => "Images Permission",
+    "IMAGES_PERMISSION" => "Permission",
     "PERMISSION_PUBLIC" => "Public",
     "PUBLIC_MESSAGE" => "Anyone registered in platform can access",
     "PERMISSION_PRIVATE" => "Private",
@@ -79,7 +79,7 @@ $lang = array_merge($lang,array(
     "MODAL_PROCESSING_IMAGES_MSG" => "Processing research’s data request...",
     "MODAL_ABOUT_TITLE" => "About the project",
     "MODAL_ABOUT_MSG" => "<b>Author:</b> Roberto Alves Braga Jr<br><b>Developer:</b> RPG Software and Research<br>
-        <b>Contact us:</b> <a href='mailto:contact@bslonclouds.com'>contact@bslonclouds.com</a>",
+        <b>Contact us:</b> <a href='mailto:contact@bslonclouds.com' target='_blank'>contact@bslonclouds.com</a>",
     "RESEARCH_PUBLIC_ID" => "Published in DOI/URL (optional)",
     "CANNOT_CHANGE_ID" => "Unique ID <b>CANNOT</b> be changed",
     "MODEL_START_SEND_IMAGES" => "Starting processing the images. It can take some minutes.",
@@ -123,8 +123,8 @@ $lang = array_merge($lang,array(
     "RESEARCHES_TEXT" => "Researches’ data",
     "FOOTER_VISITORS" => "Total views",
     "FOOTER_PROJECT_MSG" => "Project supported by (beta version)",
-    "TUTORIALS_MSG" => "This area is under construction, and the Tools and the Tutorial expected to here will be bring 
-        from BSLTL project <a href='https://www.nongnu.org/bsltl/'>https://www.nongnu.org/bsltl/</a>",
+    "TUTORIALS_MSG" => "This area is under construction, and the Tools and the Tutorial expected to be here are still in 
+        the BSLTL project <a href='https://www.nongnu.org/bsltl/'>https://www.nongnu.org/bsltl/</a>",
     "SERVICES_MSG" => "This area is under construction.",
     "TERMS_MODAL_HEADER" => "Terms and conditions of use",
     "TERMS_AND_CONTIDIONS_TEXT" => "1 - The data I am setting as public can be used by anyone to do research.<br>
@@ -146,7 +146,7 @@ $lang = array_merge($lang,array(
         for your collaboration.",
     "SUBJECT_RECEIVE_RESEARCH" => "Research uploaded successfully",
     "MSG_DATA_ANALYSIS" => "You must be looged to access online data analysis.",
-    "ERROR_LOADING_IMAGES" => "You can analysis a maximum of 64 images!",
+    "ERROR_LOADING_IMAGES" => "You can analyse a maximum of 64 images!",
     "USER_MENU" => "User",
     "MENU_BSLDATA" => "BSL Data",
     "MENU_BLOG" => "Blog",
@@ -160,22 +160,29 @@ $lang = array_merge($lang,array(
     "MENU_DOWNLOAD_DATA" => "Download",
     "UPLOAD_TEXT" => "Upload your data",
     "MENU_UPLOAD_DATA" => "Upload",
-    "MSG_DATA_UPLOAD" => "You must be registered and logged in to upload your data",
+    "MSG_DATA_UPLOAD" => "You must be registered and logged-in to upload your data",
     "OFFLINE_TEXT" => "Offline Analisys",
     "SIZE_ERROR_MODAL_TITLE" => "Image size error",
     "SIZE_ERROR_MSG" => "Image with wrong size: ",
     "BTN_OK" => "Ok",
     "COLOR_ERROR_MODAL_TITLE" => "Color image not allowed",
-    "COLOR_ERROR_MSG" => "Only grayscales images allowed to analysis.<br>Try our tool to turn image to gray scale.",
-    "GRAPHAVD_MODAL_TITLE" => "Absolute Value of the Differences Method in Graphic Mode",
+    "COLOR_ERROR_MSG" => "Only grayscales images allowed to online analysis.<br>Try our tool to turn image to gray scale.",
+    "GRAPHAVD_MODAL_TITLE" => "Absolute Value of the Differences Method in Graphic Mode in Low-Resolution",
     "MSG_IMAGE_TITLE" => "Processing Graph AVD...",
     "NUMBER_POINTS_INPUT" => "Enter number of points to random Gaussian:",
     "STD_DEVIATION_INPUT" => "Enter the standard deviation to Gaussian:",
-    "GRAPHIC_SPECKLE_TITLE" => "Speckle Mean",
+    "GRAPHIC_SPECKLE_TITLE" => "Map of activity preview - Low-Resolution. 10 images used",
     "HEATMAP_TITLE" => "Heatmap",
     "DISPERSION_TITLE" => "Color Histogram",
     "CLICK_POINT_TITLE" => "Select a Point",
     "CLICK_POINT_MSG" => "Click a point in graphic image to process analysis.",
+    "AVD_TEXT_TITLE" => "AVD",
+    "AVD_TEXT_MSG" => " Numerical AVD value from ",
+    "AVD_TEXT_MSG_1" => " images.",
+    "AVD_TEXT_MSG_2" => "(AVD reference)",
+    "OFFLINE_MSG" => "This area is under construction, If you need our help with off-line analysis, contact us by 
+        <a href='mailto:contact@bslonclouds.com' target='_blank'>contact@bslonclouds.com</a>",
+
 ));
 
 

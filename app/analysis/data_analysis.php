@@ -32,6 +32,7 @@ require_once "clickpoint_modal.php";
     let filename_msg = "<?=lang("IMAGE_NAME_MSG"); ?>";
     let msg_select_images = "<?=lang("SELECT_IMAGES_BTN");?>";
     let msg_error_loding_images = "<?=lang("ERROR_LOADING_IMAGES");?>";
+    let msg_avd_images = "<?=lang("AVD_TEXT_MSG_1")?>";
 </script>
 
 <body>

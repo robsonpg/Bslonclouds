@@ -96,7 +96,7 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
                 <div class="row">
                     <div class="col-md-12">
                         <div role="alert" class="alert alert-warning">
-                            <h6><?=lang("TUTORIALS_MSG"); ?></h6>
+                            <h6><?=lang("OFFLINE_MSG"); ?></h6>
                         </div>
                     </div>
                 </div>

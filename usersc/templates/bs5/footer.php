@@ -15,11 +15,11 @@ require_once $abs_us_root . $us_url_root . 'app/database_layer.php';
               </div>
               <div class="col-4 text-center">
                   <h6><?=lang("FOOTER_PROJECT_MSG"); ?></h6>
-                  <a href="https://www.gov.br/cnpq/pt-br">
+                  <a href="https://www.gov.br/cnpq/pt-br" target="_blank">
                       <img src="/usersc/templates/bs4/assets/images/CNPq_v2017_rgb.png" height="30mm"/>
                   </a>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <a href="https://www.rpgsoftware.com.br">
+                  <a href="https://www.rpgsoftware.com.br" target="_blank">
                     <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
                   </a>
               </div>

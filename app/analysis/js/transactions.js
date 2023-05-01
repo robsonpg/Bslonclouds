@@ -27,6 +27,14 @@ function readURL(input, id) {
     let main_height = 0;
     image_info_list = [];
     images_properties = [];
+    let modalErrorSize = document.getElementById('sizeerror-modal')
+    modalErrorSize.addEventListener('hidden.bs.modal', function (event) {
+        clearAllData();
+    })
+    let modalColorSize = document.getElementById('colorerror-modal')
+    modalColorSize.addEventListener('hidden.bs.modal', function (event) {
+        clearAllData();
+    })
     let count = 0;
     if (input.files.length > 64) {
         let error_place = document.getElementById("error_messages_place");
@@ -61,7 +69,7 @@ function readURL(input, id) {
                 //#########################################################################
                 // Essa função abaixo é assincrona e será executada após a função principal
                 let img_cvs = document.getElementById('tumb' + i);
-                img_cvs.onload = function () {
+                img_cvs.onload = await function () {
                     // Determna o tamanho padrão
                     if (i === 0) {
                         main_width = img_cvs.naturalWidth;
@@ -129,6 +137,7 @@ function startImageAnalyse(){
             // Avisar que o conjunto de imagens tem tamanhos diferentes
             document.getElementById("image_name").innerText = image_info_list[idx][FILE_NAME];
             $('#sizeerror-modal').modal('show');
+
             return;
         }
     }
@@ -158,6 +167,7 @@ function startImageAnalyse(){
         if (flag_color) {
             document.getElementById("image_name_color").innerText = image_info_list[idx][FILE_NAME];
             $('#colorerror-modal').modal('show');
+            clearAllData();
             return;
         }
     }
@@ -495,7 +505,9 @@ function calculateAVD() {
     }
 
     let avd_number = document.getElementById("avd_number");
+    let img_number = document.getElementById("avd_images");
     avd_number.innerHTML = "<b>" + String(Number(Math.round(AVD * 100) / 100).toFixed(2)) + "</b>";
+    img_number.innerHTML = "[" + (image_info_list.length) + "]" + msg_avd_images;
     //console.log("AVD: " + AVD);
 
 }

@@ -81,9 +81,12 @@
                         <div class="row">
                             <div class="col">
                                 <div class="card mb-3">
-                                    <h4 class="card-header">AVD</h4>
+                                    <h4 class="card-header"><?=lang("AVD_TEXT_TITLE")?></h4>
                                     <div class="card-body">
-                                        <h5 class="card-title" id="avd_number">0.00</h5>
+                                        <h5 class="card-title"><a id="avd_number">0.00</a><a>&nbsp</a>
+                                            <?=lang("AVD_TEXT_MSG")?><a id="avd_images">[0]</a></h5>
+                                        <a href="https://www.nongnu.org/bsltl/documentation.html" target="_blank">
+                                            <?=lang("AVD_TEXT_MSG_2")?></a>
                                     </div>
                                 </div>
                             </div>
