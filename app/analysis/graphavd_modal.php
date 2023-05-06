@@ -8,7 +8,7 @@
 
 ?>
 <!-- Properties Modal -->
-<div class="modal fade modal-lg" id="graphavd-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+<div class="modal fade modal-xl" id="graphavd-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
      data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -38,7 +38,6 @@
                              <i class="fa-solid fa-arrow-down" onclick="downCalc()"></i>
                          </span>
                      </div>
-
                 </div>
                 <hr>
                 <div class="row">
@@ -60,16 +59,18 @@
                             <h6 class="card-header"><?=lang("GRAPHIC_SPECKLE_TITLE"); ?></h6>
                             <div>
                                 <canvas id="graphavd_cvs" style="border:1px solid #d3d3d3;"></canvas>
+                                <img src="../images/heatmap.png" style="position: absolute; width: 7%">
                             </div>
+
                         </div>
                     </div>
-                    <div class="col" >
+                    <!--div class="col-1" >
                         <div class="card mb-3">
                             <h6 class="card-header"><?=lang("HEATMAP_TITLE"); ?></h6>
                             <img src="../images/heatmap.png" style="width: 40%">
                         </div>
-                    </div>
-                    <div class="col" >
+                    </div-->
+                    <div class="col-4" >
                         <div class="row">
                             <div class="col align-items-center">
                                 <div class="card mb-3">
@@ -85,17 +86,18 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><a id="avd_number">0.00</a><a>&nbsp</a>
                                             <?=lang("AVD_TEXT_MSG")?><a id="avd_images">[0]</a></h5>
-                                        <a href="https://www.nongnu.org/bsltl/documentation.html" target="_blank">
+                                        <a href="http://repositorio.ufla.br/jspui/handle/1/12119" target="_blank">
                                             <?=lang("AVD_TEXT_MSG_2")?></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="ok_avd" class="btn btn-default" data-bs-dismiss="modal"><?=lang("BTN_OK")?></a>
+                <a id="ok_avd" class="btn btn-primary" data-bs-dismiss="modal" style="width: 30%"><?=lang("BTN_CLOSE")?></a>
             </div>
         </div>
     </div>

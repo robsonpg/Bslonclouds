@@ -179,7 +179,7 @@ $lang = array_merge($lang,array(
     "AVD_TEXT_TITLE" => "AVD",
     "AVD_TEXT_MSG" => " Numerical AVD value from ",
     "AVD_TEXT_MSG_1" => " images.",
-    "AVD_TEXT_MSG_2" => "(AVD reference)",
+    "AVD_TEXT_MSG_2" => "(AVD 1)",
     "OFFLINE_MSG" => "This area is under construction, If you need our help with off-line analysis, contact us by 
         <a href='mailto:contact@bslonclouds.com' target='_blank'>contact@bslonclouds.com</a>",
 
