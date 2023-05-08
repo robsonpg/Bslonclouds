@@ -81,11 +81,13 @@ function readURL(input, id) {
                     image_info_list[i][IMAGE_WIDTH] = main_width;
                     image_info_list[i][IMAGE_HEIGTH] = main_height;
                     count++;
-                    if (count === (input.files.length)) {
-                        btn_select.disabled = false;
-                        btn_select.value = msg_select_images;
-                        // Acabou de carregar as imagens, fazer anális
-                        startImageAnalyse();
+                    if (i === (input.files.length - 1)) {
+                        if (img_cvs.complete) {
+                            btn_select.disabled = false;
+                            btn_select.value = msg_select_images;
+                            // Acabou de carregar as imagens, fazer anális
+                            startImageAnalyse();
+                        }
                     }
                 };
             }
