@@ -16,6 +16,7 @@ require_once "sizeerror_modal.php";
 require_once "colorerror_modal.php";
 require_once "graphavd_modal.php";
 require_once "clickpoint_modal.php";
+require_once "imagesloaded_modal.php";
 ?>
 
 <style>
@@ -33,6 +34,8 @@ require_once "clickpoint_modal.php";
     let msg_select_images = "<?=lang("SELECT_IMAGES_BTN");?>";
     let msg_error_loding_images = "<?=lang("ERROR_LOADING_IMAGES");?>";
     let msg_avd_images = "<?=lang("AVD_TEXT_MSG_1")?>";
+    let msg_analysing = "<?=lang("BTN_ANALYSING");?>";
+    let msg_done = "<?=lang("MSG_DONE");?>";
 </script>
 
 <body>

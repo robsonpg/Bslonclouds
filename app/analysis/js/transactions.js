@@ -18,6 +18,14 @@ let IMAGE_WIDTH = 3;
 let IMAGE_HEIGTH = 4;
 
 
+function successCallback(result) {
+    console.log("It succeeded with " + result);
+}
+
+function failureCallback(error) {
+    console.log("It failed with " + error);
+}
+
 //#######################################################################
 // Função de leitura da imagem
 // Mas o projeto prevê muitas imagens
@@ -54,7 +62,8 @@ function readURL(input, id) {
         let canvas_image = null;
         let row_tumb = document.createElement("div");
         row_tumb.className = "row justify-content-start align-items-left border";
-        for (let i=0; i<input.files.length; i++) {
+        for (let i=0; i<input.files.length; i++)
+        {
             tumb_image = document.createElement("img");
             tumb_image.setAttribute("id", "tumb" + i);
             tumb_image.style.height = "20mm";
@@ -85,8 +94,12 @@ function readURL(input, id) {
                         if (img_cvs.complete) {
                             btn_select.disabled = false;
                             btn_select.value = msg_select_images;
+                            let btn_start = document.getElementById("btn_start_avd");
+                            btn_start.className = "btn btn-primary";
+                            //alert("Imagens carregadas");
                             // Acabou de carregar as imagens, fazer anális
-                            startImageAnalyse();
+                            //setTimeout(startImageAnalyse, 5000);
+                            $('#imagesloaded-modal').modal('show');
                         }
                     }
                 };
@@ -127,6 +140,9 @@ function copyImagesToCanvas() {
 //####################################################################################
 // Faz análise das imagens quanto ao tamanho de cada uma e seu profundidade de cores
 function startImageAnalyse(){
+    let btn_start = document.getElementById("btn_start_avd");
+    btn_start.className = "btn btn-primary disabled";
+    btn_start.innerText = msg_analysing;
     /// image_info_list contém os detalhes de cada imagem carregada
     // Vamos basear na resolução da primeira imagem para comparar as outras
     let img_width = image_info_list[0][IMAGE_WIDTH];
@@ -139,7 +155,6 @@ function startImageAnalyse(){
             // Avisar que o conjunto de imagens tem tamanhos diferentes
             document.getElementById("image_name").innerText = image_info_list[idx][FILE_NAME];
             $('#sizeerror-modal').modal('show');
-
             return;
         }
     }
@@ -288,6 +303,8 @@ async function CalcShowGraphAVD() {
 
     calculateGaussian();
     progress.value = image_info_list.length.toString();
+    let btn_start = document.getElementById("btn_start_avd");
+    btn_start.innerText = msg_done;
     $('#clickpoint-modal').modal('show');
 }
 

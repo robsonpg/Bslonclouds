@@ -14,6 +14,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalTitle"><?=lang("GRAPHAVD_MODAL_TITLE")?></h4>
+                <a id="btn_start_avd" class="btn btn-primary disabled" style="width: 30%" onclick="startImageAnalyse()">
+                    <?=lang("BTN_START_ANALISYS")?></a>
             </div>
             <div class="container bg-light">
                 <div class="row justify-content-between align-items-center">

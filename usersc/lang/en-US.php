@@ -182,6 +182,11 @@ $lang = array_merge($lang,array(
     "AVD_TEXT_MSG_2" => "(AVD 1)",
     "OFFLINE_MSG" => "This area is under construction, If you need our help with off-line analysis, contact us by 
         <a href='mailto:contact@bslonclouds.com' target='_blank'>contact@bslonclouds.com</a>",
+    "BTN_START_ANALISYS" => "Start Analisys",
+    "BTN_ANALYSING" => "Analyzing...",
+    "MSG_DONE" => "Done",
+    "LOADED_IMAGES_TITLE" => "Images loaded",
+    "LOADED_IMAGES_MSG" => "All imagens loaded to memory",
 
 ));
 
