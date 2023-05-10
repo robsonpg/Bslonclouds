@@ -187,6 +187,8 @@ $lang = array_merge($lang,array(
     "MSG_DONE" => "Done",
     "LOADED_IMAGES_TITLE" => "Images loaded",
     "LOADED_IMAGES_MSG" => "All imagens loaded to memory",
+    "ANALYSIS_MSG" => "You can select a maximum of 64 images and they must be in sequence for the analysis to occur correctly",
+    "ANALYSIS_WARNING" => "Bsl on Clouds will work in best performance if used in Chrome, Microsoft Edge, Opera or Brave Browser.",
 
 ));
 

@@ -56,7 +56,10 @@ require_once "imagesloaded_modal.php";
 <div class="row">
     <div class="col-8 align-self-center">
         <div role="alert" class="alert alert-info">
-            You can select a maximum of 64 images and they must be in sequence for the analysis to occur correctly
+            <?=lang("ANALYSIS_MSG");?>
+        </div>
+        <div role="alert" class="alert alert-warning">
+            <?=lang("ANALYSIS_WARNING");?>
         </div>
     </div>
     <div class="col-3 align-self-center">
