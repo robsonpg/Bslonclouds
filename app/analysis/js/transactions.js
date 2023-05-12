@@ -539,7 +539,7 @@ function calculateAVD() {
     let avd_number = document.getElementById("avd_number");
     let img_number = document.getElementById("avd_images");
     avd_number.innerHTML = "<b>" + String(Number(Math.round(AVD * 100) / 100).toFixed(2)) + "</b>";
-    img_number.innerHTML = "[" + (image_info_list.length) + "]" + msg_avd_images;
+    img_number.innerHTML = (image_info_list.length) + msg_avd_images;
     //console.log("AVD: " + AVD);
 
 }
