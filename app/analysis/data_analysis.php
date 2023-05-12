@@ -54,21 +54,27 @@ require_once "imagesloaded_modal.php";
     </div> <!-- col class title-->
 </div> <!-- row Title -->
 <div class="row">
-    <div class="col-8 align-self-center">
+    <div class="col-8">
         <div role="alert" class="alert alert-info">
             <?=lang("ANALYSIS_MSG");?>
         </div>
-        <div role="alert" class="alert alert-warning">
+        <div role="alert" class="alert alert-danger">
             <?=lang("ANALYSIS_WARNING");?>
         </div>
+        <div role="alert" class="alert alert-danger">
+            <?=lang("ANALYSIS_DANGER");?>
+        </div>
     </div>
-    <div class="col-3 align-self-center">
-        <input type="file" id="getfiles" style="display: none;" capture="camera"
+    <div class="col">
+        <input type="file" id="getfiles" style="display: none;"
                onchange="readURL(this,'mini_foto_new');" multiple accept=".bmp"/>
         <input type="button" id="btn_get_files" value="<?=lang("SELECT_IMAGES_BTN");?>"
                onclick="document.getElementById('getfiles').click();" class="btn btn-primary"/>
+        <a id="btn_start_avd" class="btn btn-primary disabled" onclick="CalcShowGraphAVD()">
+            <?=lang("BTN_START_ANALISYS")?></a>
     </div>
 </div>
+<br>
 <div id="error_messages_place"></div>
 <div class="row">
     <div class="container bg-light" id="tumbnails">

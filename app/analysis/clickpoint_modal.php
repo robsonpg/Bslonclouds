@@ -8,7 +8,7 @@
 
 ?>
 <!-- Properties Modal -->
-<div class="modal fade" id="clickpoint-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+<div class="modal fade" id="clickpoint-modal" tabindex="-1" style="z-index: 3500" role="dialog" aria-labelledby="modalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="ok_error" class="btn btn-default" data-bs-dismiss="modal"><?=lang("BTN_OK")?></a>
+                <a id="ok_error" class="btn btn-primary" data-bs-dismiss="modal"><?=lang("BTN_OK")?></a>
             </div>
         </div>
     </div>

@@ -171,9 +171,10 @@ $lang = array_merge($lang,array(
     "MSG_IMAGE_TITLE" => "Processing Graph AVD...",
     "NUMBER_POINTS_INPUT" => "Enter number of points to random Gaussian:",
     "STD_DEVIATION_INPUT" => "Enter the standard deviation to Gaussian:",
-    "GRAPHIC_SPECKLE_TITLE" => "Map of activity preview - Low-Resolution. 10 images used",
+    "GRAPHIC_SPECKLE_TITLE" => "Map of activity preview - Low-Resolution - ",
+    "GRAPHIC_SPECKLE_TITLE1" => " images used",
     "HEATMAP_TITLE" => "Heatmap",
-    "DISPERSION_TITLE" => "Color Histogram",
+    "DISPERSION_TITLE" => "Histogram",
     "CLICK_POINT_TITLE" => "Select a Point",
     "CLICK_POINT_MSG" => "Click a point in graphic image to process analysis.",
     "AVD_TEXT_TITLE" => "AVD",
@@ -182,14 +183,14 @@ $lang = array_merge($lang,array(
     "AVD_TEXT_MSG_2" => "(AVD 1)",
     "OFFLINE_MSG" => "This area is under construction, If you need our help with off-line analysis, contact us by 
         <a href='mailto:contact@bslonclouds.com' target='_blank'>contact@bslonclouds.com</a>",
-    "BTN_START_ANALISYS" => "Start Analisys",
+    "BTN_START_ANALISYS" => "Start Analysis",
     "BTN_ANALYSING" => "Analyzing...",
     "MSG_DONE" => "Done",
     "LOADED_IMAGES_TITLE" => "Images loaded",
     "LOADED_IMAGES_MSG" => "All imagens loaded to memory",
     "ANALYSIS_MSG" => "You can select a maximum of 64 images and they must be in sequence for the analysis to occur correctly",
     "ANALYSIS_WARNING" => "Bsl on Clouds will work in best performance if used in Chrome, Microsoft Edge, Opera or Brave Browser.",
-
+    "ANALYSIS_DANGER" => "Make sure all your images are in gray scale and the same size for correct algorithm execution."
 ));
 
 

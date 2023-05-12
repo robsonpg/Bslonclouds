@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="ok_error_color" class="btn btn-default" data-bs-dismiss="modal"><?=lang("BTN_OK")?></a>
+                <a id="ok_error_color" class="btn btn-primary" data-bs-dismiss="modal"><?=lang("BTN_OK")?></a>
             </div>
         </div>
     </div>

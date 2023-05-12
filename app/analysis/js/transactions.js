@@ -51,10 +51,16 @@ function readURL(input, id) {
             error_place.innerHTML = "";
         }, 5000);
     } else {
-        $('#graphavd-modal').modal('show');
+        //$('#graphavd-modal').modal('show');
         let btn_select = document.getElementById("btn_get_files");
         btn_select.value = msg_loading;
         btn_select.disabled = true;
+
+        let img_count = document.getElementById("image_number");
+        if (input.files.length > 10)
+            img_count.innerText = "10";
+        else
+            img_count.innerText = String(input.files.length);
 
         let tumb_div = document.querySelector("#tumbnails");
         tumb_div.innerHTML = "";
@@ -80,7 +86,8 @@ function readURL(input, id) {
                 let img_cvs = document.getElementById('tumb' + i);
                 img_cvs.onload = await function () {
                     // Determna o tamanho padrão
-                    if (i === 0) {
+                    if ((img_cvs.naturalWidth > 0) && (img_cvs.naturalHeight > 0)) {
+                    //if (i === 0) {
                         main_width = img_cvs.naturalWidth;
                         main_height = img_cvs.naturalHeight;
                         let cvs = document.getElementById("graphavd_cvs");
@@ -98,8 +105,12 @@ function readURL(input, id) {
                             btn_start.className = "btn btn-primary";
                             //alert("Imagens carregadas");
                             // Acabou de carregar as imagens, fazer anális
-                            //setTimeout(startImageAnalyse, 5000);
                             $('#imagesloaded-modal').modal('show');
+                            copyImagesToCanvas();
+                            // setTimeout(function(){
+                            //     $('#imagesloaded-modal').modal('show');
+                            //     startImageAnalyse();
+                            // }, 5000);
                         }
                     }
                 };
@@ -141,8 +152,8 @@ function copyImagesToCanvas() {
 // Faz análise das imagens quanto ao tamanho de cada uma e seu profundidade de cores
 function startImageAnalyse(){
     let btn_start = document.getElementById("btn_start_avd");
-    btn_start.className = "btn btn-primary disabled";
-    btn_start.innerText = msg_analysing;
+    btn_start.className = "btn btn-primary";
+    //btn_start.innerText = msg_analysing;
     /// image_info_list contém os detalhes de cada imagem carregada
     // Vamos basear na resolução da primeira imagem para comparar as outras
     let img_width = image_info_list[0][IMAGE_WIDTH];
@@ -191,7 +202,8 @@ function startImageAnalyse(){
     // Copia imagens para os elementos de canvas buffers
     copyImagesToCanvas();
     // Calcula o GraphAVD
-    CalcShowGraphAVD();
+
+    //CalcShowGraphAVD();
 }
 
 //############################################################################
@@ -214,6 +226,7 @@ let backup_canvas = null;
 // LEMBRAR QUE IMAGEM NA MEMÓRIA ESTÁ EM 4 BYTES
 //#######################################################################################
 async function CalcShowGraphAVD() {
+    $('#graphavd-modal').modal('show');
     // Criando a imagem baseada na matrix AVD
     let canvas = document.getElementById('graphavd_cvs');
     let progress = document.getElementById("image_process");
@@ -303,8 +316,8 @@ async function CalcShowGraphAVD() {
 
     calculateGaussian();
     progress.value = image_info_list.length.toString();
-    let btn_start = document.getElementById("btn_start_avd");
-    btn_start.innerText = msg_done;
+    // let btn_start = document.getElementById("btn_start_avd");
+    // btn_start.innerText = msg_done;
     $('#clickpoint-modal').modal('show');
 }
 

@@ -8,14 +8,12 @@
 
 ?>
 <!-- Properties Modal -->
-<div class="modal fade modal-xl" id="graphavd-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+<div class="modal fade modal-xl" id="graphavd-modal" tabindex="-1" style="z-index: 1000" role="dialog" aria-labelledby="modalLabel"
      data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalTitle"><?=lang("GRAPHAVD_MODAL_TITLE")?></h4>
-                <a id="btn_start_avd" class="btn btn-primary disabled" style="width: 30%" onclick="startImageAnalyse()">
-                    <?=lang("BTN_START_ANALISYS")?></a>
             </div>
             <div class="container bg-light">
                 <div class="row justify-content-between align-items-center">
@@ -58,7 +56,9 @@
                 <div class="row">
                     <div class="col d-flex justify-content-center">
                         <div class="card mb-3">
-                            <h6 class="card-header"><?=lang("GRAPHIC_SPECKLE_TITLE"); ?></h6>
+                            <h6 class="card-header"><?=lang("GRAPHIC_SPECKLE_TITLE");?><a id="image_number"></a>
+                                <?=lang("GRAPHIC_SPECKLE_TITLE1");?>
+                            </h6>
                             <div>
                                 <canvas id="graphavd_cvs" style="border:1px solid #d3d3d3;"></canvas>
                                 <img src="../images/heatmap.png" style="position: absolute; width: 7%">
