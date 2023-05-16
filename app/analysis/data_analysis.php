@@ -17,6 +17,7 @@ require_once "colorerror_modal.php";
 require_once "graphavd_modal.php";
 require_once "clickpoint_modal.php";
 require_once "imagesloaded_modal.php";
+require_once "cacheerror_modal.php";
 ?>
 
 <style>

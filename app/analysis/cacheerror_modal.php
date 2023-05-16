@@ -8,15 +8,15 @@
 
 ?>
 <!-- Properties Modal -->
-<div class="modal fade" id="clickpoint-modal" tabindex="-1" style="z-index: 3500" role="dialog" aria-labelledby="modalLabel">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="background-color: #cdf2fb">
+<div class="modal fade" id="cacheerror-modal" style="z-index: 9999" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-dialog-centered">
             <div class="modal-header">
-                <h4 class="modal-title" id="modalTitle"><?=lang("CLICK_POINT_TITLE")?></h4>
+                <h4 class="modal-title" id="modalTitle"><?=lang("CACHE_ERROR_MODAL_TITLE")?></h4>
             </div>
-            <div class="container" style="background-color: #cdf2fb">
+            <div class="container bg-light">
                 <div class="row justify-content-between align-items-center border">
-                    <div class="col"><?=lang("CLICK_POINT_MSG"); ?></div>
+                    <div class="col"><?=lang("CACHE_ERROR_MSG"); ?></div>
                 </div>
             </div>
             <div class="modal-footer">

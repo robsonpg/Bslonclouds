@@ -105,8 +105,7 @@ function readURL(input, id) {
                             btn_start.className = "btn btn-primary";
                             //alert("Imagens carregadas");
                             // Acabou de carregar as imagens, fazer anális
-                            $('#imagesloaded-modal').modal('show');
-                            copyImagesToCanvas();
+                            startImageAnalyse();
                             // setTimeout(function(){
                             //     $('#imagesloaded-modal').modal('show');
                             //     startImageAnalyse();
@@ -139,66 +138,94 @@ function readURL(input, id) {
 //#########################################################################################
 // Copia as imagens para canvas relativos para ocorrer a manipulação
 function copyImagesToCanvas() {
-    for (let idx = 0; idx < image_info_list.length; idx++) {
-        let img_cvs = document.getElementById('tumb' + idx);
-        let cvs_cvs = document.getElementById('cvs' + idx);
-        cvs_cvs.setAttribute("height", image_info_list[idx][IMAGE_HEIGTH]);
-        cvs_cvs.setAttribute("width", image_info_list[idx][IMAGE_WIDTH]);
-        cvs_cvs.getContext('2d', {willReadFrequently: true}).drawImage(img_cvs, 0, 0, image_info_list[idx][IMAGE_WIDTH], image_info_list[idx][IMAGE_HEIGTH]);
+    try {
+        let main_width = 0;
+        let main_height = 0;
+        for (let idx = 0; idx < image_info_list.length; idx++) {
+            let img_cvs = document.getElementById('tumb' + idx);
+            let cvs_cvs = document.getElementById('cvs' + idx);
+            cvs_cvs.setAttribute("height", image_info_list[idx][IMAGE_HEIGTH]);
+            cvs_cvs.setAttribute("width", image_info_list[idx][IMAGE_WIDTH]);
+            cvs_cvs.getContext('2d', {willReadFrequently: true}).drawImage(img_cvs, 0, 0, image_info_list[idx][IMAGE_WIDTH], image_info_list[idx][IMAGE_HEIGTH]);
+            // Find width and height of the images
+            if (img_cvs.naturalWidth > main_width) main_width = img_cvs.naturalWidth;
+            if (img_cvs.naturalHeight > main_height) main_height = img_cvs.naturalHeight;
+        }
+        let flg_error = false;
+        let image_name = "";
+        for (let idx = 0; idx < image_info_list.length; idx++) {
+            let img_cvs = document.getElementById('tumb' + idx);
+            if ((img_cvs.naturalWidth !== main_width) || (img_cvs.naturalHeight !== main_height)) {
+                flg_error = true;
+                image_name = image_info_list[idx][FILE_NAME];
+            }
+        }
+        if (flg_error) {
+            document.getElementById("image_name").innerText = image_name;
+            $('#sizeerror-modal').modal('show');
+        } else {
+            $('#imagesloaded-modal').modal('show');
+        }
+    } catch (error) {
+        $('#cacheerror-modal').modal('show');
     }
 }
 
 //####################################################################################
 // Faz análise das imagens quanto ao tamanho de cada uma e seu profundidade de cores
 function startImageAnalyse(){
-    let btn_start = document.getElementById("btn_start_avd");
-    btn_start.className = "btn btn-primary";
+    // let btn_start = document.getElementById("btn_start_avd");
+    // btn_start.className = "btn btn-primary";
     //btn_start.innerText = msg_analysing;
     /// image_info_list contém os detalhes de cada imagem carregada
     // Vamos basear na resolução da primeira imagem para comparar as outras
-    let img_width = image_info_list[0][IMAGE_WIDTH];
-    let img_heigth = image_info_list[0][IMAGE_HEIGTH];
+    // let img_width = image_info_list[0][IMAGE_WIDTH];
+    // let img_heigth = image_info_list[0][IMAGE_HEIGTH];
     // Analisando as dimensões
-    for (let idx = 0; idx < image_info_list.length; idx++) {
-        //alert("Fix: " + img_width + " Img: " + image_info_list[idx][IMAGE_WIDTH]);
-        if ((image_info_list[idx][IMAGE_WIDTH] !== img_width) ||
-            (image_info_list[idx][IMAGE_HEIGTH] !== img_heigth)) {
-            // Avisar que o conjunto de imagens tem tamanhos diferentes
-            document.getElementById("image_name").innerText = image_info_list[idx][FILE_NAME];
-            $('#sizeerror-modal').modal('show');
-            return;
-        }
-    }
+    // for (let idx = 0; idx < image_info_list.length; idx++) {
+    //     //alert("Fix: " + img_width + " Img: " + image_info_list[idx][IMAGE_WIDTH]);
+    //     if ((image_info_list[idx][IMAGE_WIDTH] !== img_width) ||
+    //         (image_info_list[idx][IMAGE_HEIGTH] !== img_heigth)) {
+    //         // Avisar que o conjunto de imagens tem tamanhos diferentes
+    //         document.getElementById("image_name").innerText = image_info_list[idx][FILE_NAME];
+    //         $('#sizeerror-modal').modal('show');
+    //         return;
+    //     }
+    // }
     // Analisando as cores
-    for (let idx = 0; idx < image_info_list.length; idx++) {
-        let flag_color = false;
-        let img = document.getElementById("tumb" + idx);
-        let canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        //alert("w: " + canvas.width + "h: " + canvas.height)
-        canvas.getContext('2d', {willReadFrequently: true}).drawImage(img, 0, 0, img.width, img.height);
-        let imageData = canvas.getContext('2d', {willReadFrequently: true}).getImageData(0,0, img.width, img.height);
-        for (let color_idx = 0; color_idx < imageData.data.length; color_idx += 4) {
-            // cor 1
-            let color1 = imageData.data[color_idx];
-            let color2 = imageData.data[color_idx + 1];
-            let color3 = imageData.data[color_idx + 2];
-            //alert("c1: " + color1 + " c2: " + color2 + " c3: " + color3)
-            // Se for diferente
-            if ((color1 !== color2) || (color1 !== color3) || (color2 !== color3)) {
-                // Não é grayscale
-                flag_color = true;
-                //alert("Não");
+    try {
+        for (let idx = 0; idx < image_info_list.length; idx++) {
+            let flag_color = false;
+            let img = document.getElementById("tumb" + idx);
+            let canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            //alert("w: " + canvas.width + "h: " + canvas.height)
+            canvas.getContext('2d', {willReadFrequently: true}).drawImage(img, 0, 0, img.width, img.height);
+            let imageData = canvas.getContext('2d', {willReadFrequently: true}).getImageData(0, 0, img.width, img.height);
+            for (let color_idx = 0; color_idx < imageData.data.length; color_idx += 4) {
+                // cor 1
+                let color1 = imageData.data[color_idx];
+                let color2 = imageData.data[color_idx + 1];
+                let color3 = imageData.data[color_idx + 2];
+                //alert("c1: " + color1 + " c2: " + color2 + " c3: " + color3)
+                // Se for diferente
+                if ((color1 !== color2) || (color1 !== color3) || (color2 !== color3)) {
+                    // Não é grayscale
+                    flag_color = true;
+                    //alert("Não");
+                }
+            }
+            if (flag_color) {
+                document.getElementById("image_name_color").innerText = image_info_list[idx][FILE_NAME];
+                $('#colorerror-modal').modal('show');
+                return;
             }
         }
-        if (flag_color) {
-            document.getElementById("image_name_color").innerText = image_info_list[idx][FILE_NAME];
-            $('#colorerror-modal').modal('show');
-            clearAllData();
-            return;
-        }
+    } catch (error) {
+        $('#cacheerror-modal').modal('show');
     }
+
     // Copia imagens para os elementos de canvas buffers
     copyImagesToCanvas();
     // Calcula o GraphAVD
@@ -652,6 +679,10 @@ $(document).ready(function() {
     $('#ok_avd').click( function () {
         clearAllData();
     });
+    $('#ok_error_color').click( function () {
+        clearAllData();
+    });
+
 })
 
 function toDataURL(url, callback) {
