@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="cancel" class="btn btn-default" data-dismiss="modal"><?=lang("BTN_HIDE")?></a>
+                <a id="cancel" class="btn btn-default" data-bs-dismiss="modal"><?=lang("BTN_HIDE")?></a>
             </div>
         </div>
     </div>

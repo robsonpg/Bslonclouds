@@ -82,8 +82,8 @@ $all_researches = getAllResearchesID();
 
         <div class="row">
             <div class="col-3 align-self-center">
-                <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-toggle='modal'
-                       id="btn_prop_modal" data-target='#properties-modal' data-backdrop="static"
+                <input type="button" value="<?=lang("IMAGE_PROPERTIES");?>" data-bs-toggle='modal'
+                       id="btn_prop_modal" data-bs-target='#properties-modal' data-backdrop="static"
                        class="btn btn-primary"/>
             </div>
             <div class="col align-self-center">
@@ -109,8 +109,8 @@ $all_researches = getAllResearchesID();
         </div>
         <div class="row">
             <div class="col-3 align-self-center">
-                <input type="button" value="<?=lang("SEND_IMAGES");?>" data-toggle='modal'
-                       id="btn_send_modal" data-target='#send-images-modal' data-backdrop="static"
+                <input type="button" value="<?=lang("SEND_IMAGES");?>" data-bs-toggle='modal'
+                       id="btn_send_modal" data-bs-target='#send-images-modal' data-bs-backdrop="static"
                        class="btn btn-primary" onclick="sendImagesToServer()" disabled/>
             </div>
             <div class="col align-self-center">
@@ -122,7 +122,7 @@ $all_researches = getAllResearchesID();
         </div>
         <div class="row">
             <div class="col-3 align-self-center">
-                <input type="button" value="<?=lang("CLEAR_ALL");?>" data-toggle='modal'
+                <input type="button" value="<?=lang("CLEAR_ALL");?>" data-bs-toggle='modal'
                        id="btn_clear"  class="btn btn-warning" onclick="clearAllData()" />
             </div>
             <div class="col align-self-center">

@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalPropTitle"><?=lang("MODAL_PROPERTIES_TITLE")?></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="container bg-light">
                 <div class="row justify-content-between align-items-center border">
@@ -155,8 +155,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a id="sample_data_confirm" class="btn btn-primary" style="color: whitesmoke" data-dismiss="modal"><?=lang("BTN_ACCEPT")?></a>
-                <a id="cancel" class="btn btn-default" data-dismiss="modal"><?=lang("BTN_CANCEL")?></a>
+                <a id="sample_data_confirm" class="btn btn-primary" data-bs-dismiss="modal"><?=lang("BTN_ACCEPT")?></a>
+                <a id="cancel" class="btn btn-default" data-bs-dismiss="modal"><?=lang("BTN_CANCEL")?></a>
             </div>
         </div>
     </div>
