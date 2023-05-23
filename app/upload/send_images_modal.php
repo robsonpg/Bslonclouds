@@ -13,7 +13,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalLabel"><?=lang("MODAL_SEND_IMAGES_TITLE")?></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <button type="button" class="close" data_bs-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span></button>
             </div>
             <div class="container bg-light">
