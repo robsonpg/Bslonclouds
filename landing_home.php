@@ -184,6 +184,22 @@ if ($user->isLoggedIn()) {
                         </div>
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-11 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-sm-11">
+                                    <div class="d-flex align-items-center align-self-start">
+                                        <h6><a target=”_blank” href="https://riojournal.com/article/114736/"><?=lang("ARTICLE1");?></a></h6>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3><i class="fa fa-newspaper-o float-right"></i></h3>
+                                    </div>
+                                </div>
+                                <h6 class="text-muted font-weight-normal"><?=lang("PUBLISHED_ARTICLES");?></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <hr>
                 <div class="row">

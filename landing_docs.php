@@ -100,6 +100,27 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-11 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="d-flex align-items-center align-self-start">
+                                            <h6><a target=”_blank” href="https://riojournal.com/article/114736/"><?=lang("ARTICLE1");?></a></h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="icon icon-box-danger">
+                                            <h3><i class="fa fa-newspaper-o float-right"></i></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6 class="text-muted font-weight-normal"><?=lang("PUBLISHED_ARTICLES");?></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div> <!-- tab pane -->
         </div> <!-- tab content -->
     </div> <!-- col class -->

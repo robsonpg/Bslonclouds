@@ -192,7 +192,9 @@ $lang = array_merge($lang,array(
     "ANALYSIS_WARNING" => "Bsl on Clouds will work in best performance if used in Chrome, Microsoft Edge, Opera or Brave Browser.",
     "ANALYSIS_DANGER" => "Make sure all your images are in gray scale and the same size for correct algorithm execution.",
     "CACHE_ERROR_MODAL_TITLE" => "Cache Error",
-    "CACHE_ERROR_MSG" => "Error while loading images to browser cache. Please try again."
+    "CACHE_ERROR_MSG" => "Error while loading images to browser cache. Please try again.",
+    "PUBLISHED_ARTICLES" => "Publihed Articles",
+    "ARTICLE1" => "Biospeckle Laser On Clouds, a digital gateway aiming at collaborative research improvement"
 ));
 
 
