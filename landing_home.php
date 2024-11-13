@@ -96,6 +96,27 @@ if ($user->isLoggedIn()) {
         text-align:center;
         box-shadow: 2px 2px 3px #999;
     }
+    .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            animation: scroll-left 15s linear infinite;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll-left 15s linear infinite;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
 
 </style>
 
@@ -186,19 +207,31 @@ if ($user->isLoggedIn()) {
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-sm-11 grid-margin stretch-card">
+                    <div class="col-sm-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <div class="col-sm-11">
-                                    <div class="d-flex align-items-center align-self-start">
-                                        <h6><a target=”_blank” href="https://riojournal.com/article/114736/"><?=lang("ARTICLE1");?></a></h6>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3><i class="fa fa-newspaper-o float-right"></i></h3>
-                                    </div>
-                                </div>
                                 <h6 class="text-muted font-weight-normal"><?=lang("PUBLISHED_ARTICLES");?></h6>
+                                <div class="d-flex align-items-center align-self-start">
+                                    <h6><a target=”_blank” href="https://riojournal.com/article/114736/"><?=lang("ARTICLE1");?></a></h6>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3><i class="fa fa-newspaper-o float-right"></i></h3>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-3">
+                        <div class="card alert alert-info">
+                            <div class="card-body">
+                                <marquee><h4>Join for free and explore cool datasets!</h4></marquee>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="col-3">
+                        <div class="card alert alert-info">
+                            <div class="card-body">
+                                <marquee><h4>Get started with free online analysis | Sign up now!</h4></marquee>
+                            </div>
+                        </div>
+                    </div>                    
                 </div>
 
                 <hr>
