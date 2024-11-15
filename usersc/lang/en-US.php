@@ -127,12 +127,10 @@ $lang = array_merge($lang,array(
         the BSLTL project <a href='https://www.nongnu.org/bsltl/'>https://www.nongnu.org/bsltl/</a>",
     "SERVICES_MSG" => "This area is under construction.",
     "TERMS_MODAL_HEADER" => "Terms and conditions of use",
-    "TERMS_AND_CONTIDIONS_TEXT" => "1 - The data I am setting as public can be used by anyone to do research.<br>
-            2 - The data I am setting as private will be used only by the owners of the BSL on Clouds.<br>
-            3 - The data I am up-loading are from my own, or by the authorship of a group that I am acting on behalf.<br>
-            4 - The data I will download will be referred as indicated by the author(s) in the description at BSL on Clouds.<br><br>
-            The owner of the uploaded data keeps the copyright of the data and the use of the data can be done without any permission if it was classified as <b>PUBLIC</b>.<br>
-            The user must cite the owner properly.",
+    "TERMS_AND_CONTIDIONS_TEXT" => "The data I am uploading will be ruled by the licence Creative Commons Attribution CC BY 4.0 (which permits unrestricted use, distribution, and reproduction in any medium, provided the original author(s) and source are credited).
+        The information and dataset I am uploading are solely of the author(s) without any responsibility of this site. The author(s) assume all responsibility about the property information as well about the veracity of data and its description.
+        The author uploading and downloading dataset(s) on behalf of other authors will be responsible for the terms and conditions here presented.
+        I will respect the Licence Creative Commons CC BY 4.0 when downloading the dataset(s) from BSL on Clouds.",
     "TEXT_MUST_LOGIN" => "You must be registered and logged in to access researches data by Research's Data Catalog menu item",
     "MENU_HOME" => "Home",
     "OBSERVATION_TEXTAREA" => "Enter research observations here...",
