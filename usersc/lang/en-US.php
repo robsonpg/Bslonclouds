@@ -121,7 +121,7 @@ $lang = array_merge($lang,array(
     "TUTORIALS_TEXT" => "Tutorial",
     "SERVICES_TEXT" => "Data Analysis",
     "RESEARCHES_TEXT" => "Researches’ data",
-    "FOOTER_VISITORS" => "Total views",
+    "FOOTER_VISITORS" => "Visitors: ",
     "FOOTER_PROJECT_MSG" => "Project supported by (beta version)",
     "TUTORIALS_MSG" => "This area is under construction, and the Tools and the Tutorial expected to be here are still in 
         the BSLTL project <a href='https://www.nongnu.org/bsltl/'>https://www.nongnu.org/bsltl/</a>",
@@ -131,7 +131,7 @@ $lang = array_merge($lang,array(
         The information and dataset I am uploading are solely of the author(s) without any responsibility of this site. The author(s) assume all responsibility about the property information as well about the veracity of data and its description.
         The author uploading and downloading dataset(s) on behalf of other authors will be responsible for the terms and conditions here presented.
         I will respect the Licence Creative Commons CC BY 4.0 when downloading the dataset(s) from BSL on Clouds.",
-    "TEXT_MUST_LOGIN" => "You must be registered and logged in to access researches data by Research's Data Catalog menu item",
+    "TEXT_MUST_LOGIN" => "You must be signed up and logged in to access researches data by Research's Data Catalog menu item",
     "MENU_HOME" => "Home",
     "OBSERVATION_TEXTAREA" => "Enter research observations here...",
     "OBSERVATIONS_MSG" => "Observations",
@@ -143,7 +143,7 @@ $lang = array_merge($lang,array(
     "TKS_MSG_3" => " was uploaded successfully. Please, wait for a while to see the data in the Catalog. We thank you 
         for your collaboration.",
     "SUBJECT_RECEIVE_RESEARCH" => "Research uploaded successfully",
-    "MSG_DATA_ANALYSIS" => "You must be looged to access online data analysis.",
+    "MSG_DATA_ANALYSIS" => "You must be looged in to access online data analysis.",
     "ERROR_LOADING_IMAGES" => "You can analyse a maximum of 64 images!",
     "USER_MENU" => "User",
     "MENU_BSLDATA" => "BSL Data",
@@ -158,7 +158,7 @@ $lang = array_merge($lang,array(
     "MENU_DOWNLOAD_DATA" => "Download",
     "UPLOAD_TEXT" => "Upload your data",
     "MENU_UPLOAD_DATA" => "Upload",
-    "MSG_DATA_UPLOAD" => "You must be registered and logged-in to upload your data",
+    "MSG_DATA_UPLOAD" => "You must be signed up and logged in to upload your data",
     "OFFLINE_TEXT" => "Offline Analisys",
     "SIZE_ERROR_MODAL_TITLE" => "Image size error",
     "SIZE_ERROR_MSG" => "Image with wrong size: ",
@@ -192,7 +192,8 @@ $lang = array_merge($lang,array(
     "CACHE_ERROR_MODAL_TITLE" => "Cache Error",
     "CACHE_ERROR_MSG" => "Error while loading images to browser cache. Please try again.",
     "PUBLISHED_ARTICLES" => "Publihed Articles",
-    "ARTICLE1" => "Biospeckle Laser On Clouds, a digital gateway aiming at collaborative research improvement"
+    "ARTICLE1" => "Biospeckle Laser On Clouds, a digital gateway aiming at collaborative research improvement",
+    "SIGNUP_TEXT" => "Sign in! (Join for free)"
 ));
 
 

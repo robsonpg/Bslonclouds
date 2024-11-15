@@ -23,10 +23,13 @@ require_once $abs_us_root . $us_url_root . 'app/database_layer.php';
                     <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
                   </a>
               </div>
-              <div class="col-3 text-center">
-                <span class="badge bg-primary">
-                <?=lang("FOOTER_VISITORS");?> <?=getTotalVisitors(); ?>
-                </span>
+                <div class="col-3 text-center">
+                    <div class="alert alert-dismissible alert-info">
+                    <h6><?=lang("FOOTER_VISITORS");?> <?=getTotalVisitors(); ?></h6>
+                </div>
+                <div style="text-align:center;">
+                      <a href="https://www.sitelock.com/verify.php?site=bslonclouds.com"><img src="https://shield.sitelock.com/shield/bslonclouds.com" alt="SiteLock"></a>
+                    </div>
               </div>
           </div>
           <div class="row">
