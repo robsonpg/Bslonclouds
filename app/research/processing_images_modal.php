@@ -25,6 +25,16 @@
                     </div>
                 </div>
             </div>
+            <div class="container">
+                <div class="row">
+                    <div class="alert alert-success">
+                        <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+                        <img alt="Creative Commons Attribution 4.0 International License" 
+                            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"/></a>
+                        <a><?=lang("CC_TEXT1")?><a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><?=lang("CC_TEXT2")?></a>.
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
                 <a id="cancel" class="btn btn-default" data-bs-dismiss="modal"><?=lang("BTN_HIDE")?></a>
             </div>

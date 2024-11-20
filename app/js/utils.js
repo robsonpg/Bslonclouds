@@ -275,6 +275,11 @@ $(document).ready(function() {
                 btn_send.disabled = false;
             }
         }
+        // Esconde o modal
+        $('#properties-modal').modal('hide');
+        // Desabilita o botão de entrada de probpriedades
+        let btn_properties = document.getElementById("btn_prop_modal");
+        btn_properties.disabled = true;
         //alert("confirm");
     });
 })

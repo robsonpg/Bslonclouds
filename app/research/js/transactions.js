@@ -161,13 +161,15 @@ function editResearch(uid_text) {
     sample_wavelength.value = selected_research["bsl_sample_data_laser_wavelength"];
 
     checked = selected_research["bsl_sample_data_permission"];
-    if (checked.toString() === PERMISSION_PUBLIC) {
-        document.getElementById("sample_permission1").checked = true;
-    } else {
-        if (checked.toString() === PERMISSION_PRIVATE) {
-            document.getElementById("sample_permission2").checked = true;
-        }
-    }
+    // Sempre público agora
+    document.getElementById("sample_permission1").checked = true;
+    // if (checked.toString() === PERMISSION_PUBLIC) {
+    //     document.getElementById("sample_permission1").checked = true;
+    // } else {
+    //     if (checked.toString() === PERMISSION_PRIVATE) {
+    //         document.getElementById("sample_permission2").checked = true;
+    //     }
+    // }
 
     let sample_pub = document.getElementById("research_public_id");
     sample_pub.value = selected_research["bsl_sample_data_published_DOI_URL"];

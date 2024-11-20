@@ -175,9 +175,9 @@ $(document).ready(function() {
         sample_other.value = "";
         sample_other.disabled = true;
 
-        let permission = document.getElementsByName("sample_permission");
-        for(i = 0; i<permission.length; i++)
-            permission[i].checked = false;
+        // let permission = document.getElementsByName("sample_permission");
+        // for(i = 0; i<permission.length; i++)
+        //     permission[i].checked = false;
         let sample_pub = document.getElementById("research_public_id");
         sample_pub.value = "";
 
@@ -255,13 +255,15 @@ function showPropertiesModal() {
     sample_wavelength.value = images_properties[6];
 
     checked = images_properties[7];
-    if (checked === PERMISSION_PUBLIC) {
-        document.getElementById("sample_permission1").checked = true;
-    } else {
-        if (checked === PERMISSION_PRIVATE) {
-            document.getElementById("sample_permission2").checked = true;
-        }
-    }
+    // Sempre permitir publico
+    document.getElementById("sample_permission1").checked = true;
+    // if (checked === PERMISSION_PUBLIC) {
+    //     document.getElementById("sample_permission1").checked = true;
+    // } else {
+    //     if (checked === PERMISSION_PRIVATE) {
+    //         document.getElementById("sample_permission2").checked = true;
+    //     }
+    // }
 
     let sample_pub = document.getElementById("research_public_id");
     sample_pub.value = images_properties[8];

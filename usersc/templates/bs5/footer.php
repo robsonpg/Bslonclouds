@@ -22,6 +22,10 @@ require_once $abs_us_root . $us_url_root . 'app/database_layer.php';
                   <a href="https://www.rpgsoftware.com.br" target="_blank">
                     <img src="/usersc/templates/bs4/assets/images/RPG_logo1.png" height="30mm" />
                   </a>
+                  <br><br><br>
+                  <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+                      <img alt="Creative Commons Attribution 4.0 International License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                  </a><br/><?=lang("CC_TEXT1")?><a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><?=lang("CC_TEXT2")?></a>.
               </div>
                 <div class="col-3 text-center">
                     <div class="alert alert-dismissible alert-info">
