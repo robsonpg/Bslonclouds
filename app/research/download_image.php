@@ -150,6 +150,9 @@ try {
 //fclose($myfile);
 
 echo $zip->status;
+//###############################################################
+// Registra o download da pesquisa
+registerDownload($research_id, $user->data()->id);
 
 // #################################################################
 // O código javascript abaixo é para download individual das imagens

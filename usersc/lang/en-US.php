@@ -79,7 +79,7 @@ $lang = array_merge($lang,array(
     "MODAL_PROCESSING_IMAGES_MSG" => "Processing research’s data request...",
     "MODAL_ABOUT_TITLE" => "About the project",
     "MODAL_ABOUT_MSG" => "<b>Authors:</b> Roberto Alves Braga Jr, Robson Pierangeli Godinho<br><b>Developer:</b> RPG Software and Research<br>
-        <b>Contact us:</b> <a href='mailto:contact@bslonclouds.com' target='_blank'>contact@bslonclouds.com</a>",
+        <a href='mailto:contact@bslonclouds.com'><b>Contact us!</b></a>",
     "RESEARCH_PUBLIC_ID" => "Published in DOI/URL (optional)",
     "CANNOT_CHANGE_ID" => "Unique ID <b>CANNOT</b> be changed",
     "MODEL_START_SEND_IMAGES" => "Starting processing the images. It can take some minutes.",

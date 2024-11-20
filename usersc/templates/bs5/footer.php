@@ -27,13 +27,16 @@ require_once $abs_us_root . $us_url_root . 'app/database_layer.php';
                       <img alt="Creative Commons Attribution 4.0 International License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
                   </a><br/><?=lang("CC_TEXT1")?><a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><?=lang("CC_TEXT2")?></a>.
               </div>
-                <div class="col-3 text-center">
-                    <div class="alert alert-dismissible alert-info">
+                <div class="col-4 text-center">
+                    <div class="alert alert-info">
                     <h6><?=lang("FOOTER_VISITORS");?> <?=getTotalVisitors(); ?></h6>
                 </div>
-                <div style="text-align:center;">
-                      <a href="https://www.sitelock.com/verify.php?site=bslonclouds.com"><img src="https://shield.sitelock.com/shield/bslonclouds.com" alt="SiteLock"></a>
+                <div class="col-4">
+                    <div style="text-align:center;">
+                        <a href="https://www.sitelock.com/verify.php?site=bslonclouds.com">
+                            <img src="https://shield.sitelock.com/shield/bslonclouds.com" alt="SiteLock" width="150%"></a>
                     </div>
+                </div>
               </div>
           </div>
           <div class="row">

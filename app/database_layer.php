@@ -385,6 +385,20 @@ function getTotalVisitors() {
     $res = $db->query($sql);
     return $res->results()[0]->count;
 }
+
+function registerDownload($research_id, $user_id)
+{
+    $db = DB::getInstance();
+    $sql = "INSERT INTO bsl_downloads
+            (bsl_downloads_user_id,
+            bsl_downloads_research_id,
+            bsl_downloads_timestamp)
+            VALUES
+            ($user_id,$research_id,now());";
+    echo $sql;
+    $res = $db->query($sql);
+    return $res;
+}
 //##############################################################################
 // Tabelas no banco de dados
 //##############################################################################
@@ -441,6 +455,15 @@ function getTotalVisitors() {
 //    ALTER TABLE `bslonc02_bslonc`.`bsl_sample_data`
 //    ADD COLUMN `bsl_sample_data_amount_of_images` INT NOT NULL AFTER `bsl_sample_data_insert_timestamp`,
 //    CHANGE COLUMN `bsl_sample_data_insert_timestamp` `bsl_sample_data_insert_timestamp` DATETIME NOT NULL ;
+// 
+// SQL para criar a tabela de downloads
+// CREATE TABLE `bslonc02_bslonc`.`bsl_downloads` (
+// `bsl_downloads_id` INT NOT NULL AUTO_INCREMENT,
+//   `bsl_downloads_user_id` INT NOT NULL,
+//   `bsl_downloads_research_id` INT NOT NULL,
+//   `bsl_downloads_timestamp` DATETIME NOT NULL,
+//   PRIMARY KEY (`bsl_downloads_id`),
+//   UNIQUE INDEX `bsl_downloads_id_UNIQUE` (`bsl_downloads_id` ASC) VISIBLE);
 
 
 
