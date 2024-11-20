@@ -1,29 +1,31 @@
 <?php
-function parseMenuLabel($string){
-	global $lang,$user,$settings;
+function parseMenuLabel($string) {
+    global $lang, $user, $settings;
 
-	if(substr($string, 0, 2) != "{{"){
-		$newString =  $string;
-	}elseif($string == "{{LOGGED_IN_USERNAME}}"){
-			if(isset($user) && $user->isLoggedIn()){
+    // Check if the string contains "{{LOGGED_IN_USERNAME}}"
+    if (strpos($string, "{{LOGGED_IN_USERNAME}}") !== false) {
+        // Replace "{{LOGGED_IN_USERNAME}}" with the appropriate value
+        if (isset($user) && $user->isLoggedIn()) {
+            $newString = echouser($user->data()->id, $settings->echouser, true);
 
-			$newString = echouser($user->data()->id,$settings->echouser,true);
+        } else {
+            $newString = "";
+        }
+		$newString = str_replace("{{LOGGED_IN_USERNAME}}", $newString, $string);
+    } else {
+        // No "{{LOGGED_IN_USERNAME}}" found, so keep the original string
+        $newString = $string;
+    }
 
-		}else{
-			$newString = "";
-		}
-		return $newString;
-	}else{
-		$newString = str_replace(['{', '}'], '', $string);
-		if(array_key_exists($newString,$lang)){
-			return $lang[$newString];
-		}else{
-			return $newString;
-		}
-
-	}
-	return $newString;
+    // Perform additional checks and replacements
+    $newString = str_replace(['{', '}'], '', $newString);
+    if (array_key_exists($newString, $lang)) {
+        return $lang[$newString];
+    } else {
+        return $newString;
+    }
 }
+
 
 function _assert( $expr, $msg){ if( !$expr ) print "<br/><b>ASSERTION FAIL: </b>{$msg}<br>";  }
 
@@ -73,18 +75,18 @@ function prepareDropdownString($menuItem,$user_id){
 }
 
 function prepareItemString($menuItem,$user_id){
+  global $db;
+
 	$itemString='';
 	if($menuItem['label']=='{{hr}}') { $itemString = "<li class='divider'></li>"; }
 	elseif($menuItem['link']=='users/verify_resend.php' || $menuItem['link']=='usersc/verify_resend.php') {
-		$db = DB::getInstance();
-		$query = $db->query("SELECT * FROM email");
-		$results = $query->first();
+
+		$results = $db->query("SELECT * FROM email")->first();
 		$email_act=$results->email_act;
 		if($email_act==1) {
 			$itemString.='<li><a href="'.US_URL_ROOT.$menuItem['link'].'"><span class="'.$menuItem['icon_class'].'"></span> '.$menuItem['label'].'</a></li>'; }
 	}
 	elseif($menuItem['link']=='users/join.php' || $menuItem['link']=='usersc/join.php') {
-		$db = DB::getInstance();
 		$query = $db->query("SELECT * FROM settings");
 		$results = $query->first();
 		$registration=$results->registration;
@@ -192,12 +194,17 @@ if(!function_exists("migrateUSMainMenu")){
     if($o->logged_in == 0 && ($newPerms == "[]" || $newPerms == "[0]")){
       $newPerms = "[0]";
     }
-    if($o->logged_in == 1 && $newPerms == "[0]"){
-      $newPerms = "[1]";
-    }
-    $db->update("us_menu_items",$id,["permissions"=>$newPerms]);
-    // dump("Perm Update " . $db->errorString());
-  }
+	if($o->logged_in == 1 && $newPerms == "[0]"){
+		$newPerms = "[1]";
+	  }
+	  if($newPerms == "" || $newPerms == "[]"){
+		  $newPerms = "[0]";
+	  }
+
+	  $db->update("us_menu_items",$id,["permissions"=>$newPerms]);
+	  // dump("Perm Update " . $db->errorString());
+	}
+
 
 
   $new = $db->query("SELECT * FROM us_menu_items WHERE menu = 1")->results();

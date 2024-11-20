@@ -10,8 +10,8 @@ foreach ($count as $c) {
 }
 
 $codeUsage = '<?php
-  // replace ID with the ID from the table below for the menu you want to display.
-  $menu = new Menu(ID);
+  // replace ID with the ID (or menu name string) from the table below for the menu you want to display. Set id to 0 for no menu.
+  $menu = new Menu(ID); 
   $menu->display();
 
   // some features can be overridden between instantiation and displaying the menu.
@@ -21,8 +21,12 @@ $codeUsage = '<?php
       "branding_html"=>"<h1>Foo</h1>",  //override branding (logo) HTML
       "show_branding"=>true, //show/hide branding html on menu
       "show_active"=>true, //highlight active menu item
+      "theme"=>"dark", //override the theme (light, dark)
   ];
   $menu->display($override);
+
+  //to force a specific menu on a page, just after init.php use 
+  $menu_override = 2; //where 2 is the menu ID
 ?>
 ';
 

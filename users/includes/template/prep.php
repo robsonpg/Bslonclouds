@@ -14,7 +14,7 @@ require_once  $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->tem
   if(!$ignoreTemplateFix){
   if(file_exists($abs_us_root . $us_url_root . 'usersc/templates/bs5/header.php')){
     $db->update('settings',1,['template'=>'bs5']);
-    $settings->template = "bsf";
+    $settings->template = "bs5";
     require_once $abs_us_root . $us_url_root . 'usersc/templates/bs5/header.php';
     err("Template missing. Falling back to Standard Template");
   }else{
@@ -45,9 +45,10 @@ if(!isset($hide_top_navigation) || $hide_top_navigation != true){
 }
 
 require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/container_open.php'; //custom template container
-
+if($currentPage != "login.php"){
 if(file_exists( $abs_us_root . $us_url_root . 'usersc/includes/system_messages_header.php' ) ){
   require_once $abs_us_root . $us_url_root . 'usersc/includes/system_messages_header.php';
 }else{
   require_once $abs_us_root . $us_url_root . 'users/includes/system_messages_header.php';
+}
 }

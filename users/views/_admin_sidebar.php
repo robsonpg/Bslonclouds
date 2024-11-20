@@ -44,6 +44,9 @@
 </style>
 <?php
 if ($dashboard_sidebar_menu == true && $hide_top_navigation == true) {
+  if(file_exists($abs_us_root . $us_url_root . "usersc/views/_admin_sidebar_fallback_menu.php")){
+    require_once $abs_us_root . $us_url_root . "usersc/views/_admin_sidebar_fallback_menu.php";
+  }else{
 ?>
   <div class="col-12 sidebar-fallback w-100 border-bottom bg-light mb-4">
     <nav>
@@ -53,13 +56,22 @@ if ($dashboard_sidebar_menu == true && $hide_top_navigation == true) {
       </ul>
     </nav>
   </div>
-<?php } ?>
+<?php } 
+}
+?>
 
 
 <div class="col-xs-3 col-xl-2 ps-0 sidebar-wrapper">
   <div class="d-flex flex-column p-2 text-bg-dark sidebar">
     <?php
     // $menu_override is the menu you specified in usersc/includes/dashboard_overrides.php
+
+    //There is a new sidebar_menu_id that allows you to set a different menu in the sidebar than the top in dashboard_overrides. If it's not there, you can add it.
+
+    if(isset($sidebar_menu_id)){
+      $menu_override = $sidebar_menu_id;
+    }
+    
     $menu = new Menu($menu_override);
     $override = [
       "layout" => "accordion",  //horizontal, accordion

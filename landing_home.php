@@ -219,16 +219,16 @@ if ($user->isLoggedIn()) {
                         </div>
                     </div>
                     <div class="col-3">
-                        <div class="card alert alert-info">
+                        <div class="card alert alert-warning border">
                             <div class="card-body">
                                 <marquee><h4>Join for free and explore cool datasets!</h4></marquee>
                             </div>
                         </div>
                     </div>                    
                     <div class="col-3">
-                        <div class="card alert alert-info">
+                        <div class="card alert alert-warning border">
                             <div class="card-body">
-                                <marquee><h4>Get started with free online analysis | Sign up now!</h4></marquee>
+                                <marquee><h4>Get started with free online analysis | <a href="usersc/join.php?">Sign up now!</a></h4></marquee>
                             </div>
                         </div>
                     </div>                    

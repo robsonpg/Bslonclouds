@@ -1,6 +1,8 @@
 <?php
 $hooks = getMyHooks(['page' => 'admin.php?view=user']);
 includeHook($hooks, 'pre');
+$pw_settings = $db->query("SELECT * FROM us_password_strength")->first();
+
 $validation = new Validate();
 //PHP Goes Here!
 $email = $db->query('SELECT email_act FROM email')->first();
@@ -9,14 +11,13 @@ $errors = [];
 $successes = [];
 $userId = (int) Input::get('id');
 
-//Check if selected user exists
-if (!userIdExists($userId)) {
+$userdetailsQ = $db->query("SELECT * FROM users WHERE id =  ?", [$userId]);
+$userdetailsC = $userdetailsQ->count();
+if ($userdetailsC < 1) {
   usError("That user does not exist");
   Redirect::to($us_url_root . 'users/admin.php?view=users');
-  die();
 }
-
-$userdetails = fetchUserDetails(null, null, $userId); //Fetch user details
+$userdetails = $userdetailsQ->first();
 
 //Forms posted
 if (!empty($_POST)) {
@@ -26,7 +27,39 @@ if (!empty($_POST)) {
     include $abs_us_root . $us_url_root . 'usersc/scripts/token_error.php';
   } else {
     includeHook($hooks, 'post');
+    $db->update('users', $userdetails->id, ['modified' => date("Y-m-d")]);
+    $email_verified = Input::get('email_verified');
+    if ($email_verified == 1) {
+      $db->update('users', $userdetails->id, ['email_verified' => 1]);
+      usSuccess("Email Verified");
+    }
+    if (!empty($_POST['addTag'])) {
+      $add = Input::get('addTag');
 
+      foreach ($add as $a) {
+        $tagQ = $db->query("SELECT * FROM plg_tags WHERE id = ?", [$a]);
+        $tagC = $tagQ->count();
+        if ($tagC < 1) {
+          continue;
+        }
+        $tag = $tagQ->first();
+        $db->query("DELETE FROM plg_tags_matches WHERE user_id = ? AND tag_id = ?", [$userdetails->id, $a]);
+        $db->insert("plg_tags_matches", [
+          'tag_id' => $a,
+          'tag_name' => $tag->tag,
+          'user_id' => $userdetails->id,
+        ]);
+      }
+      usSuccess("Tags Updated");
+    }
+
+    if (!empty($_POST['removeTag'])) {
+      $remove = Input::get('removeTag');
+      foreach ($remove as $r) {
+        $db->query("DELETE FROM plg_tags_matches WHERE id = ?", [$r]);
+      }
+      usSuccess("Tags Removed");
+    }
 
     if (!empty($_POST['delete'])) {
       if ($userdetails->id == $user->data()->id || in_array($userdetails->id, $master_account)) {
@@ -101,11 +134,11 @@ if (!empty($_POST)) {
     }
 
     //Update display name
-    $displayname = Input::get('unx');
+    $displayname = Input::get('username');
     if ($userdetails->username != $displayname) {
       $fields = ['username' => $displayname];
       $validation->check($_POST, [
-        'unx' => [
+        'username' => [
           'display' => 'Username',
           'required' => true,
           'unique_update' => 'users,' . $userId,
@@ -139,8 +172,8 @@ if (!empty($_POST)) {
         logger($user->data()->id, 'User Manager', "Updated first name for $userdetails->fname from $userdetails->fname to $fname.");
       } else {
 ?><?php if (!$validation->errors() == '') {
-                        display_errors($validation->errors());
-                      } ?>
+          display_errors($validation->errors());
+        } ?>
 <?php
       }
     }
@@ -187,7 +220,7 @@ if (!empty($_POST)) {
 
       if (!$validation->errors()) {
         //process
-        $new_password_hash = password_hash(Input::get('pwx', true), PASSWORD_BCRYPT, ['cost' => 12]);
+        $new_password_hash = password_hash(Input::get('pwx', true), PASSWORD_BCRYPT, ['cost' => 13]);
         $user->update(['password' => $new_password_hash], $userId);
         $successes[] = 'Password updated.';
         logger($user->data()->id, 'User Manager', "Updated password for $userdetails->fname.");
@@ -214,7 +247,7 @@ if (!empty($_POST)) {
       }
     }
     $vericode_expiry = date('Y-m-d H:i:s', strtotime("+$settings->reset_vericode_expiry minutes", strtotime(date('Y-m-d H:i:s'))));
-    $vericode = randomstring(15);
+    $vericode = uniqid() . randomstring(15);
     $db->update('users', $userdetails->id, ['vericode' => $vericode, 'vericode_expiry' => $vericode_expiry]);
     if (isset($_POST['sendPwReset'])) {
       $params = [
@@ -234,11 +267,11 @@ if (!empty($_POST)) {
     }
 
     //Update email
-    $email = Input::get('emx');
+    $email = Input::get('email');
     if ($userdetails->email != $email) {
       $fields = ['email' => $email];
       $validation->check($_POST, [
-        'emx' => [
+        'email' => [
           'display' => 'Email',
           'required' => true,
           'valid_email' => true,
@@ -247,11 +280,13 @@ if (!empty($_POST)) {
           'max' => 75,
         ],
       ]);
+
       if ($validation->passed()) {
         $db->update('users', $userId, $fields);
         $successes[] = 'Email Updated';
         logger($user->data()->id, 'User Manager', "Updated email for $userdetails->fname from $userdetails->email to $email.");
       } else {
+
 ?>
   <?php if (!$validation->errors() == '') {
           display_errors($validation->errors());
@@ -364,7 +399,27 @@ if (!empty($_POST)) {
       require_once $abs_us_root . $us_url_root . 'usersc/includes/admin_user_system_settings_post.php';
     }
 
-    $userdetails = fetchUserDetails(null, null, $userId);
+    $userdetailsQ = $db->query("SELECT * FROM users WHERE id =  ?", [$userId]);
+    $userdetailsC = $userdetailsQ->count();
+    if ($userdetailsC < 1) {
+      usError("That user does not exist");
+      Redirect::to($us_url_root . 'users/admin.php?view=users');
+    }
+    $userdetails = $userdetailsQ->first();
+  }
+  if (!$validation->errors() == '') {
+
+    foreach ($validation->errors()  as $key => $e) {
+      $found = false;
+      foreach ($errors as $k => $v) {
+        if ($v == $e) {
+          $found = true;
+        }
+      }
+      if (!$found) {
+        $errors[] = $e;
+      }
+    }
   }
 
   if ($errors == [] && Input::get('return') != '') {
@@ -404,14 +459,16 @@ if (in_array($user->data()->id, $master_account) && !in_array($userId, $master_a
 if ($user->data()->cloak_allowed != 1) {
   $cloakId = $user->data()->id;
   $rsn = "Your account has cloaking disabled. Enable it <a href='?admin.php&view=user&id=$cloakId'>here</a>";
+} elseif ($userdetails->permissions == 0) {
+  $rsn = "This user is blocked from the site. Cloaking is disabled.";
+} elseif ($userdetails->email_verified == 0) {
+  $rsn = "This user has not verified their email. Cloaking is disabled.";
 }
-?>
 
-<?= resultBlock($errors, $successes); ?>
-<?php if (!$validation->errors() == '') {
+if (!$validation->errors() == '') {
   display_errors($validation->errors());
-} ?>
-<?php includeHook($hooks, 'body'); ?>
+}
+includeHook($hooks, 'body'); ?>
 
 <div class="row">
   <div class="col-2 col-sm-1">
@@ -423,7 +480,7 @@ if ($user->data()->cloak_allowed != 1) {
       <span id="fname"><?= $userdetails->fname; ?></span>
       <span id="lname"><?= $userdetails->lname; ?></span>
       <span id="slash"> - </span>
-      <span id="username"><?= $userdetails->username; ?></span>
+      <span id="ud-username"><?= $userdetails->username; ?></span>
     </h3>
 
     <p><label>User ID: <?= $userdetails->id; ?>
@@ -491,7 +548,8 @@ if ($user->data()->cloak_allowed != 1) {
 
           <input type="submit" name="cloak" id="cloak" class="btn <?= $cloakClass ?> col-12" value="Cloak Into User" <?= $disabled ?>>
         </form>
-      </div>
+
+     </div>
 
       <div class="col-12 col-sm-6 col-md-3 mt-2">
         <form class="" action="" method="post" onsubmit="return confirm('If you continue, the user will be forced to change their password on the next login.');">
@@ -515,12 +573,20 @@ if ($user->data()->cloak_allowed != 1) {
     <div class="col-12 col-sm-6">
       <div class="form-group" id="username-group">
         <label>Username:</label>
-        <input class='form-control' type='search' name='unx' value='<?= $userdetails->username; ?>' autocomplete="off" />
+        <input class='form-control' type='search' name='username' value='<?= $userdetails->username; ?>' autocomplete="off" />
       </div>
 
       <div class="form-group" id="email-group">
         <label>Email:</label>
-        <input class='form-control' type='search' name='emx' value='<?= $userdetails->email; ?>' autocomplete="off" />
+        <input class='form-control' type='search' name='email' value='<?= $userdetails->email; ?>' autocomplete="off" />
+
+      <?php if($userdetails->email_verified == 0){ ?>
+        <div class="alert alert-warning mt-2">
+          <strong>Warning!</strong> This user has not verified their email address.<br>
+          <input type="checkbox" name="email_verified" value="1"> Mark as verified
+        </div>
+      <?php 
+      } ?>
       </div>
 
       <div class="form-group" id="fname-group">
@@ -536,6 +602,45 @@ if ($user->data()->cloak_allowed != 1) {
       <div class="form-group">
         <label><input type="checkbox" name="sendPwReset" id="sendPwReset" /> Send Reset Email? Will expire in <?= $settings->reset_vericode_expiry; ?> minutes.</label><br>
       </div>
+      <?php
+      $tagsQ = $db->query("SELECT * FROM plg_tags ORDER BY tag");
+      $tagsC = $tagsQ->count();
+      if ($tagsC > 0) {
+        $tags = $tagsQ->results();
+        $mytags = $db->query("SELECT * FROM plg_tags_matches WHERE user_id = ?", [$userdetails->id])->results();
+        $usedtags = [];
+      ?>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <div class="panel-heading"><strong>Current Tags</strong></div>
+            <div class="panel-body">
+              <?php foreach ($mytags as $t) {
+                $usedtags[] = $t->tag_id;
+              ?>
+                <label class="normal">
+                  <input type="checkbox" name="removeTag[]" value="<?= $t->id ?>"> <?= $t->tag_name; ?>
+                </label><br>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="panel-heading"><strong>Add Tags</strong></div>
+            <div class="panel-body">
+              <?php foreach ($tags as $t) {
+                if (in_array($t->id, $usedtags)) {
+                  continue;
+                }
+              ?>
+                <label class="normal">
+                  <input type="checkbox" name="addTag[]" value="<?= $t->id ?>"> <?= $t->tag; ?>
+                </label><br>
+              <?php } ?>
+            </div>
+          </div>
+        </div>
+        <br>
+
+      <?php } ?>
 
       <?php includeHook($hooks, 'form'); ?>
       <div class="row">
@@ -577,15 +682,50 @@ if ($user->data()->cloak_allowed != 1) {
       </div>
     </div>
     <div class="col-12 col-sm-6">
-      <div class="form-group">
-        <label>New Password (<?= $settings->min_pw; ?> char min, <?= $settings->max_pw; ?> max.)</label>
-        <input class='form-control' type='password' autocomplete="off" name='pwx' <?php if ((!in_array($user->data()->id, $master_account) && in_array($userId, $master_account) || !in_array($user->data()->id, $master_account) && $userdetails->protected == 1) && $userId != $user->data()->id) { ?>disabled<?php } ?> />
+      <div class="row">
+        <?php if ($pw_settings->meter_active == 1) {
+          $secondCol = "col-6";
+        } else {
+          $secondCol = "col-12";
+        } ?>
+
+        <div class="<?= $secondCol ?>">
+
+          <div class="form-group">
+            <label>New Password</label>
+            <input id="password" class="form-control" type="password" autocomplete="off" name="pwx" <?php if ((!in_array($user->data()->id, $master_account) && in_array($userId, $master_account)) ||
+                                                                                                      (!in_array($user->data()->id, $master_account) && $userdetails->protected == 1) &&
+                                                                                                      $userId != $user->data()->id
+                                                                                                    ) {
+                                                                                                      echo "disabled";
+                                                                                                    } ?> />
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input id="confirm" class="form-control col-12" type="password" autocomplete="off" name="confirm" <?php if ((!in_array($user->data()->id, $master_account) && in_array($userId, $master_account)) ||
+                                                                                                                (!in_array($user->data()->id, $master_account) && $userdetails->protected == 1) &&
+                                                                                                                $userId != $user->data()->id
+                                                                                                              ) {
+                                                                                                                echo "disabled";
+                                                                                                              } ?> />
+          </div>
+
+
+        </div>
+        <?php if ($pw_settings->meter_active == 1) { ?>
+          <div class="col-6">
+            <?php
+            if (file_exists($abs_us_root . $us_url_root . 'usersc/includes/password_meter.php')) {
+              include($abs_us_root . $us_url_root . 'usersc/includes/password_meter.php');
+            } else {
+              include($abs_us_root . $us_url_root . 'users/includes/password_meter.php');
+            }
+            ?>
+            <small class="text-muted">These rules are not enforced</small>
+          </div>
+        <?php } ?>
       </div>
 
-      <div class="form-group">
-        <label>Confirm Password</label>
-        <input class='form-control' type='password' autocomplete="off" name='confirm' <?php if ((!in_array($user->data()->id, $master_account) && in_array($userId, $master_account) || !in_array($user->data()->id, $master_account) && $userdetails->protected == 1) && $userId != $user->data()->id) { ?>disabled<?php } ?> />
-      </div>
 
       <div class="form-group">
         <label> Is allowed to cloak<a class="nounderline" data-toggle="tooltip" title="Warning: This is an extremely powerful permission and should not be given lightly!!!"><i class="fa fa-question-circle offset-circle font-info"></i></a></label>
@@ -594,12 +734,12 @@ if ($user->data()->cloak_allowed != 1) {
                               echo "selected='selected'";
                             } else {
                               if (!in_array($user->data()->id, $master_account)) {  ?>disabled<?php }
-                                                                                            } ?>>Yes</option>
+                                                                                          } ?>>Yes</option>
           <option value="0" <?php if ($userdetails->cloak_allowed == 0) {
                               echo "selected='selected'";
                             } else {
                               if (!in_array($user->data()->id, $master_account)) {  ?>disabled<?php }
-                                                                                            } ?>>No</option>
+                                                                                          } ?>>No</option>
         </select>
       </div>
 
@@ -646,11 +786,9 @@ if ($user->data()->cloak_allowed != 1) {
     </div>
   </div>
 </form>
-<?php includeHook($hooks, 'bottom'); ?>
-
-
-
-<?php if ($protectedprof == 1) { ?>
+<?php
+includeHook($hooks, 'bottom');
+if ($protectedprof == 1) { ?>
   <script>
     $('#adminUser').find('input:enabled, select:enabled, textarea:enabled').attr('disabled', 'disabled');
   </script>

@@ -27,7 +27,7 @@ if (!empty($_POST)) {
     $email = Input::get('email');
     $username = Input::get('username');
     $password = Input::get('password');
-    $vericode = randomstring(15);
+    $vericode = uniqid().randomstring(15);
 
     $form_valid = false; // assume the worst
 
@@ -91,7 +91,7 @@ if (!empty($_POST)) {
           'fname' => $fname,
           'lname' => $lname,
           'email' => $email,
-          'password' => password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]),
+          'password' => password_hash($password, PASSWORD_BCRYPT, ['cost' => 13]),
           'permissions' => 1,
           'join_date' => $join_date,
           'email_verified' => 1,
@@ -197,7 +197,6 @@ foreach ($validation->errors() as $error) {
 }
 
 ?>
-
 <div class="row">
   <div class="col-12 mb-2">
     <h2>Manage Users</h2>
@@ -295,8 +294,12 @@ foreach ($validation->errors() as $error) {
                   <td><?= $v1->perms ?></td>
                 <?php } ?>
                 <td>
+                  <?php if($v1->permissions == 0){ ?>
+                      <i class="fa fa-fw fa-lock text-danger" data-bs-toggle="tooltip" title="The users's account locked (banned)"></i>
+                  <?php }else{ ?>
+                      <i class="fa fa-fw fa-unlock" data-bs-toggle="tooltip" title="The users's account unlocked (active)"></i>
+                  <?php } ?>
 
-                  <i class="fa fa-fw fa-<?php if ($v1->permissions == 1) { ?>un<?php } ?>lock" data-bs-toggle="tooltip" title="Is users's account locked (banned)"></i>
                   <?php
                   if ($act == 1 && $v1->email_verified == 1) { ?>
                     <i class='fa fa-envelope' data-bs-toggle="tooltip" title="User email is verified"></i>
@@ -430,7 +433,7 @@ foreach ($validation->errors() as $error) {
     </div>
   </div>
 </div>
-<?php if($uCount < $maxUsers && $settings->uman_search == 0){ ?>
+<?php if ($uCount > $maxUsers && $settings->uman_search == 0) { ?>
   Since you have over 2000 users, you may want to consider setting this page to User Manager Search Engine Mode in <a href="<?=$us_url_root?>users/admin?view=general">General Settings</a>.
 <?php }?>
 <script type="text/javascript" src="<?= $us_url_root ?>users/js/pagination/datatables.min.js"></script>
