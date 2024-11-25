@@ -195,7 +195,8 @@ $lang = array_merge($lang,array(
     "ARTICLE1" => "Biospeckle Laser On Clouds, a digital gateway aiming at collaborative research improvement",
     "SIGNUP_TEXT" => "Sign in! (Join for free)",
     "CC_TEXT1" => "This work is licensed under a ",
-    "CC_TEXT2" => "Creative Commons Attribution 4.0 International License"
+    "CC_TEXT2" => "Creative Commons Attribution 4.0 International License",
+    "DASHBOARD" => "Dashboard"
 ));
 
 

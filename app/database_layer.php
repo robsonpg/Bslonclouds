@@ -399,6 +399,27 @@ function registerDownload($research_id, $user_id)
     $res = $db->query($sql);
     return $res;
 }
+
+function getDownloads()
+{
+    $db = DB::getInstance();
+    // Número de Downloads e Identidade dos Autores
+    $downloadsQuery = "SELECT COUNT(*) as total_downloads, users.username 
+                   FROM bsl_downloads 
+                   JOIN users ON bsl_downloads.bsl_downloads_user_id = users.id 
+                   GROUP BY users.username";
+    $downloadsResult = $db->query($downloadsQuery);
+   return $downloadsResult->results();
+}
+
+function getUsers() {
+    $db = DB::getInstance();
+    // Lista de Usuários
+    $usersQuery = "SELECT * FROM users";
+    $query = $db->query($usersQuery);
+
+    return $query->results();
+}
 //##############################################################################
 // Tabelas no banco de dados
 //##############################################################################

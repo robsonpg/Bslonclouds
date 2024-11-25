@@ -685,6 +685,13 @@ CREATE TABLE `us_user_sessions` (
   `UserSessionEnded_Time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `bslonc02_bslonc`.`bsl_downloads` (
+ `bsl_downloads_id` INT NOT NULL AUTO_INCREMENT,
+   `bsl_downloads_user_id` INT NOT NULL,
+   `bsl_downloads_research_id` INT NOT NULL,
+   `bsl_downloads_timestamp` DATETIME NOT NULL,
+   PRIMARY KEY (`bsl_downloads_id`),
+   UNIQUE INDEX `bsl_downloads_id_UNIQUE` (`bsl_downloads_id` ASC));
 --
 -- Índices para tabelas despejadas
 --
