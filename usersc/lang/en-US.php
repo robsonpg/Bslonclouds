@@ -196,7 +196,8 @@ $lang = array_merge($lang,array(
     "SIGNUP_TEXT" => "Sign up! (Join for free)",
     "CC_TEXT1" => "This work is licensed under a ",
     "CC_TEXT2" => "Creative Commons Attribution 4.0 International License",
-    "DASHBOARD" => "Dashboard"
+    "DASHBOARD" => "Dashboard",
+    "CCBY" => "The Licence Creative Commons Attribution CC BY 4.0 permits unrestricted use, distribution, and reproduction in any medium, provided the original author(s) and source are credited."
 ));
 
 

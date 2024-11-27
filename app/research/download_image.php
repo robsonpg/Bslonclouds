@@ -121,7 +121,8 @@ try {
             lang("LASER_WAVELENGTH") . ": " . $sw . "\n" .
             lang("IMAGES_PERMISSION") . ": " . $sp_text . "\n" .
             lang("NUMBER_OF_IMAGES") . ": " . $sai . "\n" .
-            lang("RESEARCH_PUBLIC_ID") . ": " . $spub;
+            lang("RESEARCH_PUBLIC_ID") . ": " . $spub . "\n" .
+            lang("CCBY");
 
             $zip->addFromString("research_info.txt", $str_info_research);
 //        $zip->addFromString("testfilephp2.txt" . time(), "#2 This is a test string added as testfilephp2.txt.\n");
