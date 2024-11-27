@@ -813,3 +813,8 @@ table.dataTable thead .sorting_desc_disabled:after {
     font-family: 'Aeros';
     src: url('../css/Aeros.ttf') format('truetype');
 }
+
+.labelText {
+    font-size: 1.2em;
+    text-align: center;
+}
