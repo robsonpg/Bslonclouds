@@ -99,14 +99,18 @@ $usersResult = getUsers();
     <table class="styled-table" border="1">
         <tr>
             <th>ID</th>
-            <th>Nome</th>
+            <th>Name</th>
             <th>Email</th>
+            <th>Location</th>
+            <th>Institution</th>
         </tr>
         <?php foreach ($usersResult as $row) { ?>
         <tr>
             <td><?php echo $row->id; ?></td>
             <td><?php echo $row->username; ?></td>
             <td><?php echo $row->email; ?></td>
+            <td><?php echo $row->locale; ?></td>
+            <td><?php echo $row->institution; ?></td>
         </tr>
         <?php } ?>
     </table>
