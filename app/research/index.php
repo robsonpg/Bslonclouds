@@ -17,6 +17,7 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 require_once "delete_modal.php";
 require_once "processing_images_modal.php";
 require_once "accept_modal.php";
+require_once "rename_modal.php";
 require_once "../upload/properties_modal.php";
 require_once "../database_layer.php";
 require_once "../constants.php";
@@ -207,6 +208,19 @@ if ($user_moderator) {
                                                onclick="acceptResearch('<?=$uid;?>')" class="btn btn-danger"/>
                                         </div>
                                     </div>
+                                <?php 
+                                }
+                                ?>
+                                <?php
+                                // Tratamento para renommar pesquisa
+                                if (($user_moderator)) {
+                                    ?>                                    
+                                    <div class="row p-2">
+                                        <div class="col">
+                                        <input type="button" value="<?=lang("RENAME_RESEARCH_BTN");?>"
+                                               onclick="renameResearch('<?=$uid;?>')" class="btn btn-danger"/>
+                                        </div>
+                                    </div>                                    
                                     <?php
                                 }
                                 ?>

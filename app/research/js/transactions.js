@@ -243,4 +243,21 @@ function acceptResearch(uid_text) {
     $('#accept-modal').modal('show');
 }
 
+//############################################################################
+// Abre modal de renomear a pesquisa
+function renameResearch(uid_text) {
+    let rename_unique_id = document.getElementById("rename_uid");
+    rename_unique_id.innerHTML = "<b>" + uid_text + "</b>";
+    let unique_id = document.getElementById("sample_id");
+    unique_id.value = "";
+    // sample_unique_id.value = images_properties[0];
+    // let sample_name = document.getElementById("sample_name");
+    // sample_name.value = images_properties[1];
+    // let sample_frames = document.getElementById("sample_frames");
+    // sample_frames.value = images_properties[2];
+
+    // Exibe o modal
+    $('#rename-modal').modal('show');
+}
+
 

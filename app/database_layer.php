@@ -203,6 +203,18 @@ function updateSampleData($sample_uid, $sample_name, $sample_frame_rate, $sample
 }
 
 //############################################################################
+// Renomeia a pesquisa
+function renameSample($sample_uid, $sample_new_name) {
+    $db = DB::getInstance();
+    $sql = "UPDATE bsl_sample_data
+                SET
+                    bsl_sample_data_unique_id = '$sample_new_name'
+            WHERE bsl_sample_data_unique_id = '$sample_uid'";
+    $res = $db->query($sql);
+    return $res;
+}
+
+//############################################################################
 // Retorna os dados de uma pesquisa
 function getResearchOwnerData($owner_ID) {
     $db = DB::getInstance();

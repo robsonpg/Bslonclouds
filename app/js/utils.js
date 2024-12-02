@@ -89,10 +89,44 @@ function readCoverURL(input) {
     reader.readAsDataURL(input.files[0]);
 }
 
+function clickRename() {
+    let sample_unique_id = document.getElementById("rename_uid");
+    let sample_new_uid = document.getElementById("sample_id");
+    let header = sample_unique_id.innerText + "&" + sample_new_uid.value;
+    console.log("header: " + header);
+    // chama a função em php usando ajax de renomear
+    let ajaxRequest = $.ajax({
+        type: 'POST',
+        url: 'rename_sample_uid.php',
+        dataType: "text",
+        //async: true,
+        data: header,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            //location.reload();
+            if (response.includes('ERROR #0:')) {
+                //messages_place.innerHTML = response.toString();
+                location.reload();
+            } else {
+                messages_place.innerText = "Fail to update data in database.";
+                //messages_place.innerText = response.toString();
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("Error: A" + textStatus + " - " + errorThrown);
+            console.log(textStatus, errorThrown);
+        }
+    });
+
+
+
+}
 
 //#########################################################
 // Cliques comuns
 $(document).ready(function() {
+
     //#########################################################################
     // Salva inserido os dados em banco de dados
     // Quando usuário clicar em salvar será feito todos os passo abaixo

@@ -197,7 +197,11 @@ $lang = array_merge($lang,array(
     "CC_TEXT1" => "This work is licensed under a ",
     "CC_TEXT2" => "Creative Commons Attribution 4.0 International License",
     "DASHBOARD" => "Dashboard",
-    "CCBY" => "The Licence Creative Commons Attribution CC BY 4.0 permits unrestricted use, distribution, and reproduction in any medium, provided the original author(s) and source are credited."
+    "CCBY" => "The Licence Creative Commons Attribution CC BY 4.0 permits unrestricted use, distribution, and reproduction in any medium, provided the original author(s) and source are credited.",
+    "RENAME_RESEARCH_BTN" => "Rename Research",
+    "RENAME_MODAL_TITLE" => "Rename Research",
+    "NEW_NAME_MSG" => "New name",
+    "NEW_NAME_PLACEHOLDER" => "Enter the new name",
 ));
 
 
