@@ -28,6 +28,8 @@ if ($user->isLoggedIn()) {
     $visitors_statistics = clone(getAllDatabaseVisitorInfo());
     $countries_statistics = clone(getCountryTotals());
 
+    $user_img_name_public_researches = clone(getImagesAndNamesPublicResearches());
+
 //    echo 'Country Name: ' . $ipdat->geoplugin_countryName . "\n";
 //    echo 'City Name: ' . $ipdat->geoplugin_city . "\n";
 //    echo 'Continent Name: ' . $ipdat->geoplugin_continentName . "\n";
@@ -218,13 +220,45 @@ if ($user->isLoggedIn()) {
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <marquee>
+                                <?php
+                                    if ($user_img_name_public_researches->count() > 0) {
+                                        foreach ($user_img_name_public_researches->results() as $research_item) {
+                                            // Exibe cada pesquisa armazenada
+                                            $sn = $research_item->bsl_sample_data_name;
+                                            $image_data = $research_item->bsl_sample_data_cover_image;
+                                            if ($image_data === null) {
+                                                // Para que a imagem seja carregada no formato correto
+                                                $filename = '../images/default.bmp';
+                                                $fp = fopen($filename, "r");
+                                                $filesize = filesize($filename);
+                                                // If successful, read from the file pointer using the size of the file (in bytes) as the length.
+                                                if ($fp) {
+                                                    $content = fread($fp, $filesize);
+                                                    fclose($fp);
+                                                    $image_data = base64_encode($content);
+                                                }
+                                            }
+                                            echo '<img src="data:image/jpeg;base64,' . $image_data . '" alt="' . $sn . '" style="margin-right: 10px; height: 18mm;"/>';
+                                            echo  $sn . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp';
+
+                                        }
+                                    }
+                                ?>
+                                </marquee>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col-6">
                         <div class="card alert alert-warning border">
                             <div class="card-body">
-                                <marquee><h4>Join for free and explore cool datasets!</h4></marquee>
+                                <marquee><h4>Join for free and explore cool datasets! <a href="usersc/join.php?">Sign up now!</h4></marquee>
                             </div>
                         </div>
                     </div>                    

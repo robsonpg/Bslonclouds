@@ -306,6 +306,18 @@ function getPublicResearches(): ?DB
     return $res;
 }
 
+function getImagesAndNamesPublicResearches(): ?DB
+{
+    $db = DB::getInstance();
+    $sql = "SELECT bsl_sample_data_name, bsl_sample_data_cover_image FROM bsl_sample_data sd, users u where 
+                                    sd.bsl_sample_data_permission = " . PERMISSION_PUBLIC . " and
+                                    sd.bsl_sample_data_status = " . RESEARCH_STATUS_ACCEPTED ." and
+                                    u.id = sd.bsl_sample_data_owner_id 
+                                    order by RAND() asc limit 5";
+    $res = $db->query($sql);
+    return $res;
+}
+
 //##############################################################################
 // Retorna todas as pesquisas publicas
 function getNumberofPublicImages() {
