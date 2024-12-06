@@ -21,7 +21,7 @@
                         <div class="row justify-content-between align-items-center border">
                             <div class="col"><?=lang("SAMPLE_IDENTIFICATION"); ?></div>
                             <div class="col"><input type="text" id="sample_id" onkeyup="uniqueIDValidation()" onkeydown="return alphaOnly(event);"
-                                                    onblur="uniqueIDValidation()" maxlength="20" pattern="[a-zA-Z]+"></div>
+                                                    onblur="uniqueIDValidation()" maxlength="45" pattern="[a-zA-Z]+"></div>
                         </div>
                         <div class="row justify-content-between align-items-center border">
                             <div class="col" id="unique_id_help"><?=lang("MISSING_UNIQUE_ID"); ?></div>

@@ -161,6 +161,7 @@ if ($user_moderator) {
                                 <div><?=lang("NUMBER_OF_IMAGES");?>: <b><?=$sai; ?></b></div>
                                 <div><?=lang("RESEARCH_PUBLIC_ID");?>: <b><?=$spub; ?></b></div>
                                 <div><?=lang("OBSERVATIONS_MSG");?>: <b><?=$obs; ?></b></div>
+                                <div style="color: bisque"><b><?=lang("CC_BY_4");?></b></div>
                                 <?php
                                     // Tratamento para aceite de pesquisa
                                     if (($sstatus == RESEARCH_STATUS_WAINTING_REVISION) && ($user_moderator)) {
@@ -274,10 +275,10 @@ if ($user_moderator) {
                                     </div>
                                 </div>
                                 <div>
-                                                    <span class="text-primary">
-                                                        <a class="badge badge-primary float-right" href="<?=$research->bsl_sample_data_published_DOI_URL; ?>">
-                                                            Published: <?=$research->bsl_sample_data_published_DOI_URL; ?></a>
-                                                    </span>
+                                    <span class="text-primary">
+                                        <a class="badge badge-primary float-right" href="<?=$research->bsl_sample_data_published_DOI_URL; ?>">
+                                            Published: <?=$research->bsl_sample_data_published_DOI_URL; ?></a>
+                                    </span>
                                 </div>
                             </div>
                         </div>

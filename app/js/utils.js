@@ -21,7 +21,7 @@ function shakeDOM(element) {
 
 function alphaOnly(event) {
     var key = event.keyCode;
-    return (((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key >= 48 && key <= 57)) || (key === 8) || (key === 189));
+    return (((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key >= 48 && key <= 57)) || (key === 8) || (key === 189) || (Key === 95));
 }
 
 //########################################################################

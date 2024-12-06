@@ -202,6 +202,7 @@ $lang = array_merge($lang,array(
     "RENAME_MODAL_TITLE" => "Rename Research",
     "NEW_NAME_MSG" => "New name",
     "NEW_NAME_PLACEHOLDER" => "Enter the new name",
+    "CC_BY_4" => "License: CC BY 4.0",
 ));
 
 
