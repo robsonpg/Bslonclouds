@@ -3,3 +3,6 @@
 .idea/modules.xml
 .idea/php.xml
 .idea/vcs.xml
+
+users/logs/*.log.php
+usersc/includes/totp_key.php

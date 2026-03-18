@@ -7,7 +7,7 @@ $filters = [
   'passwordless' => 'View Only Passwordless Logs',
   'database_debug' => 'View Only Database Debugging Logs',
 ];
-
+$token = Token::generate(); 
 if (in_array($user->data()->id, $master_account) && $action != '') {
   $query = '';
   switch ($action) {
@@ -45,10 +45,20 @@ if (in_array($user->data()->id, $master_account) && $action != '') {
 </style>
 
 <div class="row">
-  <div class="col-12 col-sm-6">
+  <div class="col-12 col-sm-3">
     <h2 class="mb-3">System Logs</h2>
   </div>
   <?php if (in_array($user->data()->id, $master_account)) { ?>
+    <div class="col-12 col-sm-3">
+    File-based logs: 
+    <?php if(defined('USERSPICE_ACTIVE_LOGGING') && USERSPICE_ACTIVE_LOGGING == true) { ?>
+      <span class="badge badge-success">Enabled</span>
+      
+    <?php } else { ?>
+      <span class="badge badge-danger">Disabled</span>
+    <?php } ?>
+    <a href="<?= $us_url_root ?>users/logs" style="color:blue;">View Logs</a>
+    </div>
     <div class="col-12 col-sm-3">
       <select class="form-control" name="logs_actions" id="logs_actions">
         <option disabled selected value>Select an action...</option>
@@ -77,81 +87,44 @@ if (in_array($user->data()->id, $master_account) && $action != '') {
   <?php } ?>
 </div>
 
-<?php
-$logs = UserSpice_getLogs(['preset' => $mode]);
-?>
+
 <div class="card">
   <div class="card-body">
     <table id="logstable" class='table table-hover table-striped table-list-search display'>
       <thead>
-        <th>ID</th>
-        <th>IP</th>
-        <th>User (ID)</th>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Note</th>
-        <th></th>
+        <th class="text-start">ID</th>
+        <th class="text-start">IP</th>
+        <th class="text-start">User (ID)</th>
+        <th class="text-start">Cloak From</th>
+        <th class="text-start">Date</th>
+        <th class="text-start">Type</th>
+        <th class="text-start">Note</th>
+        <th class="text-start">Data</th>
       </thead>
       <tbody>
-        <?php foreach ($logs as $l) { ?>
-          <tr>
-            <td>
-              <span class="hideMe"><?= sprintf('%11d', Input::sanitize($l->id)) ?></span>
-              <?php echo Input::sanitize($l->id); ?>
-            </td>
-            <td><?php echo Input::sanitize($l->ip); ?></td>
-            <td><?php echouser(Input::sanitize($l->user_id)); ?> (<?php echo Input::sanitize($l->user_id); ?>)</td>
-            <td><?php echo Input::sanitize($l->logdate); ?></td>
-            <td><?php echo Input::sanitize($l->logtype); ?></td>
-            <td>
-              <div class="input-group">
-                <?php
-                if (strlen($l->lognote) > 80) { ?>
-                  <textarea style="padding-top:0px; padding-left:5px;" rows="1" class="form-control" readonly><?php echo Input::sanitize($l->lognote); ?></textarea>
-                <?php
-                } else {
-                  echo Input::sanitize($l->lognote);
-                }
-                ?>
-              </div>
-            </td>
-            <td>
-              <?php if ($l->metadata !== null) { ?>
-                <i class="fa fa-fw fa-sticky-note pull-right" onclick="generateMetadataModal(<?php echo $l->id; ?>)"
-                title="View Metadata"
-                data-html="true"
-                data-toggle="tooltip"
-                data-bs-toggle="tooltip"></i>
-              <?php } ?>
-            </td>
-          </tr>
-        <?php } ?>
-      </tbody>
+        </tbody>
     </table>
   </div>
 </div>
-
 <div class="modal" id="logMetadata" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Log ID #<span id="logMetadataID"></span></h5>
-        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="logMetadataBody">
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
 
-<script type="text/javascript" src="js/pagination/datatables.min.js"></script>
-<script>
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" type="text/javascript" src="js/pagination/datatables.min.js"></script>
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>">
   $(function() {
     $('[data-toggle="tooltip"]').tooltip()
   })
@@ -198,15 +171,40 @@ $logs = UserSpice_getLogs(['preset' => $mode]);
     });
   }
 
-  $(document).ready(function() {
+ $(document).ready(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const modeFilter = urlParams.get('mode') || '';
+
     $('#logstable').DataTable({
-      "pageLength": 25,
-      "stateSave": true,
-      "aLengthMenu": [
-        [25, 50, 100, -1],
-        [25, 50, 100, 250, 500]
-      ],
-      "aaSorting": []
+      pageLength: 25,
+      stateSave: true,
+      aLengthMenu: [ [25, 50, 100, -1], [25, 50, 100, "All"] ],
+      aaSorting: [],
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: "<?= $us_url_root ?>users/parsers/ssp_logs.php",
+        type: "GET",
+        data: {
+          token: "<?= $token ?>",
+          mode: modeFilter
+        }
+      },
+      // Disable sorting on the last two columns
+      columnDefs: [
+        { "targets": [6, 7], "orderable": false }
+      ]
     });
-  });
+    });
 </script>
+<style>
+  .badge {
+    font-size: .8rem;
+  }
+  .badge-success{
+    background-color: #28a745;
+  }
+  .badge-danger{
+    background-color: #dc3545;
+  }
+</style>

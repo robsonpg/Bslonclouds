@@ -1,12 +1,13 @@
-<script type="text/javascript" src="<?= $us_url_root ?>users/js/pagination/datatables.min.js"></script>
-<script type="text/javascript">
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" type="text/javascript" src="<?= $us_url_root ?>users/js/pagination/datatables.min.js"></script>
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" type="text/javascript">
   $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 
+    // Initialize tooltips
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
+    });
 
 
     function messages(data) {

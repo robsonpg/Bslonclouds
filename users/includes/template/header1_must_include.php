@@ -1,7 +1,7 @@
 <?php
 ob_start();
 /*
-UserSpice 5
+UserSpice
 An Open Source PHP User Management System
 by the UserSpice Team at http://UserSpice.com
 
@@ -21,9 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ?>
 <!DOCTYPE html>
-<html lang="<?=$html_lang ?>">
+<html lang="<?=$html_lang ?? "" ?>" class="<?= $html_class ?? "" ?>" data-bs-theme="<?= $html_data_bs_theme ?? "" ?>">
+
 <head>
-	<link rel="shortcut icon" href="/favicon.ico">
+	<!-- moved favicon to usersc/includes/head_tags.php -->
 	<?php
 	if(file_exists($abs_us_root.$us_url_root.'usersc/includes/head_tags.php')){
 		require_once $abs_us_root.$us_url_root.'usersc/includes/head_tags.php';
@@ -62,5 +63,5 @@ if(!file_exists($abs_us_root.$us_url_root."usersc/templates/".$settings->templat
 	</style>
 <?php } //end v2 template check
 ?>
-	<script src="<?=$us_url_root?>users/js/messages.js"></script>
+	<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" defer src="<?=$us_url_root?>users/js/messages.js"></script>
 	<title><?= (($pageTitle != '') ? $pageTitle : ''); ?> <?=$settings->site_name?></title>

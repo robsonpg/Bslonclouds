@@ -7,6 +7,7 @@
   </div>
 <div class="row" id="widgetList">
   <?php
+
   $ordered = explode(",",$settings->widgets);
   // dnd($ordered);
   $widgets = glob($abs_us_root.$us_url_root.'usersc/widgets/*' , GLOB_ONLYDIR);
@@ -32,7 +33,7 @@
   }
   ?>
   </div>
-  <script type="text/javascript">
+  <script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" type="text/javascript">
     let cardVisibility = "";
     <?php foreach($ordered as $w){ ?>
       cardVisibility = localStorage.getItem("<?=INSTANCE.$w?>");
@@ -72,7 +73,7 @@
   </div>
 </div>
 
-<script type="text/javascript">
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" type="text/javascript">
 
 
 new Sortable(widgetList, {

@@ -1,13 +1,18 @@
-<?php if (!in_array($user->data()->id, $master_account)) {
+<?php
+if (!in_array($user->data()->id, $master_account)) {
   Redirect::to('admin.php');
 }
 $diag = Input::get('diag');
+if (!empty($_POST)) {
+  if (!Token::check(Input::get('csrf'))) {
+    include($abs_us_root . $us_url_root . 'usersc/scripts/token_error.php');
+  }
+}
+
 if (empty($_POST)) {
   $_POST['type'] = "featured";
 }
-?>
 
-<?php
 if (
   trim($settings->spice_api ?? '') != ''
   && !preg_match("/^[\w]{5}-[\w]{5}-[\w]{5}-[\w]{5}-[\w]{5}$/", trim($settings->spice_api))
@@ -40,7 +45,7 @@ if ($settings->spice_api != '') {
       'type' => $type,
       'call' => 'loadtype',
       'generation' => 2,
-      'version'=> $user_spice_ver
+      'version' => $user_spice_ver
     );
     $payload = json_encode($data);
 
@@ -55,16 +60,28 @@ if ($settings->spice_api != '') {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     //execute the POST request
     $result = curl_exec($ch);
+    $apiResponse = usValidateApiResponse($result, $ch);
     if ($diag) {
-      echo substr($result, 0, 150) . "<br>";
+      echo substr(safeReturn($result), 0, 150) . "<br>";
       $info = curl_getinfo($ch);
       echo 'Took ' . $info['total_time'] . ' seconds to send a request<br>';
-      if (curl_errno($ch)) {
-        echo 'Curl error: ' . curl_error($ch);
+      echo 'HTTP Response Code: ' . $apiResponse['httpCode'] . '<br>';
+      if ($apiResponse['curlErrno']) {
+        echo 'Curl error: ' . safeReturn($apiResponse['curlError']);
       }
     }
     //close cURL resource
-    curl_close($ch);
+    if (PHP_VERSION_ID < 80500) {
+       curl_close($ch);
+    }
+    if (!$apiResponse['success']) {
+      $apiError = $apiResponse['error'];
+      $apiConnectionFailed = $apiResponse['connectionFailed'];
+      $apiHttpCode = $apiResponse['httpCode'];
+      unset($result);
+    } else {
+      unset($apiError, $apiConnectionFailed, $apiHttpCode);
+    }
   }
   if (!empty($_POST['goSearch']) || !empty($_GET['search'])) {
     $search = Input::get('search');
@@ -77,7 +94,7 @@ if ($settings->spice_api != '') {
       'search' => $search,
       'call' => 'search',
       'generation' => 2,
-      'version'=> $user_spice_ver,
+      'version' => $user_spice_ver,
     );
     $payload = json_encode($data);
     if ($diag) {
@@ -91,16 +108,28 @@ if ($settings->spice_api != '') {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     //execute the POST request
     $result = curl_exec($ch);
+    $apiResponse = usValidateApiResponse($result, $ch);
     if ($diag) {
-      echo substr($result, 0, 150) . "<br>";
+      echo substr(safeReturn($result), 0, 150) . "<br>";
       $info = curl_getinfo($ch);
       echo '<h6>Took ' . $info['total_time'] . ' seconds to send a request</h6><br>';
-      if (curl_errno($ch)) {
-        echo 'Curl error: ' . curl_error($ch);
+      echo 'HTTP Response Code: ' . $apiResponse['httpCode'] . '<br>';
+      if ($apiResponse['curlErrno']) {
+        echo 'Curl error: ' . safeReturn($apiResponse['curlError']);
       }
     }
     //close cURL resource
-    curl_close($ch);
+    if (PHP_VERSION_ID < 80500) {
+       curl_close($ch);
+    }
+    if (!$apiResponse['success']) {
+      $apiError = $apiResponse['error'];
+      $apiConnectionFailed = $apiResponse['connectionFailed'];
+      $apiHttpCode = $apiResponse['httpCode'];
+      unset($result);
+    } else {
+      unset($apiError, $apiConnectionFailed, $apiHttpCode);
+    }
   }
 } //end if key check
 else {
@@ -118,6 +147,21 @@ else {
     <button type="button" onclick="window.location.href = 'admin.php?view=spice';" name="button" class="btn btn-primary">Leave Diagnostic Mode</button>
   <?php } ?>
 </h2>
+<?php
+// Warning for localhost with EXTRA_CURL_SECURITY enabled
+if (isLocalhost() && defined('EXTRA_CURL_SECURITY') && EXTRA_CURL_SECURITY === true) { ?>
+  <div class="alert alert-warning" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    <strong>Localhost Notice:</strong> You have <code>EXTRA_CURL_SECURITY</code> enabled while running on localhost. If you experience issues downloading or installing addons, you can disable this feature on the <a href="admin.php?view=security">Security Dashboard</a>.
+  </div>
+<?php }
+// Suggestion for non-localhost without EXTRA_CURL_SECURITY
+if (!isLocalhost() && (!defined('EXTRA_CURL_SECURITY') || EXTRA_CURL_SECURITY !== true)) { ?>
+  <div class="alert alert-info" role="alert">
+    <i class="fas fa-shield-alt me-2"></i>
+    <strong>Security Tip:</strong> You can gain extra security by enabling <code>EXTRA_CURL_SECURITY</code> on the <a href="admin.php?view=security">Security Dashboard</a>. This forces SSL certificate verification for outbound connections.
+  </div>
+<?php } ?>
 <?php if ($diag) { ?>
   <br>
   <h3>Please Install/Update the demo plugin and look at the messages above and in your logs to diagnose API issues.</h3><br>
@@ -163,6 +207,7 @@ if (file_exists($abs_us_root . $us_url_root . "users/parsers/temp.zip")) {
     <div class="row">
       <div class="col-12 col-sm-4">
         <form class="" action="" method="post">
+          <?= tokenHere(); ?>
           <div class="input-group">
             <input type="text" name="search" class="form-control" value="" placeholder="Search all addons" autocomplete="new-password">
             <input type="submit" name="goSearch" value="Search" required class="btn btn-primary">
@@ -171,6 +216,7 @@ if (file_exists($abs_us_root . $us_url_root . "users/parsers/temp.zip")) {
       </div>
       <div class="col-12 col-sm-4 mb-4">
         <form class="" action="" method="post">
+          <?= tokenHere(); ?>
           <div class="d-flex">
             <select class="form-control" name="type">
               <option value="featured" <?php if ($type == 'featured') { ?>selected="Selected" <?php } ?>>Browse Featured</option>
@@ -185,13 +231,36 @@ if (file_exists($abs_us_root . $us_url_root . "users/parsers/temp.zip")) {
       </div>
     </div>
 
-<?php } else { ?>
-  <h2>You must <a href="admin.php?view=general">enter your Free UserSpice API key here</a> in order to use this feature.</h2>
-<?php } ?>
+  <?php } else { ?>
+    <h2>You must <a href="admin.php?view=general">enter your Free UserSpice API key here</a> in order to use this feature.</h2>
+  <?php } ?>
 
-<?php if (isset($result)) {
-  echo "<div class='row'>";
-  $dev = json_decode($result);
+  <?php if (isset($apiError)) { ?>
+    <div class="alert alert-danger" role="alert">
+      <?php if (isset($apiConnectionFailed) && $apiConnectionFailed) { ?>
+        <strong>Connection Error:</strong> <?= safeReturn($apiError) ?>
+      <?php } elseif (isset($apiHttpCode) && $apiHttpCode == 401) { ?>
+        <strong>Authentication Failed:</strong> Your API key appears to be invalid or missing.
+        Please verify your key on the <a href="admin.php?view=general">General Settings</a> page.
+      <?php } elseif (isset($apiHttpCode) && $apiHttpCode == 403) { ?>
+        <strong>Access Denied:</strong> Your IP address may have been temporarily blocked due to too many failed attempts.
+        Please wait and try again later, or contact support.
+      <?php } elseif (isset($apiHttpCode) && $apiHttpCode == 429) { ?>
+        <strong>Rate Limit Reached:</strong> You have exceeded the daily API request limit.
+        Please try again tomorrow.
+      <?php } else { ?>
+        <strong>API Error:</strong> <?= safeReturn($apiError) ?><br>
+        The API responded but was not successful. Please check your API key. Please be careful not to keep retrying or you may get banned.
+      <?php } ?>
+    </div>
+  <?php } ?>
+
+  <?php if (isset($result)) {
+    echo "<div class='row'>";
+    $dev = json_decode($result);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+      $dev = null;
+    }
   $counter = 0;
   if (!is_null($dev)) {
     foreach ($dev as $d) {
@@ -202,72 +271,71 @@ if (file_exists($abs_us_root . $us_url_root . "users/parsers/temp.zip")) {
         $text = "Official ";
         $img = $us_url_root . "users/images/check.png";
         $warning = "";
-
       } else {
         $class = "";
         $text = "Community ";
         $img = "";
         $warning = "warnme";
       }
-
-?>
-
+  ?>
       <div class="col-12 col-sm-6 col-md-4 pb-3">
         <div class="card card-custom <?= $class ?> bg-white border-white border-0" style="height: 450px">
-          <?php if($d->category == "template"){
+          <?php
+          if ($d->category == "template") {
             $imgClass = "card-template-img";
             $showLogo = false;
             $width = "col-6";
-          }else{
+          } else {
             $width = "col-12";
             $imgClass = "card-custom-img";
             $showLogo = true;
           }
           ?>
-          <div class="<?=$imgClass?>"
-            style="background-image: url(<?php if ($d->img != '') { echo $d->img; } else { echo $us_url_root . 'users/images/ssbg.jpg';} ?>);">
+          <div class="<?= $imgClass ?>" style="background-image: url(<?php if ($d->img != '') {
+                                                                        echo safeReturn(hed($d->img));
+                                                                      } else {
+                                                                        echo $us_url_root . 'users/images/ssbg.jpg';
+                                                                      } ?>);">
           </div>
-          <?php if($showLogo){ ?>
-          <div class="card-custom-avatar">
-            <?php if ($d->icon == '') {
-              $src = "https://bugs.userspice.com/usersc/logos/nologo.png";
-            } else {
-              $src = $d->icon;
-            }
-            ?>
-            <img class="img-fluid" src="<?= $src ?>" alt="Avatar" />
-          </div>
-          <?php } //end show logo ?>
-
+          <?php if ($showLogo) { ?>
+            <div class="card-custom-avatar">
+              <?php if ($d->icon == '') {
+                $src = "https://bugs.userspice.com/usersc/logos/nologo.png";
+              } else {
+                $src = safeReturn(hed($d->icon));
+              }
+              ?>
+              <img class="img-fluid" src="<?= $src ?>" alt="Avatar" />
+            </div>
+          <?php } ?>
           <div class="card-body" style="overflow-y: auto">
             <div class="row">
-              <div class="<?=$width?>">
-                <h6 class="card-title"><?= $d->project ?> v<?= $d->version . " (" . $d->status . ")"; ?>
-                <?php if($status["installed"] == "true" && $status['ver'] != "0.0.0"){
-                  $msg = spiceShakerBadge($d->version, $status['ver']);
-                  echo '<span class="' . $msg['badge']['class'] . ' spice-badge-'.$counter.'">' . $msg['badge']['text'] . '</span>';
-                 } ?>
+              <div class="<?= $width ?>">
+                <h6 class="card-title"><?= safeReturn(hed($d->project)) ?> v<?= safeReturn(hed($d->version)) . " (" . safeReturn(hed($d->status)) . ")"; ?>
+                  <?php if ($status["installed"] == "true" && $status['ver'] != "0.0.0") {
+                    $msg = spiceShakerBadge($d->version, $status['ver']);
+                    echo '<span class="' . safeReturn($msg['badge']['class']) . ' spice-badge-' . $counter . '">' . safeReturn($msg['badge']['text']) . '</span>';
+                  } ?>
                 </h6>
-                <p><strong><?= $text ?><?= ucfirst($d->category) ?></strong>
+                <p><strong><?= safeReturn(hed($text)) ?><?= safeReturn(hed(ucfirst($d->category))) ?></strong>
                   <img src="<?= $img ?>" alt="" height="15">
                 </p>
               </div>
-              <?php if($d->category == "template"){ ?>
-              <div class="col-6 text-end">
-              <?php
-              if(isset($d->features)){
-                echo $d->features."<br>";
-              }
+              <?php if ($d->category == "template") { ?>
+                <div class="col-6 text-end">
+                  <?php
+                  if (isset($d->features)) {
+                    echo safeReturn(hed($d->features)) . "<br>";
+                  }
 
-              if(isset($d->accessibility)){
-                echo $d->accessibility;
-              }
-              ?>
-              </div>
-            <?php } ?>
+                  if (isset($d->accessibility)) {
+                    echo safeReturn(hed($d->accessibility));
+                  }
+                  ?>
+                </div>
+              <?php } ?>
             </div>
-
-            <p class="card-text"><?= $d->descrip ?></p>
+            <p class="card-text"><?= safeReturn(hed($d->descrip)) ?></p>
           </div>
           <div class="card-footer" style="background: inherit; border-color: inherit;">
             <a href="#" class="btn btn-default install" style="display:none;">Please Wait</a>
@@ -277,23 +345,22 @@ if (file_exists($abs_us_root . $us_url_root . "users/parsers/temp.zip")) {
                 echo "This plugin is locked and cannot be updated";
               } else {
             ?>
-                <?php if(isset($msg['text'])){
+                <?php if (isset($msg['text'])) {
                   $labelText = $msg['text'];
-                }else{
+                } else {
                   $labelText = "Update";
                 }
                 ?>
-                <button type="button" name="button" class="btn btn-danger installme <?= $warning ?>" data-res="<?= $d->reserved ?>" data-type="<?= $d->category ?>" data-url="<?= $d->dd ?>" data-hash="<?= $d->hash ?>" data-counter="<?= $counter ?>"><?=$labelText?></button>
+                <button type="button" name="button" class="btn btn-danger installme <?= $warning ?>" data-res="<?= safeReturn(hed($d->reserved)) ?>" data-type="<?= safeReturn(hed($d->category)) ?>" data-url="<?= safeReturn(hed($d->dd)) ?>" data-hash="<?= safeReturn(hed($d->hash)) ?>" data-counter="<?= $counter ?>"><?= safeReturn($labelText) ?></button>
               <?php
-              } //end noupdate
+              }
             } else { ?>
-              <button type="button" name="button" class="btn btn-primary installme <?= $warning ?>" data-res="<?= $d->reserved ?>" data-type="<?= $d->category ?>" data-url="<?= $d->dd ?>" data-hash="<?= $d->hash ?>" data-counter="<?= $counter ?>">Download</button>
+              <button type="button" name="button" class="btn btn-primary installme <?= $warning ?>" data-res="<?= safeReturn(hed($d->reserved)) ?>" data-type="<?= safeReturn(hed($d->category)) ?>" data-url="<?= safeReturn(hed($d->dd)) ?>" data-hash="<?= safeReturn(hed($d->hash)) ?>" data-counter="<?= $counter ?>">Download</button>
             <?php } ?>
-            <a href="https://github.com/<?= $d->repo ?>/tree/master/src/<?= $d->reserved ?>" class="btn btn-outline-primary" target="_blank">View Source</a>
+            <a href="https://github.com/<?= safeReturn(hed($d->repo)) ?>/tree/master/src/<?= safeReturn(hed($d->reserved)) ?>" class="btn btn-outline-primary" target="_blank">View Source</a>
             <a href="#" class="btn btn-success visit" target="_blank" style="display:none" id="<?= $counter ?>">Check it Out!</a>
           </div>
         </div>
-
       </div>
     <?php
       $counter++;
@@ -307,7 +374,7 @@ if (file_exists($abs_us_root . $us_url_root . "users/parsers/temp.zip")) {
 }
 ?>
 </div> <!-- end .mt-3 -->
-<script type="text/javascript">
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" type="text/javascript">
   $(".installme").click(function(event) {
     if ($(this).hasClass("warnme")) {
       if (!confirm("WARNING:  Please understand that this is a community provided addon and the UserSpice developers cannot take any responsibility for any harm it may cause.  Please make sure you understand the risks before using community provided addons")) {

@@ -1,27 +1,36 @@
 <style media="screen">
+.form-check-input:checked {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
   .grippy {
     cursor: grab;
   }
-
-  .dashboard-icon-label {
-    margin-top: .3rem;
-    font-size: .75rem;
-    line-height: .75rem;
-  }
-
   .font-info {
     color: var(--bs-link-color);
     padding-left: .25rem;
   }
 
-  .dash-icon {
+  .icon-link {
+    display: block;
+    text-align: center; 
+}
+
+.dash-icon {
     height: 2.8rem;
     max-width: 3.2rem;
-  }
+    margin: 0 auto; 
+}
 
-  .dashboard-icon-label {
-    line-height: 1rem;
-  }
+.dashboard-icon-label {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.3rem; 
+    padding: 0;
+}
 
   .collapseCard {
     cursor: pointer;

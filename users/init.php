@@ -1,5 +1,7 @@
 <?php
+define('USERSPICE_ACTIVE_LOGGING', false);
 require_once 'classes/class.autoloader.php';
+ini_set('session.cookie_httponly', 1);
 session_start();
 
 $abs_us_root=$_SERVER['DOCUMENT_ROOT'];
@@ -56,7 +58,9 @@ if(Cookie::exists(Config::get('remember/cookie_name')) && !Session::exists(Confi
 
 	if ($hashCheck->count()) {
 		$user = new User($hashCheck->first()->user_id);
-		$user->login();
+		$inst = Config::get('session/session_name');
+        $_SESSION[$inst . '_login_method'] = "cookie";
+        $user->login();
 
 	}
 }
@@ -66,11 +70,17 @@ $user = new User();
 
 //Check to see that user is verified
 if($user->isLoggedIn()){
-	if($user->data()->email_verified == 0 && $currentPage != 'verify.php' && $currentPage != 'logout.php' && $currentPage != 'verify_thankyou.php'){
+	$verifySkipPages = ['verify.php', 'logout.php', 'verify_thankyou.php', 'verify_resend.php'];
+	if($user->data()->email_verified == 0 && !in_array($currentPage, $verifySkipPages)){
 		Redirect::to($us_url_root.'users/verify.php');
 	}
 }
 
+
+$userspice_nonce = base64_encode(random_bytes(16));
+// Forces SSL verification in cURL requests to UserSpice API
+// Will most likely break on localhost or self-signed certificates
+define('EXTRA_CURL_SECURITY', false); 
 require_once $abs_us_root.$us_url_root."users/includes/loader.php";
 $timezone_string = 'America/Sao_Paulo';
 date_default_timezone_set($timezone_string);

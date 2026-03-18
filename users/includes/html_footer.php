@@ -1,6 +1,6 @@
 <?php
 /*
-UserSpice 5
+UserSpice
 An Open Source PHP User Management System
 by the UserSpice Team at http://UserSpice.com
 
@@ -17,9 +17,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-if(file_exists($abs_us_root.$us_url_root.'usersc/includes/footer.php')){
-  require_once $abs_us_root.$us_url_root.'usersc/includes/footer.php';
-}
+require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/footer.php';
 
 //Plugin hooks
 foreach($usplugins as $k=>$v){
@@ -30,10 +28,12 @@ foreach($usplugins as $k=>$v){
   }
 }
 
-require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/footer.php';
+if(file_exists($abs_us_root.$us_url_root.'usersc/includes/footer.php')){
+  require_once $abs_us_root.$us_url_root.'usersc/includes/footer.php';
+}
 
 ?>
-<script type="text/javascript">
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" type="text/javascript">
 setTimeout(function(){
 $(".errSpan").html("<h4><br></h4>");
 } , "<?=$settings->err_time*1000?>");
@@ -49,5 +49,3 @@ var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.
 
 </script>
 
-  </body>
-</html>

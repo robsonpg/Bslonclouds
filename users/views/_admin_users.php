@@ -1,8 +1,11 @@
 <?php
 //we will turn off some advanced things like pagination datatabels and the more complicated views for > 2000 users
 //beginning with version 5.5.5, there is now a setting in general settings that will allow you to turn off the full list of users and provide faster performance.
-$maxUsers = 2000;
+$maxUsers = $settings->max_users_dt;
 $errors = $successes = [];
+$uCount = $db->query("SELECT count(*) as counter FROM users")->first()->counter;
+$settings->uman_search = $maxUsers > 0 && $uCount > $maxUsers ? 1 : 0;
+
 $act = $db->query('SELECT * FROM email')->first();
 $act = $act->email_act;
 $form_valid = true;
@@ -28,6 +31,7 @@ if (!empty($_POST)) {
     $username = Input::get('username');
     $password = Input::get('password');
     $vericode = uniqid().randomstring(15);
+    $hashedVericode = hashVericode($vericode);
 
     $form_valid = false; // assume the worst
 
@@ -95,7 +99,7 @@ if (!empty($_POST)) {
           'permissions' => 1,
           'join_date' => $join_date,
           'email_verified' => 1,
-          'vericode' => $vericode,
+          'vericode' => $hashedVericode,
           'force_pr' => $settings->force_pr,
           'vericode_expiry' => $vericode_expiry,
           'oauth_tos_accepted' => true,
@@ -122,6 +126,7 @@ if (!empty($_POST)) {
             'fname' => $fname,
             'email' => rawurlencode($email),
             'vericode' => $vericode,
+            'user_id' => $theNewId,
             'join_vericode_expiry' => $settings->join_vericode_expiry,
           ];
           $to = rawurlencode($email);
@@ -141,55 +146,12 @@ if (!empty($_POST)) {
 }
 
 
-$uCount = $db->query("SELECT id FROM users")->count();
-if($settings->uman_search == 0){
-$showAllUsers = Input::get('showAllUsers');
-if ($showAllUsers == 1) {
-  if ($uCount < $maxUsers) {
-    $userData = $db->query("SELECT
-      u.*,
-      group_concat(p.name SEPARATOR ', ') AS perms
-      FROM users AS u
-      JOIN user_permission_matches AS upm ON u.id = upm.user_id
-      LEFT OUTER JOIN permissions AS p ON p.id = upm.permission_id
-      GROUP BY u.id
-      ")->results();
-  } else {
-    $userData = fetchAllUsers('permissions DESC,id', false, true);
-  }
-} else {
-  if ($uCount < $maxUsers) {
-    $userData = $db->query("SELECT
-      u.*,
-      group_concat(p.name SEPARATOR ', ') AS perms
-      FROM users AS u
-      JOIN user_permission_matches AS upm ON u.id = upm.user_id
-      LEFT OUTER JOIN permissions AS p ON p.id = upm.permission_id
-      WHERE u.active = 1
-      GROUP BY u.id
-      ")->results();
-  } else {
-    $userData = fetchAllUsers('permissions DESC,id', false, false);
-  }
-}
-}else{
-  $showAllUsers = false;
-  //search using the search form
-  if(!empty($_POST['search'])){
-    $search = Input::get('searchTerm');
-    $userData = $db->query("SELECT
-      u.*,
-      group_concat(p.name SEPARATOR ', ') AS perms
-      FROM users AS u
-      JOIN user_permission_matches AS upm ON u.id = upm.user_id
-      LEFT OUTER JOIN permissions AS p ON p.id = upm.permission_id
-      WHERE fname LIKE ? OR lname LIKE ? OR username LIKE ? OR email LIKE ?
-      GROUP BY u.id
-      ",["%$search%","%$search%","%$search%","%$search%"])->results();
-  }else{
-    $userData = new stdClass();
-  }
-}
+// Include custom column configuration
+include $abs_us_root . $us_url_root . 'usersc/includes/user_manager_columns.php';
+
+// Get user data using the custom function
+$userData = $user_manager_get_data($settings, $db, $uCount, $maxUsers);
+$showAllUsers = $settings->uman_search == 0 ? Input::get('showAllUsers') : false;
 $random_password = random_password();
 
 foreach ($validation->errors() as $error) {
@@ -200,15 +162,14 @@ foreach ($validation->errors() as $error) {
 <div class="row">
   <div class="col-12 mb-2">
     <h2>Manage Users</h2>
-    <?php //echo resultBlock($errors, $successes);
-    ?>
+    <small>You can customize which fields are used by editing <code>usersc/includes/user_manager_columns.php</code></small>
     <?php includeHook($hooks, 'pre'); ?>
 
     <div class="row" style="margin-top:1vw;">
       <div class="col-6">
-        <?php if ($showAllUsers != 1) { ?>
+        <?php if ($showAllUsers != 1 && $settings->uman_search < 1) { ?>
           <a href="?view=users&showAllUsers=1" class="btn btn-outline-primary btn-sm nounderline"><i class="fa fa-eye"></i> Show All Users</a>
-        <?php } else { ?>
+        <?php } elseif($settings->uman_search < 1) { ?>
           <a href="?view=users" class="btn btn-outline-primary btn-sm nounderline"><i class="fa fa-eye-slash"></i> Hide Inactive Users</a>
         <?php } ?>
       </div>
@@ -223,8 +184,8 @@ foreach ($validation->errors() as $error) {
         <form class="" action="" method="post">
           <?=tokenHere();?>
           <div class="input-group">
-            <input type="text" name="searchTerm" value="" class="form-control" placeholder="Search for users to manage">
-            <input type="submit" name="search" value="Search" class="btn btn-outline-primary">
+            <input type="text" name="searchTerm" value="" class="form-control" placeholder="Search for users to manage. Enter % for all users">
+            <input type="submit" name="search" value="Search" class="btn btn-outline-primary" onclick="setTimeout(function() { $('#dt-search-0').val(''); }, 100);">
           </div>
 
           <small>Search by first name, last name, username, or email</small>
@@ -239,18 +200,13 @@ foreach ($validation->errors() as $error) {
         <table id="userstable" class='table table-hover table-list-search'>
           <thead>
             <tr>
-              <th>ID</th>
-              <th></th>
-              <th>Username</th>
-              <th>Name</th>
-              <th>Email</th>
-              <?php includeHook($hooks, 'body'); ?>
-              <th>Last Sign In</th>
-              <?php
-              if ($uCount < $maxUsers) { ?>
-                <th>Permissions</th>
+              <?php foreach ($user_manager_columns as $col_key => $col_title) {
+                // Skip permissions column if not applicable
+                if ($col_key == 'perms' && $uCount >= $maxUsers) continue;
+              ?>
+                <th><?php echo $col_title; ?></th>
               <?php } ?>
-              <th>Status</th>
+              <?php includeHook($hooks, 'body'); ?>
             </tr>
           </thead>
           <tbody>
@@ -259,54 +215,14 @@ foreach ($validation->errors() as $error) {
             foreach ($userData as $v1) {
             ?>
               <tr>
-                <td><span class="hideMe"><?= sprintf('%08d', $v1->id) ?></span>
-                  <a class="nounderline text-dark" href='admin.php?view=user&id=<?php echo $v1->id; ?>'><?php echo $v1->id; ?></a>
-                </td>
-                <td>
-                  <a class="nounderline text-danger" href='admin.php?view=user&id=<?php echo $v1->id; ?>'><?php if ($v1->force_pr == 1) { ?><i class="fa fa-lock"></i><?php } ?></a>
-                </td>
-
-                <td>
-                  <a class="nounderline text-dark" href='admin.php?view=user&id=<?php echo $v1->id; ?>'><?php echo $v1->username; ?></a>
-                </td>
-
-                <td>
-                  <a class="nounderline text-dark" href='admin.php?view=user&id=<?php echo $v1->id; ?>'><?php echo $v1->fname; ?> <?php echo $v1->lname; ?></a>
-                </td>
-
-                <td>
-                  <a class="nounderline text-dark" href='admin.php?view=user&id=<?php echo $v1->id; ?>'><?php echo $v1->email; ?>
-                  </a>
-                </td>
-
-                <?php includeHook($hooks, 'bottom'); ?>
-
-                <td>
-                  <?php if ($v1->last_login != "0000-00-00 00:00:00") {
-                    echo $v1->last_login;
-                  } else { ?>
-                    <i>Never</i>
-                  <?php } ?>
-                </td>
-
-                <?php
-                if ($uCount < $maxUsers) { ?>
-                  <td><?= $v1->perms ?></td>
+                <?php foreach ($user_manager_columns as $col_key => $col_title) {
+                  $cell_data = $user_manager_column_data($v1, $col_key);
+                  // Skip columns that return null (like perms when not applicable)
+                  if ($cell_data === null && $col_key == 'perms' && $uCount >= $maxUsers) continue;
+                ?>
+                  <td><?php echo $cell_data; ?></td>
                 <?php } ?>
-                <td>
-                  <?php if($v1->permissions == 0){ ?>
-                      <i class="fa fa-fw fa-lock text-danger" data-bs-toggle="tooltip" title="The users's account locked (banned)"></i>
-                  <?php }else{ ?>
-                      <i class="fa fa-fw fa-unlock" data-bs-toggle="tooltip" title="The users's account unlocked (active)"></i>
-                  <?php } ?>
-
-                  <?php
-                  if ($act == 1 && $v1->email_verified == 1) { ?>
-                    <i class='fa fa-envelope' data-bs-toggle="tooltip" title="User email is verified"></i>
-                  <?php } ?>
-
-
-                </td>
+                <?php includeHook($hooks, 'bottom'); ?>
               </tr>
             <?php
             }
@@ -433,11 +349,9 @@ foreach ($validation->errors() as $error) {
     </div>
   </div>
 </div>
-<?php if ($uCount > $maxUsers && $settings->uman_search == 0) { ?>
-  Since you have over 2000 users, you may want to consider setting this page to User Manager Search Engine Mode in <a href="<?=$us_url_root?>users/admin?view=general">General Settings</a>.
-<?php }?>
-<script type="text/javascript" src="<?= $us_url_root ?>users/js/pagination/datatables.min.js"></script>
-<script>
+
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>" type="text/javascript" src="<?= $us_url_root ?>users/js/pagination/datatables.min.js"></script>
+<script nonce="<?=htmlspecialchars($userspice_nonce ?? '')?>">
   $(document).ready(function() {
     $('#userstable').DataTable({
       "pageLength": 25,
@@ -446,7 +360,11 @@ foreach ($validation->errors() as $error) {
         [25, 50, 100, -1],
         [25, 50, 100, "All"]
       ],
-      "aaSorting": []
+      "aaSorting": [],
+      "initComplete": function() {
+      // Clear the search box after DataTables has fully initialized
+      this.api().search('').draw();
+    }
     });
 
     $('.password_view_control').hover(function() {
