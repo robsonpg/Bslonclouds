@@ -168,7 +168,8 @@ if (Input::exists()) {
             $vericode_expiry = date('Y-m-d H:i:s');
             if ($act == 1) {
                 //Verify email address settings
-                $to = rawurlencode($email);
+                //$to = rawurlencode($email);
+                $to = $email;
                 $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
                 $body = email_body('_email_template_verify.php', $params);
                 email($to, $subject, $body);

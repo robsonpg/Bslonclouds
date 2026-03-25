@@ -211,7 +211,8 @@ if (Input::exists()) {
             if ($act == 1 || !$allowPasswords) {
                 // Verify email address settings
                 $params['user_id'] = $theNewId;  // Add user_id for email template
-                $to = rawurlencode($email);
+                //$to = rawurlencode($email);
+                $to = $email;
                 $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
                 $body = email_body('_email_template_verify.php', $params);
                 email($to, $subject, $body);
