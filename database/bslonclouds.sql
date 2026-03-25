@@ -432,6 +432,7 @@ CREATE TABLE `users` (
   `join_date` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1',
+  `country` varchar(100) DEFAULT NULL,
   `institution` varchar(128) DEFAULT NULL,
   `skills` varchar(128) DEFAULT NULL,
   `newsletter` tinyint(1) DEFAULT NULL,

@@ -77,6 +77,9 @@ if (Input::exists()) {
     $lname = Input::get('lname');
     $email = Input::get('email');
     $username = Input::get('username');
+    $country = Input::get('country');
+    $institution = Input::get('institution');
+    $skills = Input::get('skills');
 
     $validation = new Validate();
         if (pluginActive('userInfo', true)) {
@@ -113,6 +116,12 @@ if (Input::exists()) {
                   'min' => 5,
                   'max' => 100,
             ],
+            'country' => [
+                  'display' => lang('GEN_COUNTRY'),
+                  'required' => true,
+                  'min' => 1,
+                  'max' => 100,
+            ],
         ];
         if($allowPasswords){
             $valArray['password'] = [
@@ -131,6 +140,11 @@ if (Input::exists()) {
             $_POST['password'] = randomstring(25);
         }
         $validation->check($_POST, $valArray);
+
+        // Validate agreement checkbox (must be checked to register)
+        if (!Input::get('agreement')) {
+            $validation->addError([lang('GEN_MUST_AGREE'), 'agreement']);
+        }
 
     if ($eventhooks = getMyHooks(['page' => 'joinAttempt'])) {
         includeHook($eventhooks, 'body');

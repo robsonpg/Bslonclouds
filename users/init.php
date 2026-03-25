@@ -1,12 +1,13 @@
 <?php
+$noPHPInfo = false;
 define('USERSPICE_ACTIVE_LOGGING', false);
 require_once 'classes/class.autoloader.php';
 ini_set('session.cookie_httponly', 1);
 session_start();
 
-$abs_us_root=$_SERVER['DOCUMENT_ROOT'];
+$abs_us_root=Server::get('DOCUMENT_ROOT');
 
-$self_path=explode("/", $_SERVER['PHP_SELF']);
+$self_path=explode("/", Server::get('PHP_SELF'));
 $self_path_length=count($self_path);
 $file_found=FALSE;
 
@@ -81,6 +82,7 @@ $userspice_nonce = base64_encode(random_bytes(16));
 // Forces SSL verification in cURL requests to UserSpice API
 // Will most likely break on localhost or self-signed certificates
 define('EXTRA_CURL_SECURITY', false); 
+$system_messages_justify = "right";
 require_once $abs_us_root.$us_url_root."users/includes/loader.php";
 $timezone_string = 'America/Sao_Paulo';
 date_default_timezone_set($timezone_string);
