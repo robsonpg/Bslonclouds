@@ -158,26 +158,10 @@ if (Input::exists()) {
             //add user to the database
             $user = new User();
             $join_date = date('Y-m-d H:i:s');
-            $params = [
-                                'fname' => Input::get('fname'),
-                                'email' => $email,
-                                'username' => $username,
-                                'vericode' => $vericode,
-                                'join_vericode_expiry' => $settings->join_vericode_expiry,
-                        ];
-            $vericode_expiry = date('Y-m-d H:i:s');
             if ($act == 1) {
-                //Verify email address settings
-                //$to = rawurlencode($email);
-                $to = $email;
-                $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
-                $body = email_body('_email_template_verify.php', $params);
-                $body2 = /*Input::get('fname') . " " .*/ $email . " " . $username . " " . $vericode; // . " " . $settings->join_vericode_expiry;
-                email($to, $subject, "Teste Teste Teste Teste");
-                echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
-                exit;
-
                 $vericode_expiry = date('Y-m-d H:i:s', strtotime("+$settings->join_vericode_expiry hours", strtotime(date('Y-m-d H:i:s'))));
+            } else {
+                $vericode_expiry = date('Y-m-d H:i:s');
             }
             try {
                 // echo "Trying to create user";
@@ -229,6 +213,22 @@ if (Input::exists()) {
                 $theNewId = $user->create($fields);
 
                 includeHook($hooks, 'post');
+
+                if ($act == 1) {
+                    $params = [
+                        'fname'                => Input::get('fname'),
+                        'email'                => $email,
+                        'vericode'             => $vericode,
+                        'join_vericode_expiry' => $settings->join_vericode_expiry,
+                        'user_id'              => $theNewId,
+                    ];
+                    $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
+                    $body = email_body('_email_template_verify.php', $params);
+                    $email_sent = email($email, $subject, $body);
+                    if (!$email_sent) {
+                        logger($theNewId, 'Email Error', 'Verification email failed to send to: ' . Input::sanitize($email));
+                    }
+                }
             } catch (Exception $e) {
                 if ($eventhooks = getMyHooks(['page' => 'joinFail'])) {
                     includeHook($eventhooks, 'body');
