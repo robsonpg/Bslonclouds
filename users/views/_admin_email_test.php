@@ -18,6 +18,8 @@
     $subject = 'Testing Your Email Settings!';
     $body = 'This is the body of your test email';
     $mail_result = email($to, $subject, $body);
+    echo "Enviando email 3: " . $to . " " . $subject . " " . $body;
+    exit;    
 
     if ($mail_result) {
       echo '<div class="alert alert-success" role="alert">Mail sent successfully</div><br/>';
