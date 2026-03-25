@@ -172,7 +172,7 @@ if (Input::exists()) {
                 $to = $email;
                 $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
                 $body = email_body('_email_template_verify.php', $params);
-                email($to, $subject, $body);
+                email($to, $subject, "Um teste" /*$body*/);
                 //echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
                 //exit;
 
