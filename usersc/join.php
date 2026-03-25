@@ -173,8 +173,8 @@ if (Input::exists()) {
                 $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
                 $body = email_body('_email_template_verify.php', $params);
                 email($to, $subject, $body);
-                echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
-                exit;
+                //echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
+                //exit;
 
                 $vericode_expiry = date('Y-m-d H:i:s', strtotime("+$settings->join_vericode_expiry hours", strtotime(date('Y-m-d H:i:s'))));
             }
