@@ -156,40 +156,16 @@ if (Input::exists()) {
     if ($validation->passed()) {
             $form_valid = true;
 
-        //   $vericode = randomstring(15);
-        //   $vericode_expiry = date("Y-m-d H:i:s", strtotime("+$settings->join_vericode_expiry hours"));
-        //   $db->update('users', $fuser->data()->id, ['vericode' => hashVericode($vericode), 'vericode_expiry' => $vericode_expiry]);
-        //   $options = array(
-        //       'fname'                => $fuser->data()->fname,
-        //       'email'                => $email,
-        //       'vericode'             => $vericode,
-        //       'user_id'              => $fuser->data()->id,
-        //       'join_vericode_expiry' => $settings->join_vericode_expiry
-        //   );
-        //   $encoded_email = rawurlencode($email);
-        //   $subject = lang("EML_VER") . " @ " . date("Y-m-d H:i:s");
-        //   $body = email_body('_email_template_verify.php', $options);
-
             //add user to the database
             $user = new User();
             $join_date = date('Y-m-d H:i:s');
-            // $params = [
-            //                     'fname' => Input::get('fname'),
-            //                     'email' => $email,
-            //                     'username' => $username,
-            //                     'vericode' => $vericode,
-            //                     'join_vericode_expiry' => $settings->join_vericode_expiry,
-            //             ];
             $params = [
-              'fname'                => "Novo Usuário",
-              'email'                => $email,
-              'vericode'             => $vericode,
-              'user_id'              => $fuser->data()->id,
-              'join_vericode_expiry' => $settings->join_vericode_expiry
+                                'fname' => Input::get('fname'),
+                                'email' => $email,
+                                'username' => $username,
+                                'vericode' => $vericode,
+                                'join_vericode_expiry' => $settings->join_vericode_expiry,
                         ];
-
-
-
             $vericode_expiry = date('Y-m-d H:i:s');
             if ($act == 1) {
                 //Verify email address settings
@@ -197,9 +173,9 @@ if (Input::exists()) {
                 $to = $email;
                 $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
                 $body = email_body('_email_template_verify.php', $params);
-                email($to, $subject, $body);
+                email($to, $subject, $vericode);
                 //echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
-                //exit;
+                exit;
 
                 $vericode_expiry = date('Y-m-d H:i:s', strtotime("+$settings->join_vericode_expiry hours", strtotime(date('Y-m-d H:i:s'))));
             }
