@@ -173,7 +173,7 @@ if (Input::exists()) {
                 $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
                 $body = email_body('_email_template_verify.php', $params);
                 $body2 = /*Input::get('fname') . " " .*/ $email . " " . $username . " " . $vericode; // . " " . $settings->join_vericode_expiry;
-                email($to, $subject, $body2);
+                email($to, $subject, rawurlencode($body2));
                 echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
                 exit;
 
