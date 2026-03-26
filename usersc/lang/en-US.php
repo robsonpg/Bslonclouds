@@ -203,6 +203,9 @@ $lang = array_merge($lang, [
     'NEW_NAME_MSG' => 'New name',
     'NEW_NAME_PLACEHOLDER' => 'Enter the new name',
     'CC_BY_4' => 'License: CC BY 4.0',
+    'EML_HI' => 'Welcome to Biospeckle Laser On Clouds, ',
+    'EML_VER_EML' => 'Hello! You’re just one step away from using BSL on Clouds. Please confirm your identity by clicking below to ensure your account is secure:',
+    'EML_VER' => 'Click here to verify your email',
 ]);
 
 ?>
