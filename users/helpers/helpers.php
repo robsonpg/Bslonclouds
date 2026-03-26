@@ -173,7 +173,6 @@ if (!function_exists('email')) {
   */
     $results = $db->query('SELECT * FROM email')->first();
 
-    echo "Método de envio 1";
     $mail = new PHPMailer();
     $mail->CharSet = 'UTF-8';
     $mail->SMTPDebug = $results->debug_level;               // Enable verbose debug output
@@ -240,13 +239,13 @@ if (!function_exists('email')) {
     $mail->Subject = (string)$mail->Subject;
     $mail->Body = (string)$mail->Body;
     
-    echo "Dados email: " . $mail->From . " " . 
+    echo "\n Dados email: " . $mail->From . " " . 
     $mail->FromName . " " . $mail->Username . " " . $mail->Subject . " " . $mail->Body . " " . 
     $mail->getToAddresses()[0] . " " . $results->isHTML;
 
     $result = $mail->send();
 
-    echo "Email enviado!!";
+    echo "\n Email enviado!!";
 
     return $result;
   }
