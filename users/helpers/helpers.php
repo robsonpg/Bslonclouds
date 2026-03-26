@@ -233,10 +233,17 @@ if (!function_exists('email')) {
       require_once $abs_us_root . $us_url_root . "usersc/scripts/email_function_override.php";
     }
 
+    // Garantir que todos os campos são string
+    $mail->From = (string)$mail->From;
+    $mail->FromName = (string)$mail->FromName;
+    $mail->Username = (string)$mail->Username;
+    $mail->Subject = (string)$mail->Subject;
+    $mail->Body = (string)$mail->Body;
+    
     echo "Dados email: " . $mail->From . " " . 
     $mail->FromName . " " . $mail->Username . " " . $mail->Subject . " " . $mail->Body . " " . 
-    print_r($mail->getToAddresses());
-    
+    print_r($mail->getToAddresses()) . " " . $results->isHTML;
+
     $result = $mail->send();
 
     echo "Email enviado!!";
