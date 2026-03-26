@@ -232,6 +232,7 @@ if (!function_exists('email')) {
       require_once $abs_us_root . $us_url_root . "usersc/scripts/email_function_override.php";
     }
 
+    $mail->isSMTP();
     // Garantir que todos os campos são string
     $mail->From = (string)$mail->From;
     $mail->FromName = (string)$mail->FromName;
