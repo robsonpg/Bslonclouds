@@ -228,9 +228,9 @@ if (!function_exists('email')) {
     $mail->Subject = $subject;
     $mail->Body    = $body;
 
-    echo "\\nDados email: " . $mail->From . " " . 
+    echo "Dados email: " . $mail->From . " " . 
     $mail->FromName . " " . $mail->Username . " " . $mail->Subject . " " . $mail->Body . " " . 
-    $mail->getToAddresses() . "\\n";
+    print_r($mail->getToAddresses());
 
     if (!empty($attachment)) $mail->addAttachment($attachment);
     if (file_exists($abs_us_root . $us_url_root . "usersc/scripts/email_function_override.php")) {
