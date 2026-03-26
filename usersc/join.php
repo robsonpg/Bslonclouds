@@ -177,8 +177,6 @@ if (Input::exists()) {
                 // $subject = 'Testing Your Email Settings!';
                 email($to, $subject, $body);
                 //echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
-                exit;
-
                 $vericode_expiry = date('Y-m-d H:i:s', strtotime("+$settings->join_vericode_expiry hours", strtotime(date('Y-m-d H:i:s'))));
             }
             try {
