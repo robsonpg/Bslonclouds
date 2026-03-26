@@ -239,9 +239,11 @@ if (!function_exists('email')) {
     $mail->Subject = (string)$mail->Subject;
     $mail->Body = (string)$mail->Body;
     
-    echo "\n Dados email: " . $mail->From . " " . 
-    $mail->FromName . " " . $mail->Username . " " . $mail->Subject . " " . $mail->Body . " " . 
-    $mail->getToAddresses()[0] . " " . $results->isHTML;
+    // echo "<p> Dados email: " . $mail->From . " " . 
+    // $mail->FromName . " " . $mail->Username . " " . $mail->Subject . " " . $mail->Body . " " . 
+    // $mail->getToAddresses()[0] . " " . $results->isHTML;
+    echo "Dados email: ";
+    print_r($mail);
 
     $result = $mail->send();
 
