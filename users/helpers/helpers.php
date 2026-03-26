@@ -173,6 +173,7 @@ if (!function_exists('email')) {
   */
     $results = $db->query('SELECT * FROM email')->first();
 
+    echo "Método de envio 1";
     $mail = new PHPMailer();
     $mail->CharSet = 'UTF-8';
     $mail->SMTPDebug = $results->debug_level;               // Enable verbose debug output
@@ -231,6 +232,8 @@ if (!function_exists('email')) {
       require_once $abs_us_root . $us_url_root . "usersc/scripts/email_function_override.php";
     }
     $result = $mail->send();
+
+    echo "Email enviado!!";
 
     return $result;
   }
