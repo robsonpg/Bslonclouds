@@ -175,7 +175,7 @@ if (Input::exists()) {
 
                 // $to = "robson.pierangeli@gmail.com";
                 // $subject = 'Testing Your Email Settings!';
-                email($to, $subject, "Registro");
+                email($to, $subject, $body);
                 //echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
                 exit;
 
