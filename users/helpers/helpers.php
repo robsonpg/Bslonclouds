@@ -242,7 +242,7 @@ if (!function_exists('email')) {
     
     echo "Dados email: " . $mail->From . " " . 
     $mail->FromName . " " . $mail->Username . " " . $mail->Subject . " " . $mail->Body . " " . 
-    print_r($mail->getToAddresses()) . " " . $results->isHTML;
+    $mail->getToAddresses()[0] . " " . $results->isHTML;
 
     $result = $mail->send();
 
