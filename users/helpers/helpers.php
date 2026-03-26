@@ -243,12 +243,12 @@ if (!function_exists('email')) {
     // echo "<p> Dados email: " . $mail->From . " " . 
     // $mail->FromName . " " . $mail->Username . " " . $mail->Subject . " " . $mail->Body . " " . 
     // $mail->getToAddresses()[0] . " " . $results->isHTML;
-    echo "Dados email: ";
-    print_r($mail);
+    // echo "Dados email: ";
+    // print_r($mail);
 
     $result = $mail->send();
 
-    echo "\n Email enviado!!";
+    //echo "\n Email enviado!!";
 
     return $result;
   }
