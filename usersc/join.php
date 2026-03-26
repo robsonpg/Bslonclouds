@@ -172,6 +172,9 @@ if (Input::exists()) {
                 $to = $email;
                 $subject = html_entity_decode($settings->site_name, ENT_QUOTES);
                 $body = email_body('_email_template_verify.php', $params);
+
+                $subject = 'Testing Your Email Settings!';
+                $body = 'This is the body of your test email';
                 email($to, $subject, $body);
                 echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
                 exit;
