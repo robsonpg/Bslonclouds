@@ -62,23 +62,26 @@ Special thanks to John Bovey for the password strenth feature.
         required autofocus autocomplete="username">
       </div>
 
-      <div class="form-group">
-        <label for="fname" id="fname-label"><?php echo lang('GEN_FNAME'); ?><span class="req-star">*</span></label>
-
-        <input type="text" class="form-control" id="fname" name="fname" placeholder="<?php echo lang('GEN_FNAME'); ?>" value="<?php if (!$form_valid && !empty($_POST)) {
-            echo $fname;
-        } ?>"
-        required autofocus autocomplete="first-name">
-      </div>
-
-      <div class="form-group">
-        <label for="lname" id="lname-label"><?php echo lang('GEN_LNAME'); ?><span class="req-star">*</span></label>
-
-        <input type="text" class="form-control" id="lname" name="lname" placeholder="<?php echo lang('GEN_LNAME'); ?>"
-               value="<?php if (!$form_valid && !empty($_POST)) {
-                   echo $lname;
-               } ?>"
-        required autocomplete="family-name">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="fname" id="fname-label"><?php echo lang('GEN_FNAME'); ?><span class="req-star">*</span></label>
+            <input type="text" class="form-control" id="fname" name="fname" placeholder="<?php echo lang('GEN_FNAME'); ?>" value="<?php if (!$form_valid && !empty($_POST)) {
+                echo $fname;
+            } ?>"
+            required autofocus autocomplete="first-name">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="lname" id="lname-label"><?php echo lang('GEN_LNAME'); ?><span class="req-star">*</span></label>
+            <input type="text" class="form-control" id="lname" name="lname" placeholder="<?php echo lang('GEN_LNAME'); ?>"
+                   value="<?php if (!$form_valid && !empty($_POST)) {
+                       echo $lname;
+                   } ?>"
+            required autocomplete="family-name">
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -371,14 +374,14 @@ Special thanks to John Bovey for the password strenth feature.
                 autocomplete="institution">
     </div>
 
-        <div class="form-group">
-            <input type="checkbox" name="newsletter" id="newsletter" style="width: 1.2em; height: 1.2em; vertical-align: middle;">
-            <label for="newsletter" id="newsletter-label" style="float: none; display: inline; margin: 0;"><?php echo lang('GEN_NEWSLETTER'); ?></label>
-        </div>
-
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom: 6px;">
             <input type="checkbox" name="agreement" id="agreement" style="width: 1.2em; height: 1.2em; vertical-align: middle;">
             <label for="agreement" id="agreement-label" style="float: none; display: inline; margin: 0;"><b><?php echo lang('GEN_AGREEMENT'); ?><span class="req-star">*</span></b></label>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <input type="checkbox" name="newsletter" id="newsletter" style="width: 1.2em; height: 1.2em; vertical-align: middle;">
+            <label for="newsletter" id="newsletter-label" style="float: none; display: inline; margin: 0;"><?php echo lang('GEN_NEWSLETTER'); ?></label>
         </div>
 
       <div class="form-group">
@@ -406,7 +409,7 @@ $password_match_statement = '<span id="password_match" class="gray_out_text">'.l
 ?>
 
         <div style="display: inline-block">
-          <label for="password" id="password-label"><?php echo lang('GEN_PASS'); ?><span class="req-star">*</span> (<?php echo lang('GEN_MIN'); ?> <?php echo $settings->min_pw; ?> <?php echo lang('GEN_AND'); ?> <?php echo lang('GEN_MAX'); ?> <?php echo $settings->max_pw; ?> <?php echo lang('GEN_CHAR'); ?>)</label>
+          <label for="password" id="password-label"><?php echo lang('GEN_PASS'); ?><span class="req-star">*</span></label>
 
           <input  class="form-control" type="password" name="password" id="password" placeholder="<?php echo lang('GEN_PASS'); ?>"
           required autocomplete="new-password" aria-describedby="passwordhelp">
@@ -449,8 +452,8 @@ include $abs_us_root.$us_url_root.'usersc/scripts/additional_join_form_fields.ph
 
       <input type="hidden" value="<?php echo Token::generate(); ?>" name="csrf">
 
-      <div class="form-group">
-        <button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i> <?php echo lang('SIGNUP_TEXT'); ?></button>
+      <div class="form-group" style="margin-top: 20px;">
+        <button class="submit btn btn-primary btn-lg w-100" type="submit" id="next_button"><i class="fa fa-plus-square"></i> <?php echo lang('SIGNUP_TEXT'); ?></button>
       </div>
 
     </form>

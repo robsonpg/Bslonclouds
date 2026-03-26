@@ -10,7 +10,7 @@ $lang = array_merge($lang, [
     'GEN_INSTITUTION' => 'Institution and department',
     'GEN_COUNTRY' => 'Country',
     'GEN_SKILLS' => 'Skills',
-    'GEN_NEWSLETTER' => 'Do you want to receive our newletter?',
+    'GEN_NEWSLETTER' => 'Do you want to receive our newsletter?',
     'GEN_AGREEMENT' => "By check this box, you agree with our <a href='' data-bs-toggle='modal' data-bs-target='#termsModal'>terms and conditions of use.</a>",
     'GEN_MUST_AGREE' => 'You must agree with our terms and conditions.',
     'PROCESS_IMAGES' => 'Image Process',
