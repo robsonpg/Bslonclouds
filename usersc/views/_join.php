@@ -355,21 +355,13 @@ Special thanks to John Bovey for the password strenth feature.
     </div>
 
         <div class="form-group">
-            <label for="skills" id="skills-label"><?=lang("GEN_SKILLS");?></label>
-
-            <input  class="form-control" type="text" name="skills" id="skills"
-                    placeholder="<?=lang("GEN_SKILLS");?>" value="<?php if (!$form_valid && !empty($_POST)){ echo $skills;} ?>"
-                    autocomplete="skills">
+            <input type="checkbox" name="newsletter" id="newsletter" style="width: 1.2em; height: 1.2em; vertical-align: middle;">
+            <label for="newsletter" id="newsletter-label" style="float: none; display: inline; margin: 0;"><?=lang("GEN_NEWSLETTER");?></label>
         </div>
 
         <div class="form-group">
-            <label for="newsletter" id="newsletter-label"><?=lang("GEN_NEWSLETTER");?></label>
-            <input type="checkbox" name="newsletter" id="newsletter">
-        </div>
-
-        <div class="form-group">
-            <label for="agreement" id="agreement-label"><b><?=lang("GEN_AGREEMENT");?>*</b></label>
-            <input type="checkbox" name="agreement" id="agreement">
+            <input type="checkbox" name="agreement" id="agreement" style="width: 1.2em; height: 1.2em; vertical-align: middle;">
+            <label for="agreement" id="agreement-label" style="float: none; display: inline; margin: 0;"><b><?=lang("GEN_AGREEMENT");?>*</b></label>
         </div>
 
       <div class="form-group">
