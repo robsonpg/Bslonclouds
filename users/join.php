@@ -217,7 +217,7 @@ if (Input::exists()) {
                 $body = email_body('_email_template_verify.php', $params);
                 email($to, $subject, "TEste TESTE");
                 //echo "Enviando email 2: " . $to . " " . $subject . " " . $body;
-                //exit;
+                exit;
             }
         } catch (Exception $e) {
             // Record failed registration attempt
