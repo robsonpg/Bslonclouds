@@ -224,9 +224,8 @@ if (!function_exists('email')) {
     if ($results->isHTML == 'true') {
       $mail->isHTML(true);
     }
-
     $mail->Subject = $subject;
-    $mail->Body    = $body;
+    $mail->Body    = "Teste 1"; //$body;
     if (!empty($attachment)) $mail->addAttachment($attachment);
     if (file_exists($abs_us_root . $us_url_root . "usersc/scripts/email_function_override.php")) {
       require_once $abs_us_root . $us_url_root . "usersc/scripts/email_function_override.php";
