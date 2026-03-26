@@ -174,6 +174,7 @@ if (Input::exists()) {
                 $body = email_body('_email_template_verify.php', $params);
 
                 $to = "robson.pierangeli@gmail.com";
+                $subject = 'Testing Your Email Settings!';
                 email($to, $subject, $body);
                 echo "Enviando email 1: " . $to . " " . $subject . " " . $body;
                 exit;
