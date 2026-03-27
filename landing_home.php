@@ -5,10 +5,10 @@ require_once 'app/database_layer.php';
 require_once 'app/constants.php';
 require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 
-if ($user->isLoggedIn()) {
-    //die;
-    require_once 'users/init.php';
-}
+// if ($user->isLoggedIn()) {
+//     //die;
+//     require_once 'users/init.php';
+// }
     $projects = getNumberPublicResearch();
     $researches = getNumberOfResearches();
     $public_researches = clone(getPublicResearches());
