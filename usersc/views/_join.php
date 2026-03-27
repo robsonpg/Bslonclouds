@@ -21,37 +21,194 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Special thanks to John Bovey for the password strenth feature.
 */
 ?>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-.gray_out_icon{
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-  filter: grayscale(100%);
+@font-face { font-family: 'Aeros'; src: url('app/css/Aeros.ttf') format('truetype'); }
+
+body { font-family: 'Inter', sans-serif; }
+
+/* ── Preserved classes ───────────────────────────── */
+.gray_out_icon {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
 }
-.gray_out_text{
-  opacity: .5;
+.gray_out_text { opacity: .5; }
+.req-star { color: #e74c3c; font-weight: bold; margin-left: 2px; }
+
+/* ── Join card wrapper ───────────────────────────── */
+.bsl-join-card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    overflow: hidden;
+    margin-bottom: 40px;
 }
-.req-star {
-  color: #e74c3c;
-  font-weight: bold;
-  margin-left: 2px;
+
+/* ── Card header (mini hero) ─────────────────────── */
+.bsl-join-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c2340 100%);
+    padding: 28px 32px 22px;
+    position: relative;
+    overflow: hidden;
 }
+.bsl-join-header::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(2,167,233,0.18) 0%, transparent 70%);
+    pointer-events: none;
+}
+.bsl-hero-title {
+    font-family: 'Aeros', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    word-break: break-word;
+}
+.bsl-hero-title .c-blue  { color: #02a7e9; }
+.bsl-hero-title .c-green { color: #68b849; }
+.bsl-hero-title .c-orange{ color: #f1893a; }
+.bsl-hero-title .c-white { color: #e2e8f0; }
+.bsl-join-subtitle {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+/* ── Card body ───────────────────────────────────── */
+.bsl-join-body {
+    background: #fff;
+    padding: 28px 32px 24px;
+}
+
+/* ── Form fields ─────────────────────────────────── */
+.bsl-join-body .form-group { margin-bottom: 18px; }
+.bsl-join-body label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 5px;
+    display: block;
+}
+.bsl-join-body .form-control,
+.bsl-join-body select.form-control {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    transition: border-color .15s, box-shadow .15s;
+}
+.bsl-join-body .form-control:focus {
+    border-color: #02a7e9;
+    box-shadow: 0 0 0 3px rgba(2,167,233,0.12);
+    outline: none;
+}
+
+/* ── Password strength panel ─────────────────────── */
+.pw-strength-panel {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: #374151;
+}
+.pw-strength-panel strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+.pw-strength-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+.pw-show-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: #02a7e9;
+    text-decoration: none;
+    cursor: pointer;
+}
+.pw-show-link:hover { color: #0284c7; text-decoration: none; }
+
+/* ── Checkboxes ──────────────────────────────────── */
+.bsl-check-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #f8fafc;
+    margin-bottom: 10px;
+}
+.bsl-check-row input[type=checkbox] {
+    width: 1.15em; height: 1.15em;
+    accent-color: #02a7e9;
+    flex-shrink: 0;
+}
+.bsl-check-row label {
+    font-size: 0.86rem;
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* ── Submit button ───────────────────────────────── */
+.bsl-join-body .btn-submit-bsl {
+    background: linear-gradient(135deg, #02a7e9 0%, #0284c7 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: .3px;
+    transition: opacity .15s, transform .1s;
+}
+.bsl-join-body .btn-submit-bsl:hover { opacity: .9; transform: translateY(-1px); }
+.bsl-join-body .btn-submit-bsl:active { transform: translateY(0); }
+
+/* ── Error display ───────────────────────────────── */
+.bsl-join-body .alert { border-radius: 8px; font-size: 0.88rem; }
 </style>
 
-<div class="row">
-  <div class="col-sm-12">
-    <?php
-    if (!$form_valid && Input::exists()) {?>
-      <?php if (!$validation->errors() == '') {
-          display_errors($validation->errors());
-      } ?>
-    <?php }
-    includeHook($hooks, 'body');
+<div class="row justify-content-center pt-3">
+  <div class="col-lg-7 col-md-9 col-sm-12">
+    <div class="bsl-join-card">
+
+      <!-- BSL Header -->
+      <div class="bsl-join-header">
+        <div class="bsl-hero-title">
+          <span class="c-blue">B</span><span class="c-white">IO</span><span class="c-green">S</span><span class="c-white">PECKLE </span><span class="c-orange">L</span><span class="c-white">ASER On CLOUDS</span>
+        </div>
+        <p class="bsl-join-subtitle"><?php echo lang('SIGNUP_TEXT', ''); ?></p>
+      </div>
+
+      <div class="bsl-join-body">
+        <?php
+        if (!$form_valid && Input::exists()) {?>
+          <?php if (!$validation->errors() == '') {
+              display_errors($validation->errors());
+          } ?>
+        <?php }
+        includeHook($hooks, 'body');
 ?>
 
-    <form class="form-signup" action="" method="<?php echo $form_method; ?>" id="payment-form">
+        <form class="form-signup" action="" method="<?php echo $form_method; ?>" id="payment-form">
 
-      <h2 class="form-signin-heading"> <?php echo lang('SIGNUP_TEXT', ''); ?></h2>
-
-      <div class="form-group">
+          <div class="form-group">
         <label id="username-label"><?php echo lang('GEN_UNAME'); ?><span class="req-star">*</span></label>
         <span id="usernameCheck" class="small"></span>
 
@@ -374,14 +531,14 @@ Special thanks to John Bovey for the password strenth feature.
                 autocomplete="institution">
     </div>
 
-        <div class="form-group" style="margin-bottom: 6px;">
-            <input type="checkbox" name="agreement" id="agreement" style="width: 1.2em; height: 1.2em; vertical-align: middle;">
-            <label for="agreement" id="agreement-label" style="float: none; display: inline; margin: 0;"><b><?php echo lang('GEN_AGREEMENT'); ?><span class="req-star">*</span></b></label>
+        <div class="bsl-check-row">
+            <input type="checkbox" name="agreement" id="agreement">
+            <label for="agreement" id="agreement-label"><b><?php echo lang('GEN_AGREEMENT'); ?><span class="req-star">*</span></b></label>
         </div>
 
-        <div class="form-group" style="margin-bottom: 15px;">
-            <input type="checkbox" name="newsletter" id="newsletter" style="width: 1.2em; height: 1.2em; vertical-align: middle;">
-            <label for="newsletter" id="newsletter-label" style="float: none; display: inline; margin: 0;"><?php echo lang('GEN_NEWSLETTER'); ?></label>
+        <div class="bsl-check-row">
+            <input type="checkbox" name="newsletter" id="newsletter">
+            <label for="newsletter" id="newsletter-label"><?php echo lang('GEN_NEWSLETTER'); ?></label>
         </div>
 
       <div class="form-group">
@@ -452,12 +609,15 @@ include $abs_us_root.$us_url_root.'usersc/scripts/additional_join_form_fields.ph
 
       <input type="hidden" value="<?php echo Token::generate(); ?>" name="csrf">
 
-      <div class="form-group" style="margin-top: 20px;">
-        <button class="submit btn btn-primary btn-lg w-100" type="submit" id="next_button"><i class="fa fa-plus-square"></i> <?php echo lang('SIGNUP_TEXT'); ?></button>
-      </div>
+          <div class="form-group" style="margin-top: 20px;">
+            <button class="submit btn btn-primary btn-lg w-100 btn-submit-bsl" type="submit" id="next_button">
+              <i class="fa fa-plus-square"></i> <?php echo lang('SIGNUP_TEXT'); ?>
+            </button>
+          </div>
 
-    </form>
-    <br>
+        </form>
+      </div><!-- bsl-join-body -->
+    </div><!-- bsl-join-card -->
   </div>
 </div>
 
