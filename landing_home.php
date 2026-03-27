@@ -5,10 +5,6 @@ require_once 'app/database_layer.php';
 require_once 'app/constants.php';
 require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 
-// if ($user->isLoggedIn()) {
-//     //die;
-//     require_once 'users/init.php';
-// }
     $projects = getNumberPublicResearch();
     $researches = getNumberOfResearches();
     $public_researches = clone(getPublicResearches());
@@ -20,7 +16,7 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
     $ip = $_SERVER['REMOTE_ADDR'];
     logger("","Visitor","Visit from $ip.");
 
-    $visitor_data = @json_decode(file_get_contents(
+    $visitor_data = @json_decode(@file_get_contents(
         "http://www.geoplugin.net/json.gp?ip=" . $ip));
 
     insertDatabaseVisitorInfo($visitor_data);
@@ -85,7 +81,6 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
         letter-spacing: 2px;
         margin-bottom: 10px;
         line-height: 1.2;
-        white-space: nowrap;
     }
     .bsl-hero-title .c-blue  { color: #02a7e9; }
     .bsl-hero-title .c-green { color: #68b849; }
@@ -587,14 +582,11 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
     window.onpopstate = function() {
         switch(location.hash) {
             case '#home':
-                //alert("home");
-                break
+                break;
             case '#login':
-                //alert("login");
-                break
+                break;
             default:
-                //alert("def");
-                location.replace("http://bslonclouds.com/");
+                location.replace("https://bslonclouds.com/");
         }
     }
 
