@@ -243,7 +243,11 @@ if (Input::exists()) {
                     $query = $db->query('SELECT * FROM email');
                     $results = $query->first();
                     $act = $results->email_act;
-                    require $abs_us_root.$us_url_root.'users/views/_joinThankYou_verify.php';
+                    if (file_exists($abs_us_root.$us_url_root.'usersc/views/_joinThankYou_verify.php')) {
+                        require_once $abs_us_root.$us_url_root.'usersc/views/_joinThankYou_verify.php';
+                    } else {
+                        require $abs_us_root.$us_url_root.'users/views/_joinThankYou_verify.php';
+                    }
 
                 } else {
                     logger($theNewId, 'User', 'Registration completed.');
