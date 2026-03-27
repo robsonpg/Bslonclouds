@@ -85,6 +85,7 @@ if ($user->isLoggedIn()) {
         letter-spacing: 2px;
         margin-bottom: 10px;
         line-height: 1.2;
+        white-space: nowrap;
     }
     .bsl-hero-title .c-blue  { color: #02a7e9; }
     .bsl-hero-title .c-green { color: #68b849; }
@@ -382,7 +383,7 @@ if ($user->isLoggedIn()) {
     </script>
 
 <body>
-<div class="container-fluid px-0" id="home_bsl">
+<div class="container-fluid px-0 pt-3" id="home_bsl">
 
     <!-- Hero Banner -->
     <div class="bsl-hero">
