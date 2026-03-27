@@ -373,6 +373,11 @@ if (!empty($_POST)) {
 // Get destination from session (set by securePage) for passkey redirect
 $dest = $_SESSION[$currentSessionName . '_login_dest'] ?? '';
 
+if (file_exists($abs_us_root . $us_url_root . 'usersc/views/_login.php')) {
+    require $abs_us_root . $us_url_root . 'usersc/views/_login.php';
+    return;
+}
+
 ?>
 <style media="screen">
     .img-responsive {
