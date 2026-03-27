@@ -239,7 +239,7 @@ if ($user_moderator) {
 
 
     <!-- Hero -->
-    <div class="row mb-3">
+    <div class="row mb-3 pt-3">
         <div class="col-md-12">
             <div class="bsl-hero">
                 <div class="bsl-hero-title">
