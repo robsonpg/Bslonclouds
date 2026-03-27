@@ -579,6 +579,17 @@ require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
         }
     }
 
+    window.onpopstate = function() {
+        switch(location.hash) {
+            case '#home':
+                break;
+            case '#login':
+                break;
+            default:
+                location.replace("http://bslonclouds.com/");
+        }
+    }
+
     if($('#audience-map').length) {
         let markers = [];
         for(var i = 0; i < cities.length; i++) {
