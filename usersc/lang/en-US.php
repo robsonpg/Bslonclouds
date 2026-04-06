@@ -127,7 +127,7 @@ $lang = array_merge($lang, [
         the BSLTL project <a href='https://www.nongnu.org/bsltl/'>https://www.nongnu.org/bsltl/</a>",
     'SERVICES_MSG' => 'This area is under construction.',
     'TERMS_MODAL_HEADER' => 'Terms and conditions of use',
-    'TERMS_AND_CONTIDIONS_TEXT' => 'The data I am uploading will be ruled by the licence Creative Commons Attribution CC BY 4.0 (which permits unrestricted use, distribution, and reproduction in any medium, provided the original author(s) and source are credited).
+    'TERMS_AND_CONTIDIONS_TEXT' => 'The data I may upload or download will be ruled by the licence Creative Commons Attribution CC BY 4.0 (which permits unrestricted use, distribution, and reproduction in any medium, provided the original author(s) and source are credited).
         The information and dataset I am uploading are solely of the author(s) without any responsibility of this site. The author(s) assume all responsibility about the property information as well about the veracity of data and its description.
         The author uploading and downloading dataset(s) on behalf of other authors will be responsible for the terms and conditions here presented.
         I will respect the Licence Creative Commons CC BY 4.0 when downloading the dataset(s) from BSL on Clouds.',
