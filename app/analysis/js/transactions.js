@@ -17,6 +17,12 @@ let IMAGE_TIMESTAMP = 2;
 let IMAGE_WIDTH = 3;
 let IMAGE_HEIGTH = 4;
 
+const MAX_DISPLAY_WIDTH = 640;
+let pan_x = 0;
+let pan_y = 0;
+let display_width = 0;
+let display_height = 0;
+
 
 function successCallback(result) {
     console.log("It succeeded with " + result);
@@ -68,8 +74,7 @@ function readURL(input, id) {
         let canvas_image = null;
         let row_tumb = document.createElement("div");
         row_tumb.className = "row justify-content-start align-items-left border";
-        for (let i=0; i<input.files.length; i++)
-        {
+        for (let i = 0; i < input.files.length; i++) {
             tumb_image = document.createElement("img");
             tumb_image.setAttribute("id", "tumb" + i);
             tumb_image.style.height = "20mm";
@@ -87,12 +92,12 @@ function readURL(input, id) {
                 img_cvs.onload = await function () {
                     // Determna o tamanho padrão
                     if ((img_cvs.naturalWidth > 0) && (img_cvs.naturalHeight > 0)) {
-                    //if (i === 0) {
+                        //if (i === 0) {
                         main_width = img_cvs.naturalWidth;
                         main_height = img_cvs.naturalHeight;
                         let cvs = document.getElementById("graphavd_cvs");
                         cvs.setAttribute("height", main_height);
-                        cvs.setAttribute("width",  main_width);
+                        cvs.setAttribute("width", Math.min(main_width, MAX_DISPLAY_WIDTH));
                     }
                     image_info_list[i][IMAGE_WIDTH] = main_width;
                     image_info_list[i][IMAGE_HEIGTH] = main_height;
@@ -146,7 +151,7 @@ function copyImagesToCanvas() {
             let cvs_cvs = document.getElementById('cvs' + idx);
             cvs_cvs.setAttribute("height", image_info_list[idx][IMAGE_HEIGTH]);
             cvs_cvs.setAttribute("width", image_info_list[idx][IMAGE_WIDTH]);
-            cvs_cvs.getContext('2d', {willReadFrequently: true}).drawImage(img_cvs, 0, 0, image_info_list[idx][IMAGE_WIDTH], image_info_list[idx][IMAGE_HEIGTH]);
+            cvs_cvs.getContext('2d', { willReadFrequently: true }).drawImage(img_cvs, 0, 0, image_info_list[idx][IMAGE_WIDTH], image_info_list[idx][IMAGE_HEIGTH]);
             // Find width and height of the images
             if (img_cvs.naturalWidth > main_width) main_width = img_cvs.naturalWidth;
             if (img_cvs.naturalHeight > main_height) main_height = img_cvs.naturalHeight;
@@ -173,7 +178,7 @@ function copyImagesToCanvas() {
 
 //####################################################################################
 // Faz análise das imagens quanto ao tamanho de cada uma e seu profundidade de cores
-function startImageAnalyse(){
+function startImageAnalyse() {
     // let btn_start = document.getElementById("btn_start_avd");
     // btn_start.className = "btn btn-primary";
     //btn_start.innerText = msg_analysing;
@@ -201,8 +206,8 @@ function startImageAnalyse(){
             canvas.width = img.width;
             canvas.height = img.height;
             //alert("w: " + canvas.width + "h: " + canvas.height)
-            canvas.getContext('2d', {willReadFrequently: true}).drawImage(img, 0, 0, img.width, img.height);
-            let imageData = canvas.getContext('2d', {willReadFrequently: true}).getImageData(0, 0, img.width, img.height);
+            canvas.getContext('2d', { willReadFrequently: true }).drawImage(img, 0, 0, img.width, img.height);
+            let imageData = canvas.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, img.width, img.height);
             for (let color_idx = 0; color_idx < imageData.data.length; color_idx += 4) {
                 // cor 1
                 let color1 = imageData.data[color_idx];
@@ -236,7 +241,7 @@ function startImageAnalyse(){
 //############################################################################
 // Retorna um pixel da imagem passada
 function getImagePixel(x, y, cvs) {
-    let ret = cvs.getContext('2d', {willReadFrequently: true}).getImageData(x, y, 1, 1).data;
+    let ret = cvs.getContext('2d', { willReadFrequently: true }).getImageData(x, y, 1, 1).data;
     ret = ret[0];
     return ret;
 }
@@ -259,14 +264,21 @@ async function CalcShowGraphAVD() {
     let progress = document.getElementById("image_process");
     progress.max = image_info_list.length.toString();
     progress.value = "0";
+    pan_x = 0;
+    pan_y = 0;
+    display_width = Math.min(image_info_list[0][IMAGE_WIDTH], MAX_DISPLAY_WIDTH);
+    display_height = image_info_list[0][IMAGE_HEIGTH];
     backup_canvas = document.createElement('canvas');
-    canvas.setAttribute("width", image_info_list[0][IMAGE_WIDTH] + "px");
-    canvas.setAttribute("height", image_info_list[0][IMAGE_HEIGTH] + "px");
+    // Canvas de exibição limitado a MAX_DISPLAY_WIDTH (janela/viewport)
+    canvas.setAttribute("width", display_width + "px");
+    canvas.setAttribute("height", display_height + "px");
+    // backup_canvas mantém a resolução completa da imagem para os cálculos
     backup_canvas.setAttribute("width", image_info_list[0][IMAGE_WIDTH] + "px");
     backup_canvas.setAttribute("height", image_info_list[0][IMAGE_HEIGTH] + "px");
-    let context_cvs = canvas.getContext('2d', {willReadFrequently: true});
-    context_cvs.canvas.width = image_info_list[0][IMAGE_WIDTH];
-    context_cvs.canvas.height = image_info_list[0][IMAGE_HEIGTH];
+    let context_cvs = canvas.getContext('2d', { willReadFrequently: true });
+    context_cvs.canvas.width = display_width;
+    context_cvs.canvas.height = display_height;
+    let context_backup = backup_canvas.getContext('2d', { willReadFrequently: true });
     // Criar matrix 2D com os AVD de pixels
     avd_matrix = new Array(image_info_list[0][IMAGE_WIDTH]);
     for (let i = 0; i < avd_matrix.length; i++) {
@@ -328,12 +340,16 @@ async function CalcShowGraphAVD() {
                     }
                 }
             }
-            context_cvs.fillStyle = "rgba(" + red + "," + green + ", " + blue + ", 1)";
-            context_cvs.fillRect(width_idx, heigth_idx, 1, 1);
+            context_backup.fillStyle = "rgba(" + red + "," + green + ", " + blue + ", 1)";
+            context_backup.fillRect(width_idx, heigth_idx, 1, 1);
         }
     }
-    // Faz um backup da imagem
-    backup_canvas.getContext('2d', {willReadFrequently: true}).drawImage(canvas, 0, 0);
+    // Exibe a janela de visualização (viewport) do canvas AVD
+    context_cvs.drawImage(backup_canvas, -pan_x, -pan_y);
+    // Mostra controles de navegação se a imagem for mais larga que o viewport
+    if (image_info_list[0][IMAGE_WIDTH] > MAX_DISPLAY_WIDTH) {
+        document.getElementById("pan_controls").style.display = "flex";
+    }
     //img_avd.src = canvas.toDataURL();
     //alert("Exibir");
     //;; exibir image!!!!
@@ -377,10 +393,10 @@ function calculateGaussian() {
 // Distribuição normal entre 0 e 1
 // Academia na veia!!! kkkkkkkk Transformação Box-Muller!!
 // Standard Normal variate using Box-Muller transform.
-function gaussianRandom(mean=0, stdev=1) {
+function gaussianRandom(mean = 0, stdev = 1) {
     let u = 1 - Math.random(); // Converting [0,1) to (0,1]
     let v = Math.random();
-    let z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    let z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
     // Transform to the desired mean and standard deviation:
     return z * stdev + mean;
 }
@@ -392,7 +408,7 @@ let gaussian_points_y = [];
 let THSP_matrix = [];
 let last_x = 0, last_y = 0;
 const canvas_avd = document.getElementById("graphavd_cvs");
-const ctx_avd = canvas_avd.getContext("2d", {willReadFrequently: true});
+const ctx_avd = canvas_avd.getContext("2d", { willReadFrequently: true });
 
 //#############################################################################
 // Função que desenha a curva gaussiana no movimento do mouse
@@ -455,7 +471,7 @@ function clickPick(event) {
         for (let gauss_idx = 0; gauss_idx < gpoints; gauss_idx++) {
             let xvalue = gaussian_points_x[gauss_idx];
             let yvalue = gaussian_points_y[gauss_idx];
-            let pix_val = getImagePixel(x + Math.round(xvalue), y + Math.round(yvalue), cvs_img);
+            let pix_val = getImagePixel((x + pan_x) + Math.round(xvalue), (y + pan_y) + Math.round(yvalue), cvs_img);
             // THSP : imagem x gauss index
             THSP_matrix[gauss_idx][idx] = pix_val;
         }
@@ -494,7 +510,7 @@ function calculateCOM() {
     }
     // linhas THSP
     let canvas_hist = document.getElementById('color_hist');
-    let context_cvs = canvas_hist.getContext('2d', {willReadFrequently: true});
+    let context_cvs = canvas_hist.getContext('2d', { willReadFrequently: true });
     context_cvs.fillStyle = "rgba(255, 255, 255, 1)";
     context_cvs.fillRect(0, 0, canvas_hist.width, canvas_hist.height);
 
@@ -508,7 +524,7 @@ function calculateCOM() {
     for (let thsp_idx_line = 0; thsp_idx_line < thsp_lines; thsp_idx_line++) {
         for (let thsp_idx_col = 0; thsp_idx_col < thsp_cols; thsp_idx_col++) {
             let color1 = THSP_matrix[thsp_idx_line][thsp_idx_col];
-            let color2 = THSP_matrix[thsp_idx_line][thsp_idx_col+1];
+            let color2 = THSP_matrix[thsp_idx_line][thsp_idx_col + 1];
             if (color1 > 255) color1 = 255;
             if (color1 < 1) color1 = 1;
             if (color2 > 255) color2 = 255;
@@ -518,8 +534,8 @@ function calculateCOM() {
             color_hist[color1]++;
             color_hist[color2]++;
             context_cvs.fillStyle = "rgba(0, 0, 0, 1)";
-            context_cvs.fillRect(color1, 255, 1, (-color_hist[color1]*(32/thsp_cols)));
-            context_cvs.fillRect(color2, 255, 1, (-color_hist[color2]*(32/thsp_cols)));
+            context_cvs.fillRect(color1, 255, 1, (-color_hist[color1] * (32 / thsp_cols)));
+            context_cvs.fillRect(color2, 255, 1, (-color_hist[color2] * (32 / thsp_cols)));
         }
     }
     calculateAVD();
@@ -559,7 +575,7 @@ function calculateAVD() {
 
     for (let idx_line = 0; idx_line < com_lines; idx_line++) {
         for (let idx_col = 0; idx_col < com_cols; idx_col++) {
-            AVD = AVD + (COM_matrix[idx_line][idx_col]*Math.abs(idx_line - idx_col))/ COM_total;
+            AVD = AVD + (COM_matrix[idx_line][idx_col] * Math.abs(idx_line - idx_col)) / COM_total;
         }
     }
 
@@ -573,11 +589,11 @@ function calculateAVD() {
 
 //##############################################################################
 // Desenha a curva gaussiana
-function plotGauss(x ,y) {
+function plotGauss(x, y) {
     //destination.style.background = rgba;
     //destination.textContent = rgba;
-    // restaura a imagem
-    canvas_avd.getContext('2d', {willReadFrequently: true}).drawImage(backup_canvas, 0, 0);
+    // restaura a imagem aplicando o offset do viewport
+    canvas_avd.getContext('2d', { willReadFrequently: true }).drawImage(backup_canvas, -pan_x, -pan_y);
     // Gerar array de pontos na forma gaussiana
     const gau_points = document.getElementById("gau_num_points");
     let gpoints = 200;
@@ -610,24 +626,24 @@ function colorPicker() {
 
 //###############################################################################
 // Transforma uma imagem em escala de cinzas
-function grayScale () {
+function grayScale() {
     var image = document.getElementById("image");
 
-    var canvas=document.createElement("canvas");
-    var ctx=canvas.getContext("2d");
+    var canvas = document.createElement("canvas");
+    var ctx = canvas.getContext("2d");
 
-    canvas.width= image.width;
-    canvas.height= image.height;
+    canvas.width = image.width;
+    canvas.height = image.height;
 
-    ctx.drawImage(image,0,0);
+    ctx.drawImage(image, 0, 0);
 
-    var imageData=ctx.getImageData(0,0, image.width, image.height);
+    var imageData = ctx.getImageData(0, 0, image.width, image.height);
 
-    for (var i=0;i<imageData.data.length;i+=4) {
-        var avg = (imageData.data[i]+imageData.data[i+1]+imageData.data[i+2])/3;
+    for (var i = 0; i < imageData.data.length; i += 4) {
+        var avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
         imageData.data[i] = avg;
-        imageData.data[i+1] = avg;
-        imageData.data[i+2] = avg;
+        imageData.data[i + 1] = avg;
+        imageData.data[i + 2] = avg;
     }
 
     ctx.putImageData(imageData, 0, 0, 0, 0, imageData.width, imageData.height);
@@ -637,7 +653,7 @@ function grayScale () {
 //##############################################################################
 // Scripts para depois que o form for carregado
 //##############################################################################
-$(document).ready(function() {
+$(document).ready(function () {
     // Trata as teclas de direção
     onkeydown = (event) => {
         let flg_prev = false;
@@ -673,13 +689,13 @@ $(document).ready(function() {
         //return false;
     };
 
-    $('#ok_error').click( function () {
+    $('#ok_error').click(function () {
         clearAllData();
     });
-    $('#ok_avd').click( function () {
+    $('#ok_avd').click(function () {
         clearAllData();
     });
-    $('#ok_error_color').click( function () {
+    $('#ok_error_color').click(function () {
         clearAllData();
     });
 
@@ -687,9 +703,9 @@ $(document).ready(function() {
 
 function toDataURL(url, callback) {
     var xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
         var reader = new FileReader();
-        reader.onloadend = function() {
+        reader.onloadend = function () {
             callback(reader.result);
         }
         reader.readAsDataURL(xhr.response);
@@ -728,10 +744,23 @@ function leftCalc() {
 }
 
 //########################################################################
+// Desloca a janela de visualização (viewport) sobre a imagem AVD completa
+function panViewport(dx, dy) {
+    let img_w = image_info_list[0][IMAGE_WIDTH];
+    let img_h = image_info_list[0][IMAGE_HEIGTH];
+    pan_x = Math.max(0, Math.min(pan_x + dx, img_w - display_width));
+    pan_y = Math.max(0, Math.min(pan_y + dy, img_h - display_height));
+    canvas_avd.getContext('2d', { willReadFrequently: true }).drawImage(backup_canvas, -pan_x, -pan_y);
+    plotGauss(last_x, last_y);
+}
+
+//########################################################################
 // Apaga todos os dados carregados localemte ff
 function clearAllData() {
     images_properties = [];
     image_info_list = [];
+    pan_x = 0;
+    pan_y = 0;
     let btn_get_files = document.getElementById("btn_get_files");
     btn_get_files.disabled = true;
     window.location.reload();

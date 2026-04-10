@@ -63,6 +63,12 @@
                                 <canvas id="graphavd_cvs" style="border:1px solid #d3d3d3;"></canvas>
                                 <img src="../images/heatmap.png" style="position: absolute; width: 7%">
                             </div>
+                            <div id="pan_controls" style="display:none;" class="d-flex justify-content-center gap-2 mt-1 mb-1">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="panViewport(-100, 0)" title="Pan left"><i class="fa-solid fa-arrow-left"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="panViewport(0, -100)" title="Pan up"><i class="fa-solid fa-arrow-up"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="panViewport(0, 100)" title="Pan down"><i class="fa-solid fa-arrow-down"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="panViewport(100, 0)" title="Pan right"><i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
 
                         </div>
                     </div>
