@@ -18,6 +18,7 @@ let IMAGE_WIDTH = 3;
 let IMAGE_HEIGTH = 4;
 
 const MAX_DISPLAY_WIDTH = 640;
+const MAX_DISPLAY_HEIGHT = 480;
 let pan_x = 0;
 let pan_y = 0;
 let display_width = 0;
@@ -96,7 +97,7 @@ function readURL(input, id) {
                         main_width = img_cvs.naturalWidth;
                         main_height = img_cvs.naturalHeight;
                         let cvs = document.getElementById("graphavd_cvs");
-                        cvs.setAttribute("height", main_height);
+                        cvs.setAttribute("height", Math.min(main_height, MAX_DISPLAY_HEIGHT));
                         cvs.setAttribute("width", Math.min(main_width, MAX_DISPLAY_WIDTH));
                     }
                     image_info_list[i][IMAGE_WIDTH] = main_width;
@@ -267,16 +268,16 @@ async function CalcShowGraphAVD() {
     pan_x = 0;
     pan_y = 0;
     display_width = Math.min(image_info_list[0][IMAGE_WIDTH], MAX_DISPLAY_WIDTH);
-    display_height = image_info_list[0][IMAGE_HEIGTH];
+    display_height = Math.min(image_info_list[0][IMAGE_HEIGTH], MAX_DISPLAY_HEIGHT);
     backup_canvas = document.createElement('canvas');
-    // Canvas de exibição limitado a MAX_DISPLAY_WIDTH (janela/viewport)
+    // Canvas de exibição limitado a 640x480 VGA (janela/viewport)
     canvas.setAttribute("width", display_width + "px");
     canvas.setAttribute("height", display_height + "px");
     // backup_canvas mantém a resolução completa da imagem para os cálculos
     backup_canvas.setAttribute("width", image_info_list[0][IMAGE_WIDTH] + "px");
     backup_canvas.setAttribute("height", image_info_list[0][IMAGE_HEIGTH] + "px");
     let context_cvs = canvas.getContext('2d', { willReadFrequently: true });
-    context_cvs.canvas.width = display_width;
+    context_cvs.canvas.width  = display_width;
     context_cvs.canvas.height = display_height;
     let context_backup = backup_canvas.getContext('2d', { willReadFrequently: true });
     // Criar matrix 2D com os AVD de pixels
@@ -346,8 +347,8 @@ async function CalcShowGraphAVD() {
     }
     // Exibe a janela de visualização (viewport) do canvas AVD
     context_cvs.drawImage(backup_canvas, -pan_x, -pan_y);
-    // Mostra controles de navegação se a imagem for mais larga que o viewport
-    if (image_info_list[0][IMAGE_WIDTH] > MAX_DISPLAY_WIDTH) {
+    // Mostra controles de navegação se a imagem exceder o viewport em qualquer dimensão
+    if (image_info_list[0][IMAGE_WIDTH] > MAX_DISPLAY_WIDTH || image_info_list[0][IMAGE_HEIGTH] > MAX_DISPLAY_HEIGHT) {
         document.getElementById("pan_controls").style.display = "flex";
     }
     //img_avd.src = canvas.toDataURL();
