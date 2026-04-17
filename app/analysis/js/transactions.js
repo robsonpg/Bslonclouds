@@ -204,11 +204,11 @@ function startImageAnalyse() {
             let flag_color = false;
             let img = document.getElementById("tumb" + idx);
             let canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
             //alert("w: " + canvas.width + "h: " + canvas.height)
-            canvas.getContext('2d', { willReadFrequently: true }).drawImage(img, 0, 0, img.width, img.height);
-            let imageData = canvas.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, img.width, img.height);
+            canvas.getContext('2d', { willReadFrequently: true }).drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+            let imageData = canvas.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, img.naturalWidth, img.naturalHeight);
             for (let color_idx = 0; color_idx < imageData.data.length; color_idx += 4) {
                 // cor 1
                 let color1 = imageData.data[color_idx];
