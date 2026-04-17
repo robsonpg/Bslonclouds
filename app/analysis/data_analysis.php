@@ -20,10 +20,49 @@ require_once "imagesloaded_modal.php";
 require_once "cacheerror_modal.php";
 ?>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../css/styles.css">
+
 <style>
-    @font-face {
-        font-family: 'Aeros';
-        src: url('../css/Aeros.ttf') format('truetype');
+    @font-face { font-family: 'Aeros'; src: url('../css/Aeros.ttf') format('truetype'); }
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Hero */
+    .bsl-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c2340 100%);
+        border-radius: 12px;
+        padding: 32px 36px 26px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+    }
+    .bsl-hero::before {
+        content: '';
+        position: absolute;
+        top: -60px; right: -60px;
+        width: 280px; height: 280px;
+        background: radial-gradient(circle, rgba(2,167,233,0.15) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .bsl-hero-title {
+        font-family: 'Aeros', serif;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        white-space: nowrap;
+        margin-bottom: 6px;
+        line-height: 1.2;
+    }
+    .bsl-hero-title .c-blue  { color: #02a7e9; }
+    .bsl-hero-title .c-green { color: #68b849; }
+    .bsl-hero-title .c-orange{ color: #f1893a; }
+    .bsl-hero-title .c-white { color: #e2e8f0; }
+    .bsl-hero-subtitle {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        margin-bottom: 0;
     }
 </style>
 
@@ -39,27 +78,24 @@ require_once "cacheerror_modal.php";
     let msg_done = "<?=lang("MSG_DONE");?>";
 </script>
 
-<body>
-<br>
-<div class="row">
+<!-- Hero -->
+<div class="row mb-3 pt-3">
     <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-12">
-                <div role="alert" class="alert alert-success">
-                    <h4 class="alert-heading" style="font-family: 'Aeros',serif"><a style="color: #02a7e9">
-                            B</a>IO<a style="color: #68b849">S</a>PECKLE <a style="color: #f1893a">L<a>ASER On CLOUDS</h4>
-                    <h4><?=lang("SERVICES_TEXT"); ?></h4>
-                </div>
+        <div class="bsl-hero">
+            <div class="bsl-hero-title">
+                <span class="c-blue">B</span><span class="c-white">IO</span><span class="c-green">S</span><span class="c-white">PECKLE </span><span class="c-orange">L</span><span class="c-white">ASER On CLOUDS</span>
             </div>
+            <p class="bsl-hero-subtitle"><?=lang("MENU_ANALYSIS");?></p>
         </div>
-    </div> <!-- col class title-->
-</div> <!-- row Title -->
+    </div>
+</div>
+
 <div class="row">
     <div class="col-8">
         <div role="alert" class="alert alert-info">
             <?=lang("ANALYSIS_MSG");?>
         </div>
-        <div role="alert" class="alert alert-danger">
+        <div role="alert" class="alert alert-warning">
             <?=lang("ANALYSIS_WARNING");?>
         </div>
         <div role="alert" class="alert alert-danger">
@@ -81,9 +117,7 @@ require_once "cacheerror_modal.php";
     <div class="container bg-light" id="tumbnails">
     </div>
 </div>
-
 <br>
-</body>
 
 <script type="text/javascript" src="../js/utils.js"></script>
 <script type="text/javascript" src="js/transactions.js"></script>
@@ -91,77 +125,4 @@ require_once "cacheerror_modal.php";
 <?php
 require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php';
 ?>
-<!--a href="#home_bsl" class="float" style="padding-top: 3mm">
-    <i class="fa fa-home my-float fa-2x"></i>
-</a-->
-</body>
-<script>
-    // Fun Facts
-    function count($this) {
-        var current = parseInt($this.html(), 10);
-        current = current + 1; /* Where 50 is increment */
-
-        $this.html(++current);
-        if (current > $this.data('count')) {
-            $this.html($this.data('count'));
-        } else {
-            setTimeout(function() {
-                count($this)
-            }, 50);
-        }
-    }
-
-    window.onpopstate = function() {
-        switch(location.hash) {
-            case '#home':
-                //alert("home");
-                break
-            case '#login':
-                //alert("login");
-                break
-            default:
-                //alert("def");
-                location.replace("http://bslonclouds.com/");
-        }
-    }
-
-    if($('#audience-map').length) {
-        let markers = [];
-        for(var i = 0; i < cities.length; i++) {
-            let obj = {};
-            let lat = cities[i].bsl_visitors_data_latitude;
-            let lon = cities[i].bsl_visitors_data_longitude;
-            let ctname = cities[i].bsl_visitors_data_city;
-            obj["latLng"] = [lat, lon];
-            obj["name"] = ctname;
-            markers.push(obj);
-        }
-
-        $('#audience-map').vectorMap({
-            map: 'world_mill_en',
-            panOnDrag: true,
-            focusOn: {
-                x: 0.5,
-                y: 0.5,
-                scale: 1,
-                animate: true
-            },
-            markerStyle: {
-                initial: {
-                    fill: '#F8E23B',
-                    stroke: '#383f47'
-                }
-            },
-            markers: markers,
-        });
-    }
-
-
-    $(".stat-timer").each(function() {
-        $(this).data('count', parseInt($(this).html(), 10));
-        $(this).html('0');
-        count($(this));
-    });
-
-</script>
 
