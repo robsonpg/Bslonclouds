@@ -1,4 +1,30 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+/* ── Override: show hamburger menu at <= 1366px ──────────────────── */
+@media screen and (min-width: 993px) and (max-width: 1366px) {
+  .us_menu_mobile_wrapper {
+    display: flex;
+  }
+  ul.us_menu.horizontal {
+    display: block;
+  }
+  ul.us_menu.horizontal > li {
+    display: none;
+  }
+  ul.us_menu .us_brand.full_screen {
+    display: none;
+  }
+  ul.us_menu.horizontal.expanded > li {
+    display: block;
+  }
+  ul.us_menu.horizontal .us_sub-menu,
+  ul.us_menu.horizontal .us_sub-menu.us_deep-sub-menu {
+    width: 100%;
+    left: 0;
+    top: 100%;
+    border: none;
+  }
+}
 time.icon {
     font-size: 1em;
     /* change icon size */

@@ -14,8 +14,38 @@ if (file_exists($abs_us_root . $us_url_root . 'usersc/templates/' . $settings->t
 
 if ($navstyle == 'Default') {
   ?>
+  <!-- Custom breakpoint: hamburger menu at widths <= 1366px -->
+  <style>
+    @media (min-width: 1367px) {
+      .navbar-expand-1366 {
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+      }
+      .navbar-expand-1366 .navbar-nav {
+        flex-direction: row;
+      }
+      .navbar-expand-1366 .navbar-nav .dropdown-menu {
+        position: absolute;
+      }
+      .navbar-expand-1366 .navbar-nav .nav-link {
+        padding-right: .5rem;
+        padding-left: .5rem;
+      }
+      .navbar-expand-1366 > .container,
+      .navbar-expand-1366 > .container-fluid {
+        flex-wrap: nowrap;
+      }
+      .navbar-expand-1366 .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+      }
+      .navbar-expand-1366 .navbar-toggler {
+        display: none;
+      }
+    }
+  </style>
   <!-- Set your logo and the "header" of the navigation here -->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-1366 navbar-dark bg-dark">
     <a href="<?= $us_url_root ?>"><img src="<?= $us_url_root ?>users/images/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
